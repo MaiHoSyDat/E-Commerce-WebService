@@ -1,0 +1,2 @@
+package com.example.case6.service;public interface IGeneratedService {
+}
