@@ -52,7 +52,7 @@ public class Account {
     @ManyToOne
     private Status status;
 
-    private double salary;
+    private double salary =0 ;
 
     @ManyToOne
     private Role role;
