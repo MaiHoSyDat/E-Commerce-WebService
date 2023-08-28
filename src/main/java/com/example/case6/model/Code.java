@@ -9,10 +9,11 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class Member {
+public class Code {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-
+    private int quantity;
+    private double percent;
 }

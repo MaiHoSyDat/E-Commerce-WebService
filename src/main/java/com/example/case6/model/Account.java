@@ -50,9 +50,6 @@ public class Account {
     private String gender;
 
     @ManyToOne
-    private Member member;
-
-    @ManyToOne
     private Status status;
 
     private double salary;

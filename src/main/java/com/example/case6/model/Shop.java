@@ -10,6 +10,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -42,5 +43,7 @@ public class Shop {
     private Status status;
 
     private Date dateCreate = Date.valueOf(LocalDate.now());
+    @OneToMany
+    private List<Code> codes;
 
 }
