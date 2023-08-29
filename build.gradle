@@ -32,6 +32,8 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-validation'  // Thêm dependency Hibernate Validator
     implementation 'javax.validation:validation-api:2.0.1.Final'  // Thêm dependency Validation API
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
 }
 
 tasks.named('test') {
