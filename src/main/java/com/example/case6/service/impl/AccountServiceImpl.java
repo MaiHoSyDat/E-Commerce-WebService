@@ -1,6 +1,7 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Status;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account create(Account account) {
+        account.setStatus(new Status(1));
         return iAccountRepo.save(account);
     }
 

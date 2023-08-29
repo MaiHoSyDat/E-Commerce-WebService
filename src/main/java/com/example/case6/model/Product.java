@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -46,6 +47,6 @@ public class Product {
     private Shop shop;
 
     @NotNull(message = "Creation date is required")
-    private Date create_at;
+    private Date create_at =  Date.valueOf(LocalDate.now());
 
 }

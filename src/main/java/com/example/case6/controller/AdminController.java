@@ -1,6 +1,7 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Role;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ public class AdminController {
     //  <1> Thêm mới 1 tài khoản cho nhân viên
     @PostMapping()
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+        account.setRole(new Role(1));
         return new ResponseEntity<>(iAccountService.create(account), HttpStatus.OK);
     }
 
