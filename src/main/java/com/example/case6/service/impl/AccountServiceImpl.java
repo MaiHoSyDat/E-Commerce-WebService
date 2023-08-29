@@ -28,7 +28,6 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account create(Account account) {
-        System.out.println(account);
         return iAccountRepo.save(account);
     }
 
