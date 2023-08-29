@@ -23,8 +23,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class AccountToken {
     private long id;//
-    private String email;//
-    private Date birthday;//
+    private String email;
+    private Date birthday;
     private Date date_create;
     private String avatar;
     private String address;
