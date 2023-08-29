@@ -1,0 +1,26 @@
+-Đăng nhập:
+POST :http://localhost:8080/login
+{
+    "username": "Tot",
+    "password": "5666666"
+}
+-Đăng ký:
+POST :http://localhost:8080/register
+{
+    "username": "Than",
+    "password": "Than123",
+    "email": "than@gmail.com",
+    "birthday": "2001-07-23",
+    "full_name": "Than",
+    "phone": "05555",
+    "role": {
+        "id": 2
+    }
+}
+
+-Đổi mật khẩu:
+POST : http://localhost:8080/account/forgot
+{
+"username": "Than",
+"password": "123456789"
+}

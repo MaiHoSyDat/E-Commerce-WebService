@@ -36,6 +36,12 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public Account changePassword(Account account) {
+        iAccountRepo.save(account);
+        return account;
+    }
+
+    @Override
     public Account findById(int id) {
         return null;
     }

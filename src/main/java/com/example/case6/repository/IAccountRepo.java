@@ -13,4 +13,6 @@ public interface IAccountRepo extends JpaRepository<Account, Integer> {
 //    Account getAccountLogin(@Param("username") String username, @Param("password") String password);
     Account getAccountByUsernameAndPassword (String user , String pass );
     Account getAccountByUsername(String username);
+    Account findAccountById(long id);
+    Account findAccountByUsername(String username);
 }

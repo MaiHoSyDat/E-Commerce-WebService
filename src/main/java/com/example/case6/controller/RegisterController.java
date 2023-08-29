@@ -16,6 +16,11 @@ public class RegisterController {
     IAccountService iAccountService;
     @PostMapping
     public ResponseEntity<Account> createAccount(@RequestBody Account account){
-        return new ResponseEntity<>(iAccountService.add(account), HttpStatus.OK);
+        try{
+            return new ResponseEntity<>(iAccountService.add(account), HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(account, HttpStatus.NOT_FOUND);
+        }
     }
 }
