@@ -17,20 +17,20 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is required")
-    @Column(unique = true)
+//    @Email(message = "Email should be valid")
+//    @NotBlank(message = "Email is required")
+//    @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
-    @NotBlank(message = "Password is required")
+//    @Column(unique = true)
+//    @NotBlank(message = "Password is required")
     private String user_name;
 
-    @Size(min = 6, message = "Password should have at least 6 characters")
-    @NotBlank(message = "Password is required")
+//    @Size(min = 6, message = "Password should have at least 6 characters")
+//    @NotBlank(message = "Password is required")
     private String password;
 
-    @Past(message = "Birthday should be in the past")
+//    @Past(message = "Birthday should be in the past")
     private Date birthday;
 
     private Date date_create = Date.valueOf(LocalDate.now());
@@ -41,10 +41,10 @@ public class Account {
     @Lob
     private String address;
 
-    @NotBlank(message = "Full name is required")
+//    @NotBlank(message = "Full name is required")
     private String full_name;
 
-    @NotBlank(message = "Phone number is required")
+//    @NotBlank(message = "Phone number is required")
     private String phone;
 
     private String gender;
