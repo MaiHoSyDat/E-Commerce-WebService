@@ -34,9 +34,6 @@ public class Employee {
 
     private String gender;
 
-    @ManyToOne
-    private Status status;
-
     private double salary =0 ;
     @OneToOne
     private Account account;
