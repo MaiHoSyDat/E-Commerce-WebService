@@ -27,6 +27,7 @@ public class Account {
     @NotBlank(message = "Password is required")
     private String password;
 
+    private String name;
     @ManyToOne
     private Role role;
 

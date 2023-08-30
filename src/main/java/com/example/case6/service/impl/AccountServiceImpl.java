@@ -1,7 +1,9 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Role;
 import com.example.case6.model.Status;
+import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,10 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account create(Account account) {
-        return null;
+        account.setRole(new Role(4));
+        account.setPassword("@123456");
+        account.setStatus(new Status(1));
+        return iAccountRepo.save(account);
     }
 
 
@@ -49,39 +54,59 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Page<Account> getAllByRoleId(Pageable pageable, long id) {
+    public Page<AccountDTO> getAllByRoleId(Pageable pageable, long id) {
+        Page<Account> accountPage = iAccountRepo.findAllByRoleId(pageable, id);
+        Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
+        return accountDTOS;
+    }
+
+    @Override
+    public AccountDTO convertToAccountDTO(Account account) {
+        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getEmail(),account.getName(),
+                account.getUsername(),account.getStatus(),account.getRole());
+        return accountDTO;
+    }
+
+    @Override
+    public Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context) {
+        if (num == 1) {
+            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", pageable);
+            Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
+            return accountDTOS;
+        } else if (num == 2) {
+            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%", pageable);
+            Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
+            return accountDTOS;
+        }
         return null;
     }
 
-
-//    @Override
-//    public Page<Account> getAllByLike(Pageable pageable, int num, String context) {
-//        if (num == 1) {
-//            return iAccountRepo.findAllByFull_nameLike("%" + context + "%", pageable);
-//        } else if (num == 2) {
-//            return iAccountRepo.findAllByEmailLike("%" + context + "%" , pageable);
-//        }
-//        return null;
-//    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = iAccountRepo.getAccountByUsername(username);
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add((GrantedAuthority) account.getRole());
-        return new User(account.getUsername(),account.getPassword(),roles);
+        return new User(account.getUsername(), account.getPassword(), roles);
     }
 
     @Override
     public Account getAccountLogin(String username, String password) {
-        return iAccountRepo.getAccountByUsernameAndPassword(username,password);
+        return iAccountRepo.getAccountByUsernameAndPassword(username, password);
     }
 
 
     @Override
-    public Account changePassword(String username,String password) {
+    public Account changePassword(String username, String password) {
         Account account = iAccountRepo.getAccountByUsername(username);
         account.setPassword(password);
         return account;
+    }
+
+    @Override
+    public void editStatus(long accountId, int statusId) {
+        Account account = iAccountRepo.findById(accountId);
+        account.setStatus(new Status(statusId));
+        iAccountRepo.save(account);
     }
 
 

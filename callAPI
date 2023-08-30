@@ -24,25 +24,22 @@
 -.  shop edit sản phẩm :
     Post : http://localhost:8080/shops/1/products/1
 
--.  Thêm mới 1 tài khoản cho nhân viên
-    Post : http://localhost:8080/admin
-        {
-            "email": "abc@gmail.com",
-            "user_name": "abc",
-            "password": "1234567",
-            "birthday": "2000-02-02",
-            "full_name": "abc",
-            "phone": "123",
-            "gender": "nam"
-        }
+
+    <1> Thêm mới 1 tài khoản cho nhân viên, đầu vào account gồm email và username:
+    POST: http://localhost:8080/admin
+    {
+        "email":"employee1@gmail.com",
+        "username":"employee1"
+    }
+
 
 -.  Lấy ra toàn bộ tài khoản theo ROLE_ID
     Get : http://localhost:8080/admin/getAccountByRole?id=1
 
--. edit account
-    Put :  http://localhost:8080/admin
+-. Admin chặn hoặc mở account
+    Put :  http://localhost:8080/admin/blockOrActive?accountId=1&statusId=1
 
--. Tìm kiếm tương đối tài khoản theo Full_name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email :
+-. Tìm kiếm tương đối tài khoản theo Name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email :
     Get : http://localhost:8080/admin/getByLike?num=1&context=2
 
 -. Lấy tất cả các shop
@@ -107,3 +104,5 @@
    "username": "Than",
    "password": "123456789"
    }
+
+
