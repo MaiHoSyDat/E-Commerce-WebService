@@ -16,7 +16,7 @@ public class Review {
     @Lob
     private String context ;
     @ManyToOne
-    private Account user;
+    private Customer user;
     @ManyToOne
     private Product product;
     private Date date =  Date.valueOf(LocalDate.now());
