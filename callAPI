@@ -36,14 +36,8 @@
             "gender": "nam"
         }
 
--.  Lấy ra toàn bộ tài khoản theo ROLE_ID
-    Get : http://localhost:8080/admin/getAccountByRole?id=1
 
--. edit account
-    Put :  http://localhost:8080/admin
 
--. Tìm kiếm tương đối tài khoản theo Full_name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email :
-    Get : http://localhost:8080/admin/getByLike?num=1&context=2
 
 -. Lấy tất cả các shop
     Get : http://localhost:8080/shops
