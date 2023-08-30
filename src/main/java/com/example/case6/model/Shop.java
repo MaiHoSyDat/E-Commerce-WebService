@@ -19,8 +19,17 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
     @NotBlank(message = "Name is required")
     private String name;
+
+    @Column(unique = true)
+    @NotBlank(message = "Username is required")
+    private String username;
+
+    @Size(min = 6, message = "Password should have at least 6 characters")
+    @NotBlank(message = "Password is required")
+    private String password;
 
     @Lob
     private String logo;
@@ -33,9 +42,9 @@ public class Shop {
 
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
+    @Column(unique = true)
     private String email;
 
-    @Positive(message = "Rating should be a positive number")
     private double rating;
 
     @NotNull(message = "Status is required")

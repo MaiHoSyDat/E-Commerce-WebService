@@ -15,7 +15,7 @@ public class AccountController {
     @Autowired
     IAccountService iAccountService;
     @PostMapping("/forgot")
-    public ResponseEntity<Account> changePassword(@RequestBody Account account){
-        return new ResponseEntity<>(iAccountService.changePassword(account), HttpStatus.OK);
+    public ResponseEntity<Account> changePassword(@RequestParam String username, @RequestParam String password){
+        return new ResponseEntity<>(iAccountService.changePassword(username,password), HttpStatus.OK);
     }
 }

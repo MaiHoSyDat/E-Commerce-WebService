@@ -22,13 +22,15 @@ public class Account {
     @Column(unique = true)
     private String email;
 
+
     @Column(unique = true)
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "Username is required")
     private String username;
 
     @Size(min = 6, message = "Password should have at least 6 characters")
     @NotBlank(message = "Password is required")
     private String password;
+
 
     @Past(message = "Birthday should be in the past")
     private Date birthday;
