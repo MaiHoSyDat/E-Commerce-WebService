@@ -29,48 +29,28 @@ public class ProductShopController {
     @Value("${upload-path}")
     private String upload;
 
+    @GetMapping
+    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(size = 10)
+                                                        Pageable pageable) {
+        return new ResponseEntity<>(iProductService.getAllProduct(pageable), HttpStatus.OK);
+    }
+
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody Product product,
-                                           @RequestPart MultipartFile image) {
-        String imgPath;
-        try {
-            if(image != null && !image.isEmpty()) {
-                imgPath = image.getOriginalFilename();
-                FileCopyUtils.copy(image.getBytes(), new File(upload + imgPath));
-                product.setThumbnail("/image/" + imgPath);
-            } else {
-                product.setThumbnail("/image/default.jpg");
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public ResponseEntity<?> createProduct(@RequestBody Product product) {
         iProductService.save(product);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id,
-                                           @RequestBody Product product,
-                                           @RequestPart MultipartFile image) {
+                                           @RequestBody Product product) {
         Optional<Product> productOptional = iProductService.findById(id);
-        if(productOptional.isPresent()) {
-            String imgPath;
-            try {
-                if(image != null && !image.isEmpty()) {
-                    imgPath = image.getOriginalFilename();
-                    FileCopyUtils.copy(image.getBytes(), new File(upload + imgPath));
-                    product.setThumbnail("/image/" + imgPath);
-                } else {
-                    product.setThumbnail(productOptional.get().getThumbnail());
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+        if (productOptional.isPresent()) {
             product.setId(id);
             iProductService.save(product);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>("Product does not exist", HttpStatus.NOT_ACCEPTABLE);
     }
 
     @DeleteMapping("/{id}")
