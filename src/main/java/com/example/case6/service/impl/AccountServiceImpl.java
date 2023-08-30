@@ -81,6 +81,7 @@ public class AccountServiceImpl implements IAccountService {
     public Account changePassword(String username,String password) {
         Account account = iAccountRepo.getAccountByUsername(username);
         account.setPassword(password);
+        iAccountRepo.save(account);
         return account;
     }
 

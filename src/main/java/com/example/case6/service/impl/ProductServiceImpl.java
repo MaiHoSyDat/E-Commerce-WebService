@@ -31,9 +31,14 @@ public class ProductServiceImpl implements IProductService {
     public void edit(Product product) {
         iProductRepo.save(product);
     }
-    //lấy ra tất cả sản phẩm theo user
+    //lấy ra tất cả sản phẩm theo user và lọc sản phẩm bị ẩn
     @Override
     public List<Product> getAll() {
         return iProductRepo.getAll();
+    }
+
+    @Override
+    public List<Product> searchProductByName(String name) {
+        return iProductRepo.getProductsByName("%" + name +"%");
     }
 }
