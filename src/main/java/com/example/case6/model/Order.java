@@ -14,11 +14,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany
-    private List<Product> products;
     private Date date_create = Date.valueOf(LocalDate.now());
     @ManyToOne
     private Status status;
     @ManyToOne
-    private Account user;
+    private Customer user;
+    private double totalAmount;
 }

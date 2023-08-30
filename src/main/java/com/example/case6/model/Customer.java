@@ -5,45 +5,41 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
-public class Shop {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(unique = true)
-    @NotBlank(message = "Name is required")
-    private String name;
+    @Past(message = "Birthday should be in the past")
+    private Date birthday;
+
+    private Date date_create = Date.valueOf(LocalDate.now());
 
     @Lob
-    private String logo;
+    private String avatar;
 
-    @NotBlank(message = "Address is required")
+    @Lob
     private String address;
+
+    @NotBlank(message = "Full name is required")
+    private String full_name;
 
     @NotBlank(message = "Phone number is required")
     private String phone;
 
+    private String gender;
 
-    private double rating;
-
-    @NotNull(message = "Status is required")
     @ManyToOne
     private Status status;
-
-    private Date dateCreate = Date.valueOf(LocalDate.now());
-    @OneToMany
-    private List<Code> codes;
-
     @OneToOne
     private Account account;
+
 
 }
