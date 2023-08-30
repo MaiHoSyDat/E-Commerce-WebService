@@ -30,10 +30,6 @@ public class AccountService implements IAccountService {
         return iAccountRepo.getAccountByUsernameAndPassword(username,password);
     }
 
-    @Override
-    public List<Account> getAll() {
-        return null;
-    }
 
     @Override
     public Account changePassword(Account account) {
@@ -41,23 +37,13 @@ public class AccountService implements IAccountService {
         return account;
     }
 
-    @Override
-    public Account findById(int id) {
-        return null;
-    }
 
     @Override
     public Account add(Account account) {
         return iAccountRepo.save(account);
     }
 
-    @Override
-    public Account edit(Account account) {
-        return null;
-    }
 
-    @Override
-    public void delete(int id) {
 
-    }
+
 }
