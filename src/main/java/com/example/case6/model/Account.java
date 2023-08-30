@@ -24,7 +24,7 @@ public class Account {
 
     @Column(unique = true)
     @NotBlank(message = "Password is required")
-    private String user_name;
+    private String username;
 
     @Size(min = 6, message = "Password should have at least 6 characters")
     @NotBlank(message = "Password is required")

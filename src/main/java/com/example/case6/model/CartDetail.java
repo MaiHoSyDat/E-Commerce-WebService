@@ -11,14 +11,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart {
+public class CartDetail {
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @OneToMany
-//    private List<Product> products;
-    @OneToOne
-    private Account account;
-
+    @ManyToOne
+    private Product product;
+    @ManyToOne
+    private Cart cart;
+    private int quantity;
 
 }
