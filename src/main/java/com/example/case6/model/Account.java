@@ -29,4 +29,7 @@ public class Account {
 
     @ManyToOne
     private Role role;
+
+    @ManyToOne
+    private Status status;
 }

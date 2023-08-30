@@ -36,8 +36,6 @@ public class Customer {
 
     private String gender;
 
-    @ManyToOne
-    private Status status;
     @OneToOne
     private Account account;
 

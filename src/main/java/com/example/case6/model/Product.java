@@ -38,10 +38,6 @@ public class Product {
     @Lob
     private String thumbnail;
 
-    @NotNull(message = "Status is required")
-    @ManyToOne
-    private Status status;
-
     @NotNull(message = "Shop is required")
     @ManyToOne
     private Shop shop;
