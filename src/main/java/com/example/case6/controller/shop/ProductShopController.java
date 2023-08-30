@@ -10,12 +10,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -33,6 +29,16 @@ public class ProductShopController {
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(size = 10)
                                                         Pageable pageable) {
         return new ResponseEntity<>(iProductService.getAllProduct(pageable), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Product> findById(@PathVariable Long id) {
+        Optional<Product> productOptional = iProductService.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 
     @PostMapping
