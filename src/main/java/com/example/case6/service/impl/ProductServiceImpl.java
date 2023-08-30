@@ -36,4 +36,9 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> getAll() {
         return iProductRepo.getAll();
     }
+
+    @Override
+    public Product getById(long id) {
+        return iProductRepo.findById(id);
+    }
 }
