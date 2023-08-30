@@ -42,11 +42,7 @@ public class LoginController {
                 String errorMessage = "Unauthorized access.";
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
             }
-            AccountToken accountToken = new AccountToken(
-                    account.getId(), account.getEmail(), account.getBirthday(), account.getDate_create(),
-                    account.getAvatar(), account.getAddress(), account.getFull_name(), account.getPhone(),
-                    account.getGender(), account.getStatus(), account.getSalary(), account.getRole(), token
-            );
+            AccountToken accountToken = new AccountToken(account.getId(), account.getEmail(), account.getStatus(), account.getRole(), token);
             return ResponseEntity.ok(accountToken);
         } catch (AuthenticationException e) {
             String errorMessage = "Invalid username or password.";

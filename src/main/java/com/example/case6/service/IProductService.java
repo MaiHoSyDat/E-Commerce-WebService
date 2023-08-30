@@ -9,4 +9,5 @@ public interface IProductService {
     Product findProductByShopId(long idShop, long idProduct);
     void save(Product product);
     void edit(Product product);
+    List<Product> getAll();
 }

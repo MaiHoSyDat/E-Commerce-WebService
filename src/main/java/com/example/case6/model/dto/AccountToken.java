@@ -24,16 +24,8 @@ import java.time.LocalDate;
 public class AccountToken {
     private long id;//
     private String email;
-    private Date birthday;
-    private Date date_create;
-    private String avatar;
-    private String address;
-    private String full_name;
-    private String phone;
-    private String gender;
-    private Status status;
 
-    private double salary =0 ;
+    private Status status;
 
     private Role role;
     private String token;
