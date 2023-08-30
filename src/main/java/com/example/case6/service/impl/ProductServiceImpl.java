@@ -31,4 +31,9 @@ public class ProductServiceImpl implements IProductService {
     public void edit(Product product) {
         iProductRepo.save(product);
     }
+    //lấy ra tất cả sản phẩm theo user
+    @Override
+    public List<Product> getAll() {
+        return iProductRepo.getAll();
+    }
 }
