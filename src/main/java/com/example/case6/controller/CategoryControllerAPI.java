@@ -1,4 +1,4 @@
-package com.example.case6.controller.shop;
+package com.example.case6.controller;
 
 import com.example.case6.model.Category;
 import com.example.case6.service.ICategoryService;
@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/categories")
-public class CategoryShopController {
+public class CategoryControllerAPI {
 
     @Autowired
     private ICategoryService iCategoryService;

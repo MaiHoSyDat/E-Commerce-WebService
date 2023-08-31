@@ -15,5 +15,5 @@ public class Wishlist {
     @OneToMany
     private List<Product> products;
     @OneToOne
-    private Account account;
+    private Customer account;
 }

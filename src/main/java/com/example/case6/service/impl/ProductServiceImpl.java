@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ProductServiceImpl implements IProductService {
+
 
     @Autowired
     private IProductRepo iProductRepo;
@@ -24,7 +26,7 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public List<Product> findAll() {
-        return null;
+        return iProductRepo.findAll();
     }
 
     @Override
@@ -33,15 +35,33 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> getProductByShopId(long id) {
+        return iProductRepo.getProductByShopId(id);
+    }
+
+    @Override
+    public Product findProductByShopId(long idShop, long idProduct) {
+        return iProductRepo.findProductByShopId(idShop, idProduct);
+    }
+
+    @Override
     public void save(Product product) {
         iProductRepo.save(product);
     }
-
 
     @Override
     public void delete(Long aLong) {
         iProductRepo.deleteById(aLong);
     }
 
+    @Override
+    public void edit(Product product) {
+        iProductRepo.save(product);
+    }
 
+    @Override
+    public Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable) {
+        return iProductRepo.filter(minPrice, maxPrice, "%" + name + "%", shopName, rating, pageable);
+    }
 }
+

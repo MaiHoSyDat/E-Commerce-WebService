@@ -1,9 +1,8 @@
-package com.example.case6.controller.shop;
+package com.example.case6.controller;
 
 import com.example.case6.model.Product;
 import com.example.case6.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -12,26 +11,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/products")
-public class ProductShopController {
+public class ProductController {
 
     @Autowired
     private IProductService iProductService;
 
-    @Value("${upload-path}")
-    private String upload;
 
-    @GetMapping
+    @GetMapping("/page")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(size = 10)
                                                         Pageable pageable) {
         return new ResponseEntity<>(iProductService.getAllProduct(pageable), HttpStatus.OK);
     }
 
     @GetMapping
+    public ResponseEntity<List<Product>> getAllProduct() {
+        return new ResponseEntity<>(iProductService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         Optional<Product> productOptional = iProductService.findById(id);
         if (productOptional.isPresent()) {
@@ -67,5 +70,17 @@ public class ProductShopController {
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    //36.KH lọc sp theo nhiều tiêu chí
+    @GetMapping("/filter")
+    public ResponseEntity<Page<Product>> filter
+    (@RequestParam(required = false, defaultValue = "0") Double minPrice,
+     @RequestParam(required = false, defaultValue = "999999999") Double maxPrice,
+     @RequestParam(required = false, defaultValue = "") String name,
+     @RequestParam(required = false, defaultValue = "") String shopName,
+     @RequestParam(required = false, defaultValue = "") Double rating,
+     @PageableDefault(size = 10) Pageable pageable) {
+        return new ResponseEntity<>(iProductService.filter(minPrice, maxPrice, name, shopName, rating, pageable), HttpStatus.OK);
     }
 }

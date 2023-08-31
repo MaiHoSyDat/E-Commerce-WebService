@@ -1,0 +1,65 @@
+-.  Sản phẩm của shop theo id:
+    Get : http://localhost:8080/shops/1/products
+
+-.  lấy ra 1 sản phẩm của shop
+    Get :   http://localhost:8080/shops/1/products/1
+
+-. shop tạo 1 sản phẩm :
+    Post : http://localhost:8080/shops/1/products/create
+    {
+        "name": "1",
+        "quantity": 1.0,
+        "price": 1.0,
+        "category": {
+            "id": 1
+                },
+        "description": "1",
+        "unit": "1",
+        "thumbnail": "1",
+        "status": {
+            "id": 1
+        }
+    }
+
+-.  shop edit sản phẩm :
+    Post : http://localhost:8080/shops/1/products/1
+
+-. Lấy tất cả các shop
+    Get : http://localhost:8080/shops
+
+-. Tìm kiếm shop theo id
+    Get : http://localhost:8080/shops/2
+
+-. Create Shop
+    Post : http://localhost:8080/shops
+    {
+        "name": "abc",
+        "username" : "abc",
+        "password" :"123456",
+        "logo": "21",
+        "address": "13",
+        "phone": "1234",
+        "email": "abc@gmail.com",
+        "status": {
+            "id": 1
+        }
+   }
+
+-. Edit shop
+    Post : http://localhost:8080/shops/3
+    {
+        "id":3,
+        "name": "abcd",
+        "username" : "abc",
+        "password" :"123456",
+        "logo": "21",
+        "address": "13",
+        "phone": "1234",
+        "email": "abc@gmail.com",
+        "status": {
+            "id": 1
+        }
+   }
+
+-. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
+    Get : http://localhost:8080/products

@@ -20,7 +20,7 @@ public class Notification {
     @ManyToOne
     private Status status; // trạng thái đọc hoặc chưa
     @ManyToOne
-    private Account user; // người gửi
+    private Customer user; // người gửi
     @ManyToOne
     private Shop shop; // người nhận
 }
