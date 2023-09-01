@@ -37,14 +37,14 @@ public class CartController {
     }
 
     // <38> Cập nhật số lượng trong giỏ hàng, FE gửi đến là một List<CartDetail>
-    @PutMapping("/updateCart")
+    @PostMapping("/updateCart")
     public ResponseEntity<?> updateCart(@RequestBody List<CartDetail> cartDetails) {
         iCartService.updateCart(cartDetails);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // <39>  Xóa 1 sản phẩm trong giỏ hàng, FE gửi đến ID của CartDetail ;
-    @DeleteMapping("/deleteProductByCart")
+    @PostMapping("/deleteProductByCart")
     public ResponseEntity<?> deleteProductByCart(@RequestParam long cartDetailId) {
         iCartService.deleteProductByCar(cartDetailId);
         return new ResponseEntity<>(HttpStatus.OK);
