@@ -70,10 +70,11 @@ public class CartServiceImpl implements ICartService {
 
                 if (index != -1) {
                     cartDetails.get(index).setQuantity(cartDetails.get(index).getQuantity() + quantity);
+                    iCartDetailService.save(cartDetails.get(index));
+
                 } else {
                     iCartDetailService.save(new CartDetail(0, product, cart, quantity));
                 }
-                iCartDetailService.save(cartDetails.get(index));
             } else {
                 iCartDetailService.save(new CartDetail(0, product, cart, quantity));
             }
