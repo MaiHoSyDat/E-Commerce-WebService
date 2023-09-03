@@ -3,7 +3,6 @@ package com.example.case6.controller;
 import com.example.case6.model.Account;
 import com.example.case6.model.Cart;
 import com.example.case6.model.CartDetail;
-import com.example.case6.model.Product;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +20,18 @@ public class CartController {
     @Autowired
     ICartService iCartService;
     @Autowired
-    IAccountService accountService;
+    IAccountService iAccountService;
 
     @GetMapping()
     public ResponseEntity<List<CartDetail>> getAllCartDetail() {
-        Account account = accountService.getById(1);
+        Account account = iAccountService.getById(1);
         return new ResponseEntity<>(iCartService.getAllCartDetail(account), HttpStatus.OK);
     }
 
     // <37> Thêm sản phẩm vào giỏ hàng
     @PostMapping("/addToCart")
     public ResponseEntity<Cart> addToCart(@RequestParam long productId, @RequestParam int quantity) {
-        Account account = accountService.getById(1);
+        Account account = iAccountService.getById(1);
         return new ResponseEntity<>(iCartService.addToCart(account, productId, quantity), HttpStatus.OK);
     }
 
@@ -47,6 +46,14 @@ public class CartController {
     @PostMapping("/deleteProductByCart")
     public ResponseEntity<?> deleteProductByCart(@RequestParam long cartDetailId) {
         iCartService.deleteProductByCar(cartDetailId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //  Thanh toán;
+    @PostMapping("/payment")
+    public ResponseEntity<?> payment(@RequestParam double payment) {
+        Account account = iAccountService.getById(1);
+        iCartService.payment(account,payment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
