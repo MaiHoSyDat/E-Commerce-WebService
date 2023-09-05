@@ -28,8 +28,6 @@ public class Customer {
     @Lob
     private String address;
 
-    @NotBlank(message = "Full name is required")
-    private String full_name;
 
     @NotBlank(message = "Phone number is required")
     private String phone;
