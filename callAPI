@@ -142,3 +142,6 @@
             }
         }
 
+
+-. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
+    Get : http://localhost:8080/products
