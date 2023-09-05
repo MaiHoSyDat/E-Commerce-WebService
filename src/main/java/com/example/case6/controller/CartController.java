@@ -8,6 +8,8 @@ import com.example.case6.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +26,16 @@ public class CartController {
 
     @GetMapping()
     public ResponseEntity<List<CartDetail>> getAllCartDetail() {
-        Account account = iAccountService.getById(1);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(iCartService.getAllCartDetail(account), HttpStatus.OK);
     }
 
     // <37> Thêm sản phẩm vào giỏ hàng
     @PostMapping("/addToCart")
     public ResponseEntity<Cart> addToCart(@RequestParam long productId, @RequestParam int quantity) {
-        Account account = iAccountService.getById(1);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(iCartService.addToCart(account, productId, quantity), HttpStatus.OK);
     }
 
@@ -52,7 +56,8 @@ public class CartController {
     //  Thanh toán;
     @PostMapping("/payment")
     public ResponseEntity<?> payment(@RequestParam double payment) {
-        Account account = iAccountService.getById(1);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         iCartService.payment(account,payment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
