@@ -1,7 +1,7 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Account;
-import com.example.case6.model.dto.AccountToken;
+import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -42,7 +41,7 @@ public class LoginController {
                 String errorMessage = "Unauthorized access.";
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
             }
-            AccountToken accountToken = new AccountToken(account.getId(), account.getEmail(), account.getStatus(), account.getRole(), token);
+            AccountDTO accountToken = new AccountDTO(account.getId(), account.getEmail(), account.getUsername(), account.getStatus(), account.getRole(), token);
             return ResponseEntity.ok(accountToken);
         } catch (AuthenticationException e) {
             String errorMessage = "Invalid username or password.";

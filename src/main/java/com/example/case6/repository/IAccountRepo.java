@@ -9,11 +9,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAccountRepo extends JpaRepository<Account , Long> {
     Account findById(long id);
-
-//    Page<Account> findAllByFull_nameLike(@Param("name") String name, Pageable pageable);
-//    @Query("select a from Account a WHERE a.email like :email")
+    @Query("select a from Account a WHERE a.name like :name")
+    Page<Account> findAllByNameLike(@Param("name") String name, Pageable pageable);
+    @Query("select a from Account a WHERE a.email like :email")
     Page<Account> findAllByEmailLike(@Param("email") String email, Pageable pageable);
     Account getAccountByUsernameAndPassword (String user , String pass );
     Account getAccountByUsername(String username);
+    Page<Account> findAllByRoleId(Pageable pageable, long id);
 
 }

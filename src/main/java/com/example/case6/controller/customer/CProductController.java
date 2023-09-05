@@ -22,4 +22,5 @@ public class CProductController {
     public ResponseEntity<List<Product>> getAllProduct(){
         return new ResponseEntity<>(iProductService.getAll(), HttpStatus.OK);
     }
+
 }

@@ -18,4 +18,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     //get all product user
     @Query(nativeQuery = true, value = "SELECT * FROM Product")
     List<Product> getAll();
+    Product findById(long id);
+    @Query(nativeQuery = true, value = "SELECT * FROM Product p where p.name like :name")
+    List<Product> getProductsByName(@Param("name") String name);
 }

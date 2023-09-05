@@ -28,6 +28,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public Product getById(long id) {
+        return iProductRepo.findById(id);
+    }
+
+    @Override
     public void edit(Product product) {
         iProductRepo.save(product);
     }

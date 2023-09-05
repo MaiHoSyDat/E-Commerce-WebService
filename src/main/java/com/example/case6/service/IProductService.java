@@ -10,4 +10,6 @@ public interface IProductService {
     void save(Product product);
     void edit(Product product);
     List<Product> getAll();
+    Product getById(long id);
+    List<Product> searchProductByName(String name);
 }
