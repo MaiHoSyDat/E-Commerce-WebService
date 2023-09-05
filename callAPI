@@ -79,10 +79,13 @@
         }
    }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 -. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
     Get : http://localhost:8080/products
 =======
+=======
+>>>>>>> 258f5225ee5b1f539d6cefd8f0642287a693a829
    -Đăng nhập:
    POST :http://localhost:8080/login
    {
@@ -127,4 +130,10 @@
 
     - thêm sản phẩm vào giỏ hàng
     Post : http://localhost:8080/cart/addToCart?productId=1&quantity=1
+<<<<<<< HEAD
 >>>>>>> 0504861bbb7382d1dd0066189e6dfb27a6c449b3
+=======
+
+-. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
+    Get : http://localhost:8080/products
+>>>>>>> 258f5225ee5b1f539d6cefd8f0642287a693a829
