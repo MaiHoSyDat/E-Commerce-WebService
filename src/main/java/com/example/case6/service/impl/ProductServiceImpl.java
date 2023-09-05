@@ -1,8 +1,14 @@
 package com.example.case6.service.impl;
 
+import com.example.case6.model.Image;
 import com.example.case6.model.Product;
+import com.example.case6.model.Shop;
+import com.example.case6.model.Status;
+import com.example.case6.model.dto.ProductDTO;
+import com.example.case6.repository.IImageRepo;
 import com.example.case6.repository.IProductRepo;
 import com.example.case6.service.IProductService;
+import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +21,12 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements IProductService {
 
-
+    @Autowired
+   private IShopService shopService;
     @Autowired
     private IProductRepo iProductRepo;
+    @Autowired
+    private IImageRepo iImageRepo;
 
     @Override
     public Page<Product> getAllProduct(Pageable pageable) {
@@ -34,6 +43,7 @@ public class ProductServiceImpl implements IProductService {
         return iProductRepo.findById(aLong);
     }
 
+
     @Override
     public List<Product> getProductByShopId(long id) {
         return iProductRepo.getProductByShopId(id);
@@ -45,8 +55,27 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public void save(Product product) {
+    public void save(ProductDTO productDTO, long idShop) {
+        Product product = new Product();
+        Shop shop = shopService.findShopById(idShop);
+        product.setShop(shop);
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.setQuantity(productDTO.getQuantity());
+        product.setCategory(productDTO.getCategory());
+        product.setDescription(productDTO.getDescription());
+        product.setUnit(productDTO.getUnit());
+        product.setThumbnail(productDTO.getThumbnail());
+        product.setStatus(new Status(1));
         iProductRepo.save(product);
+
+        Product product1 = iProductRepo.findProductWithMaxId();
+        for (int i = 0; i < productDTO.getImages().size(); i++) {
+            Image image = new Image();
+            image.setProduct(product1);
+            image.setImage(productDTO.getImages().get(i));
+           iImageRepo.save(image) ;
+        }
     }
 
     @Override

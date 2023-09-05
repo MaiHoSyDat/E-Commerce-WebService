@@ -37,4 +37,8 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
                          @Param("rating") Double rating,
                          Pageable pageable);
 
+
+    @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
+    Product findProductWithMaxId();
+
 }

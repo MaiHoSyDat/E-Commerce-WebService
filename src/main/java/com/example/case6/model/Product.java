@@ -43,6 +43,9 @@ public class Product {
     private Shop shop;
 
     @NotNull(message = "Creation date is required")
-    private Date create_at =  Date.valueOf(LocalDate.now());
+    private Date create_at = Date.valueOf(LocalDate.now());
+
+    @ManyToOne
+    private Status status;
 
 }
