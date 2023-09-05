@@ -34,4 +34,9 @@ public class ShopServiceImpl implements IShopService {
     public void editShop(Shop shop) {
         iShopRepo.save(shop);
     }
+
+    @Override
+    public Shop getShopByAccountLogin(long account_id) {
+        return iShopRepo.getShopByAccountLogin(account_id);
+    }
 }

@@ -9,4 +9,5 @@ public interface IShopService {
     Shop findShopById(long id);
     void saveShop(Shop shop);
     void editShop(Shop shop);
+    Shop getShopByAccountLogin(long account_id);
 }

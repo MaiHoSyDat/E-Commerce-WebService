@@ -18,4 +18,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     //get all product user
     @Query(nativeQuery = true, value = "SELECT * FROM Product")
     List<Product> getAll();
+    //get 10 new product trang index
+    @Query(nativeQuery = true, value = "SELECT * FROM Product Order By id desc limit 10")
+    List<Product> getTenNewProducts();
 }

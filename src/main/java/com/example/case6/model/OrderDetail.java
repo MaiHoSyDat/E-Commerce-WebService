@@ -17,5 +17,4 @@ public class OrderDetail {
     private Order order;
     @OneToMany
     private List<Product> products;
-
 }

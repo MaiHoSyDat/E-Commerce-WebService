@@ -13,6 +13,11 @@ public class ProductServiceImpl implements IProductService {
     private IProductRepo iProductRepo;
 
     @Override
+    public List<Product> getAllProduct() {
+        return iProductRepo.findAll();
+    }
+
+    @Override
     public List<Product> getProductByShopId(long id) {
         return iProductRepo.getProductByShopId(id);
     }
@@ -35,5 +40,10 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> getAll() {
         return iProductRepo.getAll();
+    }
+
+    @Override
+    public List<Product> getTenNewProducts() {
+        return iProductRepo.getTenNewProducts();
     }
 }
