@@ -1,7 +1,9 @@
 package com.example.case6.controller.shop;
 
+import com.example.case6.model.Image;
 import com.example.case6.model.Product;
 import com.example.case6.model.Shop;
+import com.example.case6.model.dto.ProductDTO;
 import com.example.case6.service.IProductService;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,11 @@ public class SProductControllerAPI {
     }
     //14
     @PostMapping("/{idShop}/products/create")
-    public ResponseEntity<Product> saveProductByShopId(@PathVariable long idShop, @RequestBody Product product) {
-        Shop shop = shopService.findShopById(idShop);
-        product.setShop(shop);
-        productService.save(product);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<ProductDTO> saveProductByShopId(@PathVariable long idShop, @RequestBody ProductDTO productDTO) {
+
+        productService.save(productDTO , idShop);
+
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
     //15, 16, 17, 18
     @PostMapping("/{idShop}/products/{idProduct}")
