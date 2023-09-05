@@ -105,4 +105,43 @@
    "password": "123456789"
    }
 
+   - lấy ra cart
+   Get :  http://localhost:8080/cart
 
+    - xóa sản phẩm trong giỏ hàng theo id
+    Delete: http://localhost:8080/cart/deleteProductByCart?cartDetailId=1
+
+    - update 1 list product cart
+    Put : http://localhost:8080/cart/updateCart
+    [
+        {
+            "id": 4,
+            "quantity": 500
+        }
+    ]
+
+    - thêm sản phẩm vào giỏ hàng
+    Post : http://localhost:8080/cart/addToCart?productId=1&quantity=1
+
+    - hiển thị toàn bộ customer
+    Get : http://localhost:8080/customer/getAll
+
+    - thêm customer đã đăng ký account
+    Post : http://localhost:8080/customer/save
+     {
+            "birthday": "2000-02-02",
+            "avatar": "1",
+            "address": "1",
+            "phone": "123456",
+            "gender": "nam",
+            "account": {
+                "id": 3,
+                "status": {
+                    "id": 3
+                }
+            }
+        }
+
+
+-. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
+    Get : http://localhost:8080/products
