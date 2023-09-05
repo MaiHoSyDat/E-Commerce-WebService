@@ -1,6 +1,5 @@
 package com.example.case6.repository;
 
-import com.example.case6.model.Order;
 import com.example.case6.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +16,12 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM Product where shop_id= :shop_id and id= :id")
     Product findProductByShopId(@Param("shop_id") long shop_id, @Param("id") long id);
 
+
     //get all product user
     @Query(nativeQuery = true, value = "SELECT * FROM Product")
     List<Product> getAll();
     Product findById(long id);
+
     @Query(value = "select p from Product p join Category c " +
             "on p.category.id = c.id " +
             "join Shop s " +

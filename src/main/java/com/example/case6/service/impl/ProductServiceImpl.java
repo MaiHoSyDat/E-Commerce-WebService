@@ -88,9 +88,16 @@ public class ProductServiceImpl implements IProductService {
         iProductRepo.save(product);
     }
 
+    //bộ lọc theo nhiều tiêu chí(hiện taị chỉ đang tìm kiêếm theo full tiêu chí)
     @Override
-    public Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName, Double rating, Pageable pageable) {
-        return iProductRepo.filter(minPrice, maxPrice, "%" + name + "%", shopName, rating, pageable);
+    public Page<Product> filter(Double minPrice,
+                                Double maxPrice,
+                                String name,
+                                String shopName,
+                                Double rating,
+                                Pageable pageable) {
+        return iProductRepo.filter(minPrice, maxPrice,
+                "%" + name + "%", shopName, rating, pageable);
     }
 
     //lấy ra tất cả sản phẩm theo user
