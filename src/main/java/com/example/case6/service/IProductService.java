@@ -28,4 +28,6 @@ public interface IProductService {
     Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable);
     List<Product> getAll();
     Product getById(long id);
+
+    void save(Product product);
 }

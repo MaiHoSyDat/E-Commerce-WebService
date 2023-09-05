@@ -110,5 +110,10 @@ public class ProductServiceImpl implements IProductService {
     public Product getById(long id) {
         return iProductRepo.findById(id);
     }
+
+    @Override
+    public void save(Product product) {
+        iProductRepo.save(product);
+    }
 }
 
