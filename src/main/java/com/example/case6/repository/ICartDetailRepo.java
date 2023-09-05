@@ -17,4 +17,5 @@ public interface ICartDetailRepo extends JpaRepository<CartDetail, Long> {
     @Modifying
     @Query("UPDATE CartDetail cd SET cd.quantity = :quantity WHERE cd.id = :id")
     void updateQuantityByCart(@Param("quantity") int quantity, @Param("id") long id);
+    void deleteById(long id);
 }

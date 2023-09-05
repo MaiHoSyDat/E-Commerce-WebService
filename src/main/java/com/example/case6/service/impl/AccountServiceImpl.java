@@ -115,4 +115,9 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.save(account);
     }
 
+    @Override
+    public Account getAccountByUsername(String username) {
+        return iAccountRepo.findByUsername(username);
+    }
+
 }

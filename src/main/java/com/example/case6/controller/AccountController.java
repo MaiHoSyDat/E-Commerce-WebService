@@ -1,7 +1,9 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Customer;
 import com.example.case6.service.IAccountService;
+import com.example.case6.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,4 +20,5 @@ public class AccountController {
     public ResponseEntity<Account> changePassword(@RequestParam String username, @RequestParam String password){
         return new ResponseEntity<>(iAccountService.changePassword(username,password), HttpStatus.OK);
     }
+
 }

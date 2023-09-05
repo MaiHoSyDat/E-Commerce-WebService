@@ -1,14 +1,10 @@
 package com.example.case6.service.impl;
 
-import com.example.case6.model.Account;
-import com.example.case6.model.Cart;
-import com.example.case6.model.CartDetail;
-import com.example.case6.model.Product;
+import com.example.case6.model.*;
 import com.example.case6.repository.ICartDetailRepo;
 import com.example.case6.repository.ICartRepo;
-import com.example.case6.service.ICartDetailService;
-import com.example.case6.service.ICartService;
-import com.example.case6.service.IProductService;
+import com.example.case6.repository.ICustomerRepo;
+import com.example.case6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +23,15 @@ public class CartServiceImpl implements ICartService {
     ICartDetailService iCartDetailService;
     @Autowired
     IProductService iProductService;
+    @Autowired
+    ICustomerService iCustomerService;
+    @Autowired
+    IOrderDetailService iOrderDetailService;
+    @Autowired
+    IOrderService iOrderService;
 
     @Override
+
     public List<Cart> getAll() {
         return iCartRepo.findAll();
     }
@@ -107,6 +110,20 @@ public class CartServiceImpl implements ICartService {
     public List<CartDetail> getAllCartDetail(Account account) {
         Cart cart = getByAccount(account);
         return iCartDetailService.getByCart(cart);
+    }
+
+    @Override
+    public void payment(Account account, double payment) {
+        Cart cart = getByAccount(account);
+        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+        Customer customer = iCustomerService.getByAccount(account);
+        Order order = new Order(customer, payment);
+        iOrderService.save(order);
+        for (CartDetail cd : cartDetails) {
+            OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
+            iOrderDetailService.save(orderDetail);
+            iCartDetailService.deleteCartDetail(cd.getId());
+        }
     }
 
 
