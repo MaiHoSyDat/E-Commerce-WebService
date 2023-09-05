@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAccountRepo extends JpaRepository<Account , Long> {
     Account findById(long id);
+    Account findByUsername(String username);
     @Query("select a from Account a WHERE a.name like :name")
     Page<Account> findAllByNameLike(@Param("name") String name, Pageable pageable);
     @Query("select a from Account a WHERE a.email like :email")

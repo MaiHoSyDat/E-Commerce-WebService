@@ -34,4 +34,6 @@ public interface IAccountService extends UserDetailsService {
     void editStatus(long accountId, int statusId);
 
     Account add(Account account);
+    Account getAccountByUsername(String username);
+
 }
