@@ -32,7 +32,6 @@ public class Shop {
     @NotBlank(message = "Phone number is required")
     private String phone;
 
-
     private double rating;
 
     @NotNull(message = "Status is required")

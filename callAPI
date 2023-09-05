@@ -122,3 +122,6 @@
 
     - thêm sản phẩm vào giỏ hàng
     Post : http://localhost:8080/cart/addToCart?productId=1&quantity=1
+
+-. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
+    Get : http://localhost:8080/products
