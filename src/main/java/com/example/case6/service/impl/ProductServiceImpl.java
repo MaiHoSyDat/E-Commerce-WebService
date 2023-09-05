@@ -79,6 +79,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public void save(Product product) {
+        iProductRepo.save(product);
+    }
+
+    @Override
     public void delete(Long aLong) {
         iProductRepo.deleteById(aLong);
     }

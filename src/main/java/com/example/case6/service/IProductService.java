@@ -16,6 +16,7 @@ public interface IProductService {
     Optional<Product> findById(Long id);
 
     void save(ProductDTO productDTO ,long idShop);
+    void save(Product product);
 
     void delete(Long id);
 
