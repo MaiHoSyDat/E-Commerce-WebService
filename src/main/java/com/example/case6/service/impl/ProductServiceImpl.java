@@ -63,5 +63,15 @@ public class ProductServiceImpl implements IProductService {
     public Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable) {
         return iProductRepo.filter(minPrice, maxPrice, "%" + name + "%", shopName, rating, pageable);
     }
+    //lấy ra tất cả sản phẩm theo user
+    @Override
+    public List<Product> getAll() {
+        return iProductRepo.getAll();
+    }
+
+    @Override
+    public Product getById(long id) {
+        return iProductRepo.findById(id);
+    }
 }
 

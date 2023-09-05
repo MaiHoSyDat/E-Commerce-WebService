@@ -24,6 +24,24 @@
 -.  shop edit sản phẩm :
     Post : http://localhost:8080/shops/1/products/1
 
+
+    <1> Thêm mới 1 tài khoản cho nhân viên, đầu vào account gồm email và username:
+    POST: http://localhost:8080/admin
+    {
+        "email":"employee1@gmail.com",
+        "username":"employee1"
+    }
+
+
+-.  Lấy ra toàn bộ tài khoản theo ROLE_ID
+    Get : http://localhost:8080/admin/getAccountByRole?id=1
+
+-. Admin chặn hoặc mở account
+    Put :  http://localhost:8080/admin/blockOrActive?accountId=1&statusId=1
+
+-. Tìm kiếm tương đối tài khoản theo Name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email :
+    Get : http://localhost:8080/admin/getByLike?num=1&context=2
+
 -. Lấy tất cả các shop
     Get : http://localhost:8080/shops
 
@@ -60,6 +78,50 @@
             "id": 1
         }
    }
+   -Đăng nhập:
+   POST :http://localhost:8080/login
+   {
+       "username": "Tot",
+       "password": "5666666"
+   }
+   -Đăng ký:
+   POST :http://localhost:8080/register
+   {
+       "username": "Than",
+       "password": "Than123",
+       "email": "than@gmail.com",
+       "birthday": "2001-07-23",
+       "full_name": "Than",
+       "phone": "05555",
+       "role": {
+           "id": 2
+       }
+   }
+
+   -Đổi mật khẩu:
+   POST : http://localhost:8080/account/forgot
+   {
+   "username": "Than",
+   "password": "123456789"
+   }
+
+   - lấy ra cart
+   Get :  http://localhost:8080/cart
+
+    - xóa sản phẩm trong giỏ hàng theo id
+    Delete: http://localhost:8080/cart/deleteProductByCart?cartDetailId=1
+
+    - update 1 list product cart
+    Put : http://localhost:8080/cart/updateCart
+    [
+        {
+            "id": 4,
+            "quantity": 500
+        }
+    ]
+
+    - thêm sản phẩm vào giỏ hàng
+    Post : http://localhost:8080/cart/addToCart?productId=1&quantity=1
 
 -. Hiển thị tất cả các sp ở trang chủ theo 10sp/1page
     Get : http://localhost:8080/products
