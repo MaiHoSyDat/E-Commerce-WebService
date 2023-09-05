@@ -32,4 +32,9 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
                          @Param("rating") Double rating,
                          Pageable pageable);
 
+    //get all product user
+    @Query(nativeQuery = true, value = "SELECT * FROM Product")
+    List<Product> getAll();
+    Product findById(long id);
+
 }

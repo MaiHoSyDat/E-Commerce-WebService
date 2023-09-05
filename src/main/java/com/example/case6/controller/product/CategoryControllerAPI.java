@@ -1,4 +1,4 @@
-package com.example.case6.controller;
+package com.example.case6.controller.product;
 
 import com.example.case6.model.Category;
 import com.example.case6.service.ICategoryService;
