@@ -36,4 +36,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
                          @Param("rating") Double rating,
                          Pageable pageable);
 
+    //get 10 new product trang index
+    @Query(nativeQuery = true, value = "SELECT * FROM Product Order By id desc limit 10")
+    List<Product> getTenNewProducts();
 }

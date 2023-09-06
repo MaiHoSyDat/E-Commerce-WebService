@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
+    List<Product> getAllProduct();
     Page<Product> getAllProduct(Pageable pageable);
 
     List<Product> findAll();
@@ -26,5 +27,6 @@ public interface IProductService {
 
     Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable);
     List<Product> getAll();
+    List<Product> getTenNewProducts();
     Product getById(long id);
 }
