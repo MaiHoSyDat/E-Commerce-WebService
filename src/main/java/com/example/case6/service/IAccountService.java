@@ -1,6 +1,7 @@
 package com.example.case6.service;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,5 +36,6 @@ public interface IAccountService extends UserDetailsService {
 
     Account add(Account account);
     Account getAccountByUsername(String username);
+
 
 }

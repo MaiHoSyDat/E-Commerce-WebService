@@ -5,6 +5,7 @@ import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.repository.IAccountRepo;
+import com.example.case6.repository.IStatusRepo;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ public class AccountServiceImpl implements IAccountService {
 
     @Autowired
     IAccountRepo iAccountRepo;
+    @Autowired
+    IStatusRepo iStatusRepo;
 
     @Override
     public List<Account> getAll() {
@@ -119,5 +122,6 @@ public class AccountServiceImpl implements IAccountService {
     public Account getAccountByUsername(String username) {
         return iAccountRepo.findByUsername(username);
     }
+
 
 }

@@ -2,8 +2,12 @@ package com.example.case6.controller.admin;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Role;
+import com.example.case6.model.Shop;
+import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.service.IAccountService;
+import com.example.case6.service.IShopService;
+import com.example.case6.service.IStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,12 +15,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
     IAccountService iAccountService;
+    @Autowired
+    IStatusService iStatusService;
+    @Autowired
+    IShopService iShopService;
 
 
     //  <1> Thêm mới 1 tài khoản cho nhân viên
@@ -41,10 +51,21 @@ public class AdminController {
 
 
     //  <4>   Admin block/active tài khoản:
-    @PutMapping("/blockOrActive")
+    @PostMapping("/blockOrActive")
     public ResponseEntity<Account> blockOrActive(@RequestParam long accountId, @RequestParam int statusId) {
         iAccountService.editStatus(accountId, statusId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //Lấy ra tất cả các role
+    @GetMapping("/roles")
+    public ResponseEntity<List<Status>> getAllStatus(){
+        return new ResponseEntity<>(iStatusService.getAllStatus(),HttpStatus.OK);
+    }
+
+    //lấy ra tất cả các shop
+    @GetMapping("/shop")
+    public ResponseEntity<List<Shop>> getAllShop(){
+        return new ResponseEntity<>(iShopService.getAllShop(),HttpStatus.OK);
+    }
 }
