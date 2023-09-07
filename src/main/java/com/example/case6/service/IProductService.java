@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IProductService {
+    List<Product> getAllProduct();
     Page<Product> getAllProduct(Pageable pageable);
 
     List<Product> findAll();
@@ -16,6 +17,7 @@ public interface IProductService {
     Optional<Product> findById(Long id);
 
     void save(ProductDTO productDTO ,long idShop);
+    void save(Product product);
 
     void delete(Long id);
 
@@ -28,8 +30,7 @@ public interface IProductService {
     Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable);
 
     List<Product> getAll();
-
+    List<Product> getTenNewProducts();
     Product getById(long id);
 
-    void save(Product product);
 }
