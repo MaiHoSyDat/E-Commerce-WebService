@@ -14,5 +14,4 @@ public class Image {
     private String image;
     @ManyToOne
     private Product product;
-
 }

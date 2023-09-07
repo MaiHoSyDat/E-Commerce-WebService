@@ -1,14 +1,10 @@
 package com.example.case6.service.impl;
 
-import com.example.case6.model.Account;
-import com.example.case6.model.Cart;
-import com.example.case6.model.CartDetail;
-import com.example.case6.model.Product;
+import com.example.case6.model.*;
 import com.example.case6.repository.ICartDetailRepo;
 import com.example.case6.repository.ICartRepo;
-import com.example.case6.service.ICartDetailService;
-import com.example.case6.service.ICartService;
-import com.example.case6.service.IProductService;
+import com.example.case6.repository.ICustomerRepo;
+import com.example.case6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +23,15 @@ public class CartServiceImpl implements ICartService {
     ICartDetailService iCartDetailService;
     @Autowired
     IProductService iProductService;
+    @Autowired
+    ICustomerService iCustomerService;
+    @Autowired
+    IOrderDetailService iOrderDetailService;
+    @Autowired
+    IOrderService iOrderService;
 
     @Override
+
     public List<Cart> getAll() {
         return iCartRepo.findAll();
     }
@@ -54,10 +57,12 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Cart addToCart(Account account, long productId, int quantity) {
+    public CartDetail addToCart(Account account, long productId, int quantity) {
         Cart cart = getByAccount(account);
         Product product = iProductService.getById(productId);
+        CartDetail cartDetail;
         if (cart != null) {
+
             int index = -1;
             List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
             if (cartDetails != null) {
@@ -70,22 +75,22 @@ public class CartServiceImpl implements ICartService {
 
                 if (index != -1) {
                     cartDetails.get(index).setQuantity(cartDetails.get(index).getQuantity() + quantity);
-                    iCartDetailService.save(cartDetails.get(index));
+                    cartDetail = iCartDetailService.save(cartDetails.get(index));
 
                 } else {
-                    iCartDetailService.save(new CartDetail(0, product, cart, quantity));
+                    cartDetail = iCartDetailService.save(new CartDetail(0, product, cart, quantity));
                 }
             } else {
-                iCartDetailService.save(new CartDetail(0, product, cart, quantity));
+                cartDetail = iCartDetailService.save(new CartDetail(0, product, cart, quantity));
             }
-            return cart;
+            return cartDetail;
         } else {
             cart = new Cart(0, account);
             create(cart);
-            CartDetail cartDetail = new CartDetail(0, product, cart, quantity);
-            iCartDetailService.save(cartDetail);
+            CartDetail cartDetail1 = new CartDetail(0, product, cart, quantity);
+            cartDetail = iCartDetailService.save(cartDetail1);
         }
-        return cart;
+        return cartDetail;
     }
 
     @Override
@@ -94,8 +99,9 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void updateCart(List<CartDetail> cartDetails) {
-        iCartDetailService.updateQuantityByCart(cartDetails);
+    public List<CartDetail> updateCart(List<CartDetail> cartDetails) {
+        return iCartDetailService.updateQuantityByCart(cartDetails);
+
     }
 
     @Override
@@ -107,6 +113,20 @@ public class CartServiceImpl implements ICartService {
     public List<CartDetail> getAllCartDetail(Account account) {
         Cart cart = getByAccount(account);
         return iCartDetailService.getByCart(cart);
+    }
+
+    @Override
+    public void payment(Account account, double payment) {
+        Cart cart = getByAccount(account);
+        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+        Customer customer = iCustomerService.getByAccount(account);
+        Order order = new Order(customer, payment);
+        iOrderService.save(order);
+        for (CartDetail cd : cartDetails) {
+            OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
+            iOrderDetailService.save(orderDetail);
+            iCartDetailService.deleteCartDetail(cd.getId());
+        }
     }
 
 

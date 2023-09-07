@@ -60,4 +60,10 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
             " GROUP BY p.id, p.name " +
             " Order By average_rating desc limit 3;")
     List<ProductReviewDTO> getThreeProductsMaxRatingDTO();
+
+    @Query(nativeQuery = true, value = "SELECT * FROM Product Order By id desc limit 10")
+    List<Product> getTenNewProducts();
+
+    @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
+    Product findProductWithMaxId();
 }

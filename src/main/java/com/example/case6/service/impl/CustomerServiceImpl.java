@@ -18,6 +18,7 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerRepo iCustomerRepo;
     @Autowired
     IAccountRepo iAccountRepo;
+
     @Override
     public Customer save(Customer customer) {
         Account account = iAccountRepo.findById(customer.getAccount().getId());
@@ -29,5 +30,10 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public List<Customer> getAll() {
         return iCustomerRepo.findAll();
+    }
+
+    @Override
+    public Customer getByAccount(Account account) {
+        return iCustomerRepo.findByAccountId(account.getId());
     }
 }
