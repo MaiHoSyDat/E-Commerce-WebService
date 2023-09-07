@@ -1,6 +1,5 @@
 package com.example.case6.repository;
 
-import com.example.case6.model.Order;
 import com.example.case6.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,4 +38,8 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     //get 10 new product trang index
     @Query(nativeQuery = true, value = "SELECT * FROM Product Order By id desc limit 10")
     List<Product> getTenNewProducts();
+
+    @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
+    Product findProductWithMaxId();
+
 }

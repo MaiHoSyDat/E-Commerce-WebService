@@ -1,4 +1,4 @@
-package com.example.case6.controller;
+package com.example.case6.controller.product;
 
 import com.example.case6.model.Product;
 import com.example.case6.service.IProductService;
@@ -24,8 +24,7 @@ public class ProductController {
 
 
     @GetMapping("/page")
-    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault(size = 10)
-                                                        Pageable pageable) {
+    public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault (size = 12) Pageable pageable) {
         return new ResponseEntity<>(iProductService.getAllProduct(pageable), HttpStatus.OK);
     }
 

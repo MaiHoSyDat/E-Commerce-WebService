@@ -1,6 +1,7 @@
 package com.example.case6.service;
 
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.ProductDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,6 +16,7 @@ public interface IProductService {
 
     Optional<Product> findById(Long id);
 
+    void save(ProductDTO productDTO ,long idShop);
     void save(Product product);
 
     void delete(Long id);
