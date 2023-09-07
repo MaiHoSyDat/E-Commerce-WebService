@@ -36,4 +36,9 @@ public class SShopControllerAPI {
         shopService.editShop(shop);
         return new ResponseEntity<>(shop, HttpStatus.OK);
     }
+    // tìm shop theo account login
+    @GetMapping("/login/{idAccount}")
+    public ResponseEntity<Shop> getShopByAccountLogin (@PathVariable long idAccount) {
+        return new ResponseEntity<>(shopService.getShopByAccountLogin(idAccount), HttpStatus.OK);
+    }
 }

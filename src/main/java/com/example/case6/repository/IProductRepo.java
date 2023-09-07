@@ -16,12 +16,10 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM Product where shop_id= :shop_id and id= :id")
     Product findProductByShopId(@Param("shop_id") long shop_id, @Param("id") long id);
 
-
     //get all product user
     @Query(nativeQuery = true, value = "SELECT * FROM Product")
     List<Product> getAll();
     Product findById(long id);
-
     @Query(value = "select p from Product p join Category c " +
             "on p.category.id = c.id " +
             "join Shop s " +
@@ -37,6 +35,9 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
                          @Param("rating") Double rating,
                          Pageable pageable);
 
+    //get 10 new product trang index
+    @Query(nativeQuery = true, value = "SELECT * FROM Product Order By id desc limit 10")
+    List<Product> getTenNewProducts();
 
     @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
     Product findProductWithMaxId();

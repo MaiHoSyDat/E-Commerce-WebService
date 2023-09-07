@@ -29,6 +29,11 @@ public class ProductServiceImpl implements IProductService {
     private IImageRepo iImageRepo;
 
     @Override
+    public List<Product> getAllProduct() {
+        return iProductRepo.findAll();
+    }
+
+    @Override
     public Page<Product> getAllProduct(Pageable pageable) {
         return iProductRepo.findAll(pageable);
     }
@@ -79,6 +84,11 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public void save(Product product) {
+        iProductRepo.save(product);
+    }
+
+    @Override
     public void delete(Long aLong) {
         iProductRepo.deleteById(aLong);
     }
@@ -104,6 +114,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> getAll() {
         return iProductRepo.getAll();
+    }
+
+    @Override
+    public List<Product> getTenNewProducts() {
+        return iProductRepo.getTenNewProducts();
     }
 
     @Override
