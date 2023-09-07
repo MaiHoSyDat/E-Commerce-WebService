@@ -1,6 +1,8 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.FilterProductDTO;
+import com.example.case6.model.dto.ProductReviewDTO;
 import com.example.case6.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,4 +85,13 @@ public class ProductController {
      @PageableDefault(size = 10) Pageable pageable) {
         return new ResponseEntity<>(iProductService.filter(minPrice, maxPrice, name, shopName, rating, pageable), HttpStatus.OK);
     }
+    @PostMapping("/filter")
+    public ResponseEntity<List<ProductReviewDTO>> getFilterProducts(@RequestBody FilterProductDTO filterProductDTO) {
+        System.out.println(filterProductDTO);
+        return new ResponseEntity<>(iProductService.getFilterProductsDTO(filterProductDTO), HttpStatus.OK);
+    }
+//    @PostMapping("/filter")
+//    public ResponseEntity<FilterProductDTO> getFilterProducts(@RequestBody FilterProductDTO filterProductDTO) {
+//        return new ResponseEntity<>(filterProductDTO, HttpStatus.OK);
+//    }
 }

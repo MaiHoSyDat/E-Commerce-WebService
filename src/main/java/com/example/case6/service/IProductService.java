@@ -1,6 +1,8 @@
 package com.example.case6.service;
 
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.FilterProductDTO;
+import com.example.case6.model.dto.ProductReviewDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,6 +29,9 @@ public interface IProductService {
 
     Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable);
     List<Product> getAll();
-    List<Product> getTenNewProducts();
+    List<ProductReviewDTO> getAllProductsDTO();
+    List<ProductReviewDTO> getTenNewProductsDTO();
+    List<ProductReviewDTO> getThreeProductsMaxRatingDTO();
+    List<ProductReviewDTO> getFilterProductsDTO(FilterProductDTO filterProductDTO);
     Product getById(long id);
 }
