@@ -41,7 +41,7 @@ public class LoginController {
                 String errorMessage = "Unauthorized access.";
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
             }
-            AccountDTO accountToken = new AccountDTO(account.getId(), account.getEmail(), account.getUsername(), account.getStatus(), account.getRole(), token);
+            AccountDTO accountToken = new AccountDTO(account.getId(), account.getEmail(),account.getName(), account.getUsername(), account.getStatus(), account.getRole(), token);
             return ResponseEntity.ok(accountToken);
         } catch (AuthenticationException e) {
             String errorMessage = "Invalid username or password.";
