@@ -34,6 +34,8 @@ public class CartController {
     // <37> Thêm sản phẩm vào giỏ hàng
     @PostMapping("/addToCart")
     public ResponseEntity<CartDetail> addToCart(@RequestParam long productId, @RequestParam int quantity) {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(iCartService.addToCart(account, productId, quantity), HttpStatus.OK);
