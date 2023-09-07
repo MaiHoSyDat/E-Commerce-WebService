@@ -1,11 +1,9 @@
 package com.example.case6.controller.admin;
 
-import com.example.case6.model.Account;
-import com.example.case6.model.Role;
-import com.example.case6.model.Shop;
-import com.example.case6.model.Status;
+import com.example.case6.model.*;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.service.IAccountService;
+import com.example.case6.service.IEmployeeService;
 import com.example.case6.service.IShopService;
 import com.example.case6.service.IStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ public class AdminController {
     IStatusService iStatusService;
     @Autowired
     IShopService iShopService;
+    @Autowired
+    IEmployeeService iEmployeeService;
 
 
     //  <1> Thêm mới 1 tài khoản cho nhân viên
@@ -67,5 +67,10 @@ public class AdminController {
     @GetMapping("/shop")
     public ResponseEntity<List<Shop>> getAllShop(){
         return new ResponseEntity<>(iShopService.getAllShop(),HttpStatus.OK);
+    }
+    //lấy ra tất cả nhân viên
+    @GetMapping("/employee")
+    public ResponseEntity<List<Object[]>> getAllEmployee(){
+        return new ResponseEntity<>(iEmployeeService.getAllEmployee(),HttpStatus.OK);
     }
 }
