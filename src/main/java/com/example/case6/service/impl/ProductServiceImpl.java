@@ -126,9 +126,5 @@ public class ProductServiceImpl implements IProductService {
         return iProductRepo.findById(id);
     }
 
-    @Override
-    public void save(Product product) {
-        iProductRepo.save(product);
-    }
 }
 
