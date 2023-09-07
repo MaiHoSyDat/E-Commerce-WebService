@@ -33,7 +33,7 @@ public class CartController {
 
     // <37> Thêm sản phẩm vào giỏ hàng
     @PostMapping("/addToCart")
-    public ResponseEntity<Cart> addToCart(@RequestParam long productId, @RequestParam int quantity) {
+    public ResponseEntity<CartDetail> addToCart(@RequestParam long productId, @RequestParam int quantity) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(iCartService.addToCart(account, productId, quantity), HttpStatus.OK);
@@ -41,16 +41,15 @@ public class CartController {
 
     // <38> Cập nhật số lượng trong giỏ hàng, FE gửi đến là một List<CartDetail>
     @PostMapping("/updateCart")
-    public ResponseEntity<?> updateCart(@RequestBody List<CartDetail> cartDetails) {
-        iCartService.updateCart(cartDetails);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<CartDetail>> updateCart(@RequestBody List<CartDetail> cartDetails) {
+        return new ResponseEntity<>(  iCartService.updateCart(cartDetails), HttpStatus.OK);
     }
 
     // <39>  Xóa 1 sản phẩm trong giỏ hàng, FE gửi đến ID của CartDetail ;
     @PostMapping("/deleteProductByCart")
-    public ResponseEntity<?> deleteProductByCart(@RequestParam long cartDetailId) {
+    public ResponseEntity<Long> deleteProductByCart(@RequestParam long cartDetailId) {
         iCartService.deleteProductByCar(cartDetailId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(cartDetailId,HttpStatus.OK);
     }
 
     //  Thanh toán;
