@@ -57,10 +57,12 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public Cart addToCart(Account account, long productId, int quantity) {
+    public CartDetail addToCart(Account account, long productId, int quantity) {
         Cart cart = getByAccount(account);
         Product product = iProductService.getById(productId);
+        CartDetail cartDetail;
         if (cart != null) {
+
             int index = -1;
             List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
             if (cartDetails != null) {
@@ -73,22 +75,22 @@ public class CartServiceImpl implements ICartService {
 
                 if (index != -1) {
                     cartDetails.get(index).setQuantity(cartDetails.get(index).getQuantity() + quantity);
-                    iCartDetailService.save(cartDetails.get(index));
+                    cartDetail = iCartDetailService.save(cartDetails.get(index));
 
                 } else {
-                    iCartDetailService.save(new CartDetail(0, product, cart, quantity));
+                    cartDetail = iCartDetailService.save(new CartDetail(0, product, cart, quantity));
                 }
             } else {
-                iCartDetailService.save(new CartDetail(0, product, cart, quantity));
+                cartDetail = iCartDetailService.save(new CartDetail(0, product, cart, quantity));
             }
-            return cart;
+            return cartDetail;
         } else {
             cart = new Cart(0, account);
             create(cart);
-            CartDetail cartDetail = new CartDetail(0, product, cart, quantity);
-            iCartDetailService.save(cartDetail);
+            CartDetail cartDetail1 = new CartDetail(0, product, cart, quantity);
+            cartDetail = iCartDetailService.save(cartDetail1);
         }
-        return cart;
+        return cartDetail;
     }
 
     @Override
@@ -97,8 +99,9 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void updateCart(List<CartDetail> cartDetails) {
-        iCartDetailService.updateQuantityByCart(cartDetails);
+    public List<CartDetail> updateCart(List<CartDetail> cartDetails) {
+        return iCartDetailService.updateQuantityByCart(cartDetails);
+
     }
 
     @Override

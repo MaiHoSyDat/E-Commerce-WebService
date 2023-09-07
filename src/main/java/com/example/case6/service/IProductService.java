@@ -28,9 +28,9 @@ public interface IProductService {
     void edit(Product product);
 
     Page<Product> filter(Double minPrice, Double maxPrice, String name, String shopName,Double rating, Pageable pageable);
+
     List<Product> getAll();
     List<Product> getTenNewProducts();
     Product getById(long id);
 
-    void save(Product product);
 }

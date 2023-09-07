@@ -25,7 +25,9 @@ public class ProductController {
 
     @GetMapping("/page")
     public ResponseEntity<Page<Product>> findAllProduct(@PageableDefault (size = 12) Pageable pageable) {
-        return new ResponseEntity<>(iProductService.getAllProduct(pageable), HttpStatus.OK);
+        Page<Product> page= iProductService.getAllProduct(pageable);
+        System.out.println(page);
+        return new ResponseEntity<>(page, HttpStatus.OK);
     }
 
     @GetMapping

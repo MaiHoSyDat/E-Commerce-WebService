@@ -42,4 +42,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
     Product findProductWithMaxId();
 
+//    @Query("SELECT i.image FROM Image i WHERE i.product.id = :product_id")
+//    List<String> findImageUrlsByProductId(@Param("productId") Long productId);
+
 }
