@@ -21,11 +21,11 @@ public interface ICartService {
 
     void deleteById(long id);
 
-    Cart addToCart(Account account, long productId, int quantity);
+    CartDetail addToCart(Account account, long productId, int quantity);
 
     Cart getByAccount(Account account);
 
-    void updateCart(List<CartDetail> cartDetails);
+    List<CartDetail> updateCart(List<CartDetail> cartDetails);
     void deleteProductByCar(long cartDetailId);
     List<CartDetail> getAllCartDetail(Account account);
     void payment(Account account, double total);
