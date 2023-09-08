@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface ICartDetailRepo extends JpaRepository<CartDetail, Long> {
     List<CartDetail> findAllByCart(Cart cart);
+    CartDetail findById(long id);
     @Modifying
     @Query("UPDATE CartDetail cd SET cd.quantity = :quantity WHERE cd.id = :id")
     void updateQuantityByCart(@Param("quantity") int quantity, @Param("id") long id);

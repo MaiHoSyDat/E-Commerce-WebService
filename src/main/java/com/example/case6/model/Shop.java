@@ -39,6 +39,7 @@ public class Shop {
     private Status status;
 
     private Date dateCreate = Date.valueOf(LocalDate.now());
+
     @OneToMany
     private List<Code> codes;
 
