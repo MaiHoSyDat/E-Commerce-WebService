@@ -22,4 +22,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
     public List<Object[]> getAllEmployee() {
         return iEmployeeRepo.getAllEmployee();
     }
+
+    @Override
+    public Employee updateEmployee(Employee employee) {
+        return iEmployeeRepo.save(employee);
+    }
+
+
+
+
 }

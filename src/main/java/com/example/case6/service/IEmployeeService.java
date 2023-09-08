@@ -7,4 +7,5 @@ import java.util.List;
 public interface IEmployeeService {
     List<Employee> findAll();
     List<Object[]> getAllEmployee();
+    Employee updateEmployee(Employee employee);
 }

@@ -63,14 +63,31 @@ public class AdminController {
         return new ResponseEntity<>(iStatusService.getAllStatus(),HttpStatus.OK);
     }
 
+    //lấy ra các role khách hàng
+    @GetMapping("/customerRoles")
+    public ResponseEntity<List<Status>> getCustomerStatus(){
+        return new ResponseEntity<>(iStatusService.getCustomerStatus(),HttpStatus.OK);
+    }
+
     //lấy ra tất cả các shop
     @GetMapping("/shop")
     public ResponseEntity<List<Shop>> getAllShop(){
         return new ResponseEntity<>(iShopService.getAllShop(),HttpStatus.OK);
     }
-    //lấy ra tất cả nhân viên
+    //lấy ra tất cả nhân viên join với account
     @GetMapping("/employee")
     public ResponseEntity<List<Object[]>> getAllEmployee(){
         return new ResponseEntity<>(iEmployeeService.getAllEmployee(),HttpStatus.OK);
+    }
+
+    //lấy ra tất cả nhân viên
+    @GetMapping("/employee/all")
+    public ResponseEntity<List<Employee>> findAllEmployee(){
+        return new ResponseEntity<>(iEmployeeService.findAll(),HttpStatus.OK);
+    }
+    // thêm thông tin nhân viên
+    @PostMapping("/employee")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+        return new ResponseEntity<>(iEmployeeService.updateEmployee(employee),HttpStatus.OK);
     }
 }

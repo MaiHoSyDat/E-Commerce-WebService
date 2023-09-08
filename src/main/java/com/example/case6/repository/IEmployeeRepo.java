@@ -11,4 +11,5 @@ public interface IEmployeeRepo extends JpaRepository<Employee, Long> {
     List<Employee> findAll();
     @Query("SELECT a.name, a.email, e FROM Account a JOIN a.role r JOIN Employee e ON e.account = a WHERE r.id = 4")
     List<Object[]> getAllEmployee();
+
 }

@@ -11,4 +11,6 @@ import java.util.List;
 public interface IStatusRepo extends JpaRepository<Status, Long> {
     @Query(value = "select new Status(s.id, s.name) from Status s")
     List<Status> getAllStatus();
+    @Query(value = "select new Status(s.id, s.name) from Status s where s.id = 1 or s.id = 2")
+    List<Status> getCustomerStatus();
 }
