@@ -37,5 +37,7 @@ public interface IAccountService extends UserDetailsService {
     Account add(Account account);
     Account getAccountByUsername(String username);
 
+    List<Account> getEmployeeAccount();
+
 
 }

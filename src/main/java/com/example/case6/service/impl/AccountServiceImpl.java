@@ -123,5 +123,10 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.findByUsername(username);
     }
 
+    @Override
+    public List<Account> getEmployeeAccount() {
+        return iAccountRepo.getEmployeeAccount();
+    }
+
 
 }

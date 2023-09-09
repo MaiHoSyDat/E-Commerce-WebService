@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface IAccountRepo extends JpaRepository<Account , Long> {
     Account findById(long id);
     Account findByUsername(String username);
@@ -17,5 +19,7 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
     Account getAccountByUsernameAndPassword (String user , String pass );
     Account getAccountByUsername(String username);
     Page<Account> findAllByRoleId(Pageable pageable, long id);
+    @Query("select a from Account a where a.role.id = 4")
+    List<Account> getEmployeeAccount();
 
 }

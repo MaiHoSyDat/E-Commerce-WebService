@@ -31,8 +31,9 @@ public class AdminController {
 
     //  <1> Thêm mới 1 tài khoản cho nhân viên
     @PostMapping()
-    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        return new ResponseEntity<>(iAccountService.create(account), HttpStatus.OK);
+    public ResponseEntity<List<Account>> createAccount(@RequestBody Account account) {
+        iAccountService.create(account);
+        return new ResponseEntity<>(iAccountService.getEmployeeAccount(), HttpStatus.OK);
     }
 
     //    <2> Tìm kiếm tương đối tài khoản theo Full_name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email
