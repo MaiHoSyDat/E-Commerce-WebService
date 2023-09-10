@@ -15,4 +15,9 @@ public interface IReviewRepo extends JpaRepository<Review, Long> {
             "JOIN review r ON p.id = r.product_id" +
             "GROUP BY p.id, p.name;")
     List<ProductReviewDTO> getReviewByStar();
+    @Query("SELECT r.rating, COUNT(r) FROM Review r where r.product.id = :product GROUP BY r.rating")
+    List<Object[]> getTotalReviewByRating(long product);
+
+    List<Review> getAllByProductId (long idProduct);
+
 }

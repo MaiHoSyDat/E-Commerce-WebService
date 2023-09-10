@@ -42,6 +42,18 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> getAllProduct() {
         return iProductRepo.findAll();
     }
+    @Override
+    public ProductDTO findByIdDto(Long aLong) {
+        List<Image> images = iImageRepo.findAllByProductId(aLong);
+        List<String> strings = new ArrayList<>();
+        for (Image i: images) {
+            strings.add(i.getImage());
+        }
+        Product product = iProductRepo.findById(aLong).get();
+        ProductDTO productDTO = new ProductDTO(product.getId(), product.getName(), product.getQuantity(), product.getPrice(), product.getCategory(),
+                product.getDescription(), product.getUnit(), product.getThumbnail(), product.getShop(),product.getCreate_at(),strings);
+        return productDTO;
+    }
 
     @Override
     public Page<Product> getAllProduct(Pageable pageable) {
