@@ -31,9 +31,9 @@ public class AdminController {
 
     //  <1> Thêm mới 1 tài khoản cho nhân viên
     @PostMapping()
-    public ResponseEntity<List<Account>> createAccount(@RequestBody Account account) {
-        iAccountService.create(account);
-        return new ResponseEntity<>(iAccountService.getEmployeeAccount(), HttpStatus.OK);
+    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+
+        return new ResponseEntity<>(iAccountService.create(account), HttpStatus.OK);
     }
 
     //    <2> Tìm kiếm tương đối tài khoản theo Full_name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email
@@ -86,9 +86,16 @@ public class AdminController {
     public ResponseEntity<List<Employee>> findAllEmployee(){
         return new ResponseEntity<>(iEmployeeService.findAll(),HttpStatus.OK);
     }
-    // thêm thông tin nhân viên
+
+    //thêm thông tin nhân viên
     @PostMapping("/employee")
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee){
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee){
+        return new ResponseEntity<>(iEmployeeService.updateEmployee(employee),HttpStatus.OK);
+    }
+    // cập nhật thông tin nhân viên
+    @PostMapping("/employee/{id}")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable int id){
+        employee.setId(id);
         return new ResponseEntity<>(iEmployeeService.updateEmployee(employee),HttpStatus.OK);
     }
 }

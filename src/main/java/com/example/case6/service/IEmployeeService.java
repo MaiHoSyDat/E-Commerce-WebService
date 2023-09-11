@@ -8,4 +8,6 @@ public interface IEmployeeService {
     List<Employee> findAll();
     List<Object[]> getAllEmployee();
     Employee updateEmployee(Employee employee);
+    Employee findEmployeeByAccountId(long id);
+
 }

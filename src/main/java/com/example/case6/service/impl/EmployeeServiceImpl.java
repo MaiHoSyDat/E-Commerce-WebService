@@ -28,7 +28,10 @@ public class EmployeeServiceImpl implements IEmployeeService {
         return iEmployeeRepo.save(employee);
     }
 
-
+    @Override
+    public Employee findEmployeeByAccountId(long id) {
+        return iEmployeeRepo.getAllByAccountId(id);
+    }
 
 
 }

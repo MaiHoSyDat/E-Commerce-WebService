@@ -5,6 +5,7 @@ import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.repository.IAccountRepo;
+import com.example.case6.repository.IRoleRepo;
 import com.example.case6.repository.IStatusRepo;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class AccountServiceImpl implements IAccountService {
     IAccountRepo iAccountRepo;
     @Autowired
     IStatusRepo iStatusRepo;
-
+    @Autowired
+    IRoleRepo iRoleRepo;
     @Override
     public List<Account> getAll() {
         return iAccountRepo.findAll();
@@ -39,9 +41,19 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account create(Account account) {
-        account.setRole(new Role(4));
+        Role role = iRoleRepo.findById(4);
+        Status status = iStatusRepo.findById(1);
+
+        if (role != null) {
+            account.setRole(role);
+        }
+
+        if (status != null) {
+            account.setStatus(status);
+        }
+
         account.setPassword("@123456");
-        account.setStatus(new Status(1));
+
         return iAccountRepo.save(account);
     }
 
