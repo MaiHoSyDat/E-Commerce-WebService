@@ -1,11 +1,14 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Shop;
+import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.repository.IShopRepo;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class ShopServiceImpl implements IShopService {
     @Autowired
     private IShopRepo iShopRepo;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     public List<Shop> getAllShop() {
@@ -38,5 +43,42 @@ public class ShopServiceImpl implements IShopService {
     @Override
     public Shop getShopByAccountLogin(long account_id) {
         return iShopRepo.getShopByAccountLogin(account_id);
+    }
+
+    @Override
+    public ShopReviewDTO findShopDTO(long idShop) {
+        ShopReviewDTO result = entityManager.createQuery("SELECT new com.example.case6.model.dto.ShopReviewDTO(s, AVG(r.rating), COUNT(r.id)) " +
+                        " FROM Shop s " +
+                        " JOIN Product p ON p.shop.id = s.id " +
+                        " LEFT JOIN Review r ON p.id = r.product.id " +
+                        " WHERE s.id = :idShop " +
+                        " GROUP BY s.id ", ShopReviewDTO.class)
+                .setParameter("idShop", idShop)
+                .getSingleResult();
+        return result;
+    }
+
+    @Override
+    public ShopReviewDTO findShopDTOByAccountLogin(long id) {
+        ShopReviewDTO result = entityManager.createQuery("SELECT new com.example.case6.model.dto.ShopReviewDTO(s, AVG(r.rating), COUNT(r.id)) " +
+                        " FROM Shop s " +
+                        " JOIN Product p ON p.shop.id = s.id " +
+                        " JOIN Account a ON a.id = s.account.id " +
+                        " LEFT JOIN Review r ON p.id = r.product.id " +
+                        " WHERE a.id = :idAccount " +
+                        " GROUP BY s.id ", ShopReviewDTO.class)
+                .setParameter("idAccount", id)
+                .getSingleResult();
+        return result;
+    }
+
+    @Override
+    public List<Shop> getFiveShopsPage(int offset) {
+        String hql = "FROM Shop";
+        List<Shop> result = entityManager.createQuery(hql, Shop.class)
+                .setFirstResult(offset)
+                .setMaxResults(5)
+                .getResultList();
+        return result;
     }
 }

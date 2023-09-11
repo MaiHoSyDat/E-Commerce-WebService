@@ -187,6 +187,7 @@ public class ProductServiceImpl implements IProductService {
         if (filterProductDTO.getRatings().isEmpty()) {
             if (!filterProductDTO.getSort().equals("Avg. Rating")) {
                 if (filterProductDTO.getSort().equals("Low to High")) {
+                    //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                             " FROM Product p" +
                             " JOIN Category c ON p.category.id = c.id " +
@@ -210,6 +211,7 @@ public class ProductServiceImpl implements IProductService {
                     if (filterProductDTO.getSort().equals("High to Low")) filterProductDTO.setSort("p.price");
                     if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.create_at");
                     if (filterProductDTO.getSort().equals("")) filterProductDTO.setSort(null);
+                    //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                             " FROM Product p" +
                             " JOIN Category c ON p.category.id = c.id " +
@@ -232,6 +234,7 @@ public class ProductServiceImpl implements IProductService {
                 }
 
             } else {
+                //Double.MAX_VALUE
                 String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                         " FROM Product p" +
                         " JOIN Category c ON p.category.id = c.id " +
@@ -251,9 +254,11 @@ public class ProductServiceImpl implements IProductService {
                         .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                         .getResultList();
                 return filter;
+
             }
         } else {
             if (filterProductDTO.getSort().equals("Low to High")) {
+                //Double.MAX_VALUE
                 String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                         " FROM Product p" +
                         " JOIN Category c ON p.category.id = c.id " +
@@ -275,8 +280,10 @@ public class ProductServiceImpl implements IProductService {
                         .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                         .getResultList();
                 return filter;
+
             } else {
                 if (filterProductDTO.getSort().equals("Avg. Rating")) {
+                    //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                             " FROM Product p" +
                             " JOIN Category c ON p.category.id = c.id " +
@@ -298,10 +305,12 @@ public class ProductServiceImpl implements IProductService {
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
                     return filter;
+
                 } else {
                     if (filterProductDTO.getSort().equals("High to Low")) filterProductDTO.setSort("p.price");
                     if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.create_at");
                     if (filterProductDTO.getSort().equals("")) filterProductDTO.setSort(null);
+                    //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
                             " FROM Product p" +
                             " JOIN Category c ON p.category.id = c.id " +
@@ -323,6 +332,7 @@ public class ProductServiceImpl implements IProductService {
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
                     return filter;
+
                 }
             }
 
