@@ -26,28 +26,36 @@ public class SProductControllerAPI {
     public ResponseEntity<List<Product>> getProductByShopId(@PathVariable long idShop) {
         return new ResponseEntity<>(productService.getProductByShopId(idShop), HttpStatus.OK);
     }
+
     //14
     @PostMapping("/{idShop}/products/create")
     public ResponseEntity<ProductDTO> saveProductByShopId(@PathVariable long idShop, @RequestBody ProductDTO productDTO) {
-
-        productService.save(productDTO , idShop);
-
+        productService.save(productDTO, idShop);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
+
     //15, 16, 17, 18
     @PostMapping("/{idShop}/products/{idProduct}")
-    public ResponseEntity<Product> updateProductByShopId(@PathVariable long idShop, @PathVariable long idProduct, @RequestBody Product product) {
-        productService.edit(product);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<?> updateProductByShopId(@PathVariable long idShop,
+                                                   @PathVariable long idProduct,
+                                                   @RequestBody Product product) {
+        Product productToUpdate = productService.findProductByShopId(idShop, idProduct);
+        if (productToUpdate != null) {
+            product.setId(idProduct);
+            System.out.println(product);
+            productService.edit(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Product does not exist" , HttpStatus.NOT_ACCEPTABLE);
     }
+
     //19
     @GetMapping("/{idShop}/products/{idProduct}")
-    public ResponseEntity<Product> findProductByShopId(@PathVariable long idShop, @PathVariable long idProduct) {
+    public ResponseEntity<Product> findProductByShopId(@PathVariable long idShop,
+                                                       @PathVariable long idProduct) {
         Product product = productService.findProductByShopId(idShop, idProduct);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
-
 
 
 }

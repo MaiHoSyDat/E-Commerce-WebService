@@ -51,7 +51,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity<?> updateProduct(@PathVariable Long id,
                                            @RequestBody Product product) {
         Optional<Product> productOptional = iProductService.findById(id);

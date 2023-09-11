@@ -19,7 +19,9 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     //get all product user
     @Query(nativeQuery = true, value = "SELECT * FROM Product")
     List<Product> getAll();
+
     Product findById(long id);
+
     @Query(value = "select p from Product p join Category c " +
             "on p.category.id = c.id " +
             "join Shop s " +
@@ -42,7 +44,5 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE p.id = (SELECT MAX(p2.id) FROM Product p2)")
     Product findProductWithMaxId();
 
-//    @Query("SELECT i.image FROM Image i WHERE i.product.id = :product_id")
-//    List<String> findImageUrlsByProductId(@Param("productId") Long productId);
 
 }
