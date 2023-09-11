@@ -24,5 +24,9 @@ public class CrudCustomerController {
         return new ResponseEntity<>(iCustomerService.getAll() , HttpStatus.OK);
 
     }
+    @GetMapping("/{idAccount}")
+    public ResponseEntity<Customer> getCustomerByAccountLogin(@PathVariable long idAccount){
+        return new ResponseEntity<>(iCustomerService.getCustomerByAccountLogin(idAccount) , HttpStatus.OK);
+    }
 
 }

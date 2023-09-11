@@ -9,5 +9,6 @@ public interface ICustomerService {
     Customer save(Customer customer);
     List<Customer> getAll();
     Customer getByAccount(Account account);
+    Customer getCustomerByAccountLogin(long idAccount);
 
 }

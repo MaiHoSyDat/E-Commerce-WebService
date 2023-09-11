@@ -36,4 +36,9 @@ public class CustomerServiceImpl implements ICustomerService {
     public Customer getByAccount(Account account) {
         return iCustomerRepo.findByAccountId(account.getId());
     }
+
+    @Override
+    public Customer getCustomerByAccountLogin(long idAccount) {
+        return iCustomerRepo.getCustomerByAccountLogin(idAccount);
+    }
 }
