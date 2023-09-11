@@ -11,4 +11,5 @@ public interface ICategoryService {
     Optional<Category> findById(Long id);
     void save(Category category);
     void delete(Long id);
+    List<Category> getTenCategoriesPage(int offset);
 }

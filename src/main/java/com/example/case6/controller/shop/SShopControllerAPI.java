@@ -20,6 +20,10 @@ public class SShopControllerAPI {
     public ResponseEntity<List<Shop>> getAllShop () {
         return new ResponseEntity<>(shopService.getAllShop(), HttpStatus.OK);
     }
+    @GetMapping("/page/{offset}")
+    public ResponseEntity<List<Shop>> getFiveShopsPage (@PathVariable int offset) {
+        return new ResponseEntity<>(shopService.getFiveShopsPage(offset), HttpStatus.OK);
+    }
     //12
     @GetMapping("/{idShop}")
     public ResponseEntity<Shop> findShopById (@PathVariable long idShop) {

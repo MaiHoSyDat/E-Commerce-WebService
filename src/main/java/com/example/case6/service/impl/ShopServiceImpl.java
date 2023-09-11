@@ -71,4 +71,14 @@ public class ShopServiceImpl implements IShopService {
                 .getSingleResult();
         return result;
     }
+
+    @Override
+    public List<Shop> getFiveShopsPage(int offset) {
+        String hql = "FROM Shop";
+        List<Shop> result = entityManager.createQuery(hql, Shop.class)
+                .setFirstResult(offset)
+                .setMaxResults(5)
+                .getResultList();
+        return result;
+    }
 }
