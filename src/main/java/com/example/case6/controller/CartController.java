@@ -55,12 +55,12 @@ public class CartController {
     }
 
     //  Thanh toán;
-    @PostMapping("/payment")
-    public ResponseEntity<?> payment(@RequestParam double payment) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
-        iCartService.payment(account,payment);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PostMapping("/payment")
+//    public ResponseEntity<?> payment(@RequestParam double payment) {
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
+//        iCartService.payment(account,payment);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }
 

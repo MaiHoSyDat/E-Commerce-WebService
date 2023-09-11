@@ -28,6 +28,6 @@ public interface ICartService {
     List<CartDetail> updateCart(List<CartDetail> cartDetails);
     void deleteProductByCar(long cartDetailId);
     List<CartDetail> getAllCartDetail(Account account);
-    void payment(Account account, double total);
+//    void payment(Account account, double total);
 
 }

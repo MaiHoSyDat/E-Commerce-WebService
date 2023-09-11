@@ -20,10 +20,18 @@ public class Order {
     private long id;
     private Date date_create = Date.valueOf(LocalDate.now());
     @ManyToOne
-    private Status status = new Status(1);
+    private Status status = new Status(5);
     @ManyToOne
     private Customer user;
     private double totalAmount;
+    private String shipmentDetails;
+    @ManyToOne
+    private Shop shop;
+
+    public Order(Customer user, Shop shop) {
+        this.user = user;
+        this.shop = shop;
+    }
 
     public Order(Customer user, double totalAmount) {
         this.user = user;

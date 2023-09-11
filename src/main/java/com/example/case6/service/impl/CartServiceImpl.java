@@ -115,19 +115,19 @@ public class CartServiceImpl implements ICartService {
         return iCartDetailService.getByCart(cart);
     }
 
-    @Override
-    public void payment(Account account, double payment) {
-        Cart cart = getByAccount(account);
-        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
-        Customer customer = iCustomerService.getByAccount(account);
-        Order order = new Order(customer, payment);
-        iOrderService.save(order);
-        for (CartDetail cd : cartDetails) {
-            OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
-            iOrderDetailService.save(orderDetail);
-            iCartDetailService.deleteCartDetail(cd.getId());
-        }
-    }
+//    @Override
+//    public void payment(Account account, double payment) {
+//        Cart cart = getByAccount(account);
+//        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+//        Customer customer = iCustomerService.getByAccount(account);
+//        Order order = new Order(customer, payment);
+//        iOrderService.save(order);
+//        for (CartDetail cd : cartDetails) {
+//            OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
+//            iOrderDetailService.save(orderDetail);
+//            iCartDetailService.deleteCartDetail(cd.getId());
+//        }
+//    }
 
 
 }
