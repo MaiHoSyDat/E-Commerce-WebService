@@ -24,6 +24,11 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    public List<Order> getAllOrdersByShopId(long idShop) {
+        return iOderRepo.getAllOrdersByShopId(idShop);
+    }
+
+    @Override
     public Order findById(long id) {
         Optional<Order> optionalOrder = iOderRepo.findById(id);
         return optionalOrder.orElse(null);

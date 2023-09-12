@@ -20,6 +20,10 @@ public class OrderController {
     public ResponseEntity<Order> findById(@PathVariable long idOrder) {
         return new ResponseEntity<>(orderService.findById(idOrder), HttpStatus.OK);
     }
+    @PostMapping("/{idOrder}")
+    public ResponseEntity<Order> update(@RequestBody Order order) {
+        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
+    }
     @GetMapping("/delete/{idOrder}")
     public ResponseEntity<Order> delete(@PathVariable long idOrder) {
         Order order = orderService.findById(idOrder);

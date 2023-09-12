@@ -149,6 +149,7 @@ public class ProductServiceImpl implements IProductService {
                         " FROM Product p " +
                         " JOIN Category c ON p.category.id = c.id " +
                         " LEFT JOIN Review r ON p.id = r.product.id " +
+                        " WHERE p.status.id <> 2 " +
                         " GROUP BY p.id, p.name " +
                         " Order By p.id desc", ProductReviewDTO.class)
                 .setMaxResults(10)
@@ -162,6 +163,7 @@ public class ProductServiceImpl implements IProductService {
                         " FROM Product p " +
                         " JOIN Category c ON p.category.id = c.id " +
                         " JOIN Review r ON p.id = r.product.id " +
+                        " WHERE p.status.id <> 2 " +
                         " GROUP BY p.id, p.name " +
                         "ORDER BY AVG(r.rating) DESC", ProductReviewDTO.class)
                 .setMaxResults(3)
