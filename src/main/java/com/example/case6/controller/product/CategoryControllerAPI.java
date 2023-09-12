@@ -21,6 +21,10 @@ public class CategoryControllerAPI {
     public ResponseEntity<List<Category>> findAll() {
         return new ResponseEntity<>(iCategoryService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/{offset}")
+    public ResponseEntity<List<Category>> getTenCategoriesPage(@PathVariable int offset) {
+        return new ResponseEntity<>(iCategoryService.getTenCategoriesPage(offset), HttpStatus.OK);
+    }
 
     @PostMapping("/addCategory")
     public ResponseEntity<?> addCategory(@RequestBody Category category) {

@@ -1,7 +1,12 @@
 package com.example.case6.controller.product;
 
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.FilterProductDTO;
+import com.example.case6.model.dto.ProductDTO;
+import com.example.case6.model.dto.ProductReviewDTO;
+import com.example.case6.model.dto.ReviewDTO;
 import com.example.case6.service.IProductService;
+import com.example.case6.service.IReviewSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +26,8 @@ public class ProductController {
 
     @Autowired
     private IProductService iProductService;
+    @Autowired
+    private IReviewSevice iReviewSevice;
 
 
     @GetMapping("/page")
@@ -36,13 +43,16 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> findById(@PathVariable Long id) {
-        Optional<Product> productOptional = iProductService.findById(id);
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            return new ResponseEntity<>(product, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO productDTO = iProductService.findByIdDto(id);
+
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+    @GetMapping("/review/{id}")
+    public ResponseEntity<List<ReviewDTO>> getProductDetail(@PathVariable Long id) {
+        List<ReviewDTO> reviewDTOS =  iReviewSevice.getAllReviewByIdProduct(id);
+        iReviewSevice.getTotalReviewRating(id);
+        return new ResponseEntity<>(reviewDTOS, HttpStatus.OK);
     }
 
     @PostMapping
@@ -84,4 +94,13 @@ public class ProductController {
      @PageableDefault(size = 10) Pageable pageable) {
         return new ResponseEntity<>(iProductService.filter(minPrice, maxPrice, name, shopName, rating, pageable), HttpStatus.OK);
     }
+    @PostMapping("/filter")
+    public ResponseEntity<List<ProductReviewDTO>> getFilterProducts(@RequestBody FilterProductDTO filterProductDTO) {
+        System.out.println(filterProductDTO);
+        return new ResponseEntity<>(iProductService.getFilterProductsDTO(filterProductDTO), HttpStatus.OK);
+    }
+//    @PostMapping("/filter")
+//    public ResponseEntity<FilterProductDTO> getFilterProducts(@RequestBody FilterProductDTO filterProductDTO) {
+//        return new ResponseEntity<>(filterProductDTO, HttpStatus.OK);
+//    }
 }
