@@ -1,6 +1,9 @@
 package com.example.case6.service.impl;
 
+import com.example.case6.model.Account;
 import com.example.case6.model.Shop;
+import com.example.case6.model.Status;
+import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.IShopRepo;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class ShopServiceImpl implements IShopService {
     @Autowired
     private IShopRepo iShopRepo;
+    @Autowired
+    private IAccountRepo iAccountRepo;
 
     @Override
     public List<Shop> getAllShop() {
@@ -26,7 +31,7 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public void saveShop(Shop shop) {
+    public void save (Shop shop) {
         iShopRepo.save(shop);
     }
 
@@ -39,4 +44,10 @@ public class ShopServiceImpl implements IShopService {
     public Shop getShopByAccountLogin(long account_id) {
         return iShopRepo.getShopByAccountLogin(account_id);
     }
+
+    @Override
+    public Shop saveShop(Shop shop) {
+        return iShopRepo.save(shop);
+    }
+
 }

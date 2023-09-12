@@ -42,7 +42,6 @@ public class SProductControllerAPI {
         Product productToUpdate = productService.findProductByShopId(idShop, idProduct);
         if (productToUpdate != null) {
             product.setId(idProduct);
-            System.out.println(product);
             productService.edit(product);
             return new ResponseEntity<>(HttpStatus.OK);
         }

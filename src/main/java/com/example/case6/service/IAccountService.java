@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface IAccountService extends UserDetailsService {
@@ -34,6 +35,9 @@ public interface IAccountService extends UserDetailsService {
     void editStatus(long accountId, int statusId);
 
     Account add(Account account);
+
     Account getAccountByUsername(String username);
+
+    Optional<Account> findShopByAccountId(Long id);
 
 }

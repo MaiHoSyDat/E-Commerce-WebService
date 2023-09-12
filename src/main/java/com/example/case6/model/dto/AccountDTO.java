@@ -12,13 +12,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO {
-    private long id;//
+    private long id;
+
     private String email;
+
     private String name;
+
     private String username;
+
     private Status status;
 
     private Role role;
+
     private String token;
 
     public AccountDTO(long id, String email, String username, Status status, Role role, String token) {
@@ -37,6 +42,5 @@ public class AccountDTO {
         this.username = username;
         this.status = status;
         this.role = role;
-
     }
 }

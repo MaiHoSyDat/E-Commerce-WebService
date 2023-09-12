@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface IShopRepo extends JpaRepository<Shop, Long> {
+
     // tìm shop theo account đăng nhập
     @Query(nativeQuery = true, value = "SELECT * FROM Shop where account_id= :account_id")
     Shop getShopByAccountLogin(@Param("account_id") long account_id);
