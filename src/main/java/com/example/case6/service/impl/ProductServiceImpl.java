@@ -94,7 +94,7 @@ public class ProductServiceImpl implements IProductService {
         }else {
             product = iProductRepo.findById(productDTO.getId());
         }
-        Shop shop = shopService.findShopById(idShop);
+        Shop shop = shopService.getShopByAccountLogin(idShop);
         product.setShop(shop);
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
