@@ -20,4 +20,9 @@ public class StatusService implements IStatusService {
     public List<Status> getCustomerStatus() {
         return iStatusRepo.getCustomerStatus();
     }
+
+    @Override
+    public List<Status> getShopStatus() {
+        return iStatusRepo.getShopStatus();
+    }
 }

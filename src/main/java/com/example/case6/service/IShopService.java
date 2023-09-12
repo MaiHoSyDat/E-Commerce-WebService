@@ -10,4 +10,6 @@ public interface IShopService {
     void saveShop(Shop shop);
     void editShop(Shop shop);
     Shop getShopByAccountLogin(long account_id);
+    void editAccountShopStatus(long accountId, int statusId);
+    void editShopStatus (long shopId, int statusId);
 }

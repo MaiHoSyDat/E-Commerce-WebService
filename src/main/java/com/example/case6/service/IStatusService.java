@@ -7,4 +7,5 @@ import java.util.List;
 public interface IStatusService {
     List<Status> getAllStatus();
     List<Status> getCustomerStatus();
+    List<Status> getShopStatus();
 }

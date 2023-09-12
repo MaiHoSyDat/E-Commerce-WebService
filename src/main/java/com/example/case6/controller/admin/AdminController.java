@@ -64,10 +64,15 @@ public class AdminController {
         return new ResponseEntity<>(iStatusService.getAllStatus(),HttpStatus.OK);
     }
 
-    //lấy ra các role khách hàng
+    //lấy ra các status khách hàng
     @GetMapping("/customerRoles")
     public ResponseEntity<List<Status>> getCustomerStatus(){
         return new ResponseEntity<>(iStatusService.getCustomerStatus(),HttpStatus.OK);
+    }
+    //lấy ra các status shop
+    @GetMapping("shopStatus")
+    public ResponseEntity<List<Status>> getShopStatus(){
+        return new ResponseEntity<>(iStatusService.getShopStatus(),HttpStatus.ACCEPTED);
     }
 
     //lấy ra tất cả các shop
@@ -97,5 +102,16 @@ public class AdminController {
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee, @PathVariable int id){
         employee.setId(id);
         return new ResponseEntity<>(iEmployeeService.updateEmployee(employee),HttpStatus.OK);
+    }
+    //duyệt tài khoản shop
+    @PostMapping("/shop/blockOrActive")
+    public ResponseEntity<?> updateShopStatus(@RequestParam long accountId, @RequestParam int statusId){
+        iShopService.editAccountShopStatus(accountId,statusId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/shop/blockOrActiveShop")
+    public ResponseEntity<?> editShopStatus(@RequestParam long shopId, @RequestParam int statusId){
+        iShopService.editShopStatus(shopId, statusId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
