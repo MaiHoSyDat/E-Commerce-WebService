@@ -30,7 +30,7 @@ import java.lang.*;
 public class ProductServiceImpl implements IProductService {
 
     @Autowired
-   private IShopService shopService;
+    private IShopService shopService;
     @PersistenceContext
     EntityManager entityManager;
 
@@ -38,20 +38,22 @@ public class ProductServiceImpl implements IProductService {
     private IProductRepo iProductRepo;
     @Autowired
     private IImageRepo iImageRepo;
+
     @Override
     public List<Product> getAllProduct() {
         return iProductRepo.findAll();
     }
+
     @Override
     public ProductDTO findByIdDto(Long aLong) {
         List<Image> images = iImageRepo.findAllByProductId(aLong);
         List<String> strings = new ArrayList<>();
-        for (Image i: images) {
+        for (Image i : images) {
             strings.add(i.getImage());
         }
         Product product = iProductRepo.findById(aLong).get();
         ProductDTO productDTO = new ProductDTO(product.getId(), product.getName(), product.getQuantity(), product.getPrice(), product.getCategory(),
-                product.getDescription(), product.getUnit(), product.getThumbnail(), product.getShop(),product.getCreate_at(),strings);
+                product.getDescription(), product.getUnit(), product.getThumbnail(), product.getShop(), product.getCreate_at(), strings);
         return productDTO;
     }
 
@@ -84,24 +86,35 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void save(ProductDTO productDTO, long idShop) {
         Product product = new Product();
+        if (productDTO.getId() == 0) {
+            if (productDTO.getThumbnail()==null) {
+                productDTO.setThumbnail("https://media.istockphoto.com/id/1494169139/vi/anh/gi%E1%BA%A5y-nh%C4%83n.jpg?s=612x612&w=0&k=20&c=TUp6JwFfKh2udS8rR5G-WQ5XzJdkypw0y7CGSNgXMsU=");
+            }
+            product.setThumbnail(productDTO.getThumbnail());
+        }else {
+            product = iProductRepo.findById(productDTO.getId());
+        }
         Shop shop = shopService.findShopById(idShop);
         product.setShop(shop);
+        product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
         product.setCategory(productDTO.getCategory());
         product.setDescription(productDTO.getDescription());
         product.setUnit(productDTO.getUnit());
-        product.setThumbnail(productDTO.getThumbnail());
+
         product.setStatus(new Status(1));
         iProductRepo.save(product);
 
         Product product1 = iProductRepo.findProductWithMaxId();
-        for (int i = 0; i < productDTO.getImages().size(); i++) {
-            Image image = new Image();
-            image.setProduct(product1);
-            image.setImage(productDTO.getImages().get(i));
-           iImageRepo.save(image) ;
+        if (productDTO.getImages().isEmpty()) {
+            for (int i = 0; i < productDTO.getImages().size(); i++) {
+                Image image = new Image();
+                image.setProduct(product1);
+                image.setImage(productDTO.getImages().get(i));
+                iImageRepo.save(image);
+            }
         }
     }
 
@@ -321,7 +334,7 @@ public class ProductServiceImpl implements IProductService {
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
-                            " ORDER BY "+ filterProductDTO.getSort() +" desc ";
+                            " ORDER BY " + filterProductDTO.getSort() + " desc ";
                     List<ProductReviewDTO> filter = entityManager.createQuery(sql, ProductReviewDTO.class)
                             .setParameter("listShop", shops)
                             .setParameter("listRating", filterProductDTO.getRatings())
