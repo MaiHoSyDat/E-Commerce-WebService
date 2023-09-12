@@ -1,5 +1,6 @@
 package com.example.case6.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Status {
     @Id

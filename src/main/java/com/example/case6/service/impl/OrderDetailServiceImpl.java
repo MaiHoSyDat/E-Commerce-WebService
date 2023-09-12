@@ -74,7 +74,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
             for (Code c: codes) {
                 codeDTOS.add(new CodeDTO(c.getId(),c.getName(),c.getQuantity(),c.getPercent(),c.getShop().getId()));
             }
-            orderDTOS.add(new OrderDTO(o.getId(),o.getShop().getId(),o.getShop().getName(),o.getTotalAmount(),orderDetailDTOs,codeDTOS));
+            orderDTOS.add(new OrderDTO(o.getId(),o.getShop().getId(),o.getShop().getName(),o.getShop().getLogo(),o.getTotalAmount(),orderDetailDTOs,codeDTOS));
         }
         return orderDTOS;
     }

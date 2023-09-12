@@ -4,6 +4,7 @@ import com.example.case6.model.Account;
 import com.example.case6.model.Cart;
 import com.example.case6.model.CartDetail;
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.CodeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,6 +29,6 @@ public interface ICartService {
     List<CartDetail> updateCart(List<CartDetail> cartDetails);
     void deleteProductByCar(long cartDetailId);
     List<CartDetail> getAllCartDetail(Account account);
-//    void payment(Account account, double total);
+    void payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs);
 
 }

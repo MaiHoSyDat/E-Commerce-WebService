@@ -25,16 +25,16 @@ public class Payment {
     @Autowired
     IOrderDetailService iOrderDetailService;
 
-    @GetMapping("/createOrder")
-    public void createOrder(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
-        iOrderDetailService.createOrderDetail(account);
-    }
-    @GetMapping("/unpaidOrders")
-    public ResponseEntity<List<OrderDTO>> getUnpaidOrders(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
-        return new ResponseEntity<>( iOrderDetailService.getOrderByUnpaid(account),HttpStatus.OK);
-    }
+//    @GetMapping("/createOrder")
+//    public void createOrder(){
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
+//        iOrderDetailService.createOrderDetail(account);
+//    }
+//    @GetMapping("/unpaidOrders")
+//    public ResponseEntity<List<OrderDTO>> getUnpaidOrders(){
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
+//        return new ResponseEntity<>( iOrderDetailService.getOrderByUnpaid(account),HttpStatus.OK);
+//    }
 }

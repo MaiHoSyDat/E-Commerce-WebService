@@ -11,12 +11,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDTO {
+public class ShopCodeDTO {
     private long id;
-    private long shopId;
     private String shopName;
     private String logo;
-    private double total_amount;
-    private List<OrderDetailDTO> orderDetails;
     private List<CodeDTO> codes;
 }
