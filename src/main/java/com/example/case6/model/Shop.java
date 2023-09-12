@@ -40,9 +40,6 @@ public class Shop {
 
     private Date dateCreate = Date.valueOf(LocalDate.now());
 
-    @OneToMany
-    private List<Code> codes;
-
     @OneToOne
     private Account account;
 
