@@ -21,4 +21,5 @@ public class FilterProductDTO {
     private List<Integer> ratings;
     private String sort;
     private String quantity;
+    private Long idStatus;
 }

@@ -197,6 +197,7 @@ public class ProductServiceImpl implements IProductService {
                             " WHERE ((p.shop) IN (:listShop)) " +
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
+                            " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " ORDER BY p.price asc ";
@@ -205,6 +206,7 @@ public class ProductServiceImpl implements IProductService {
                             .setParameter("minPrice", filterProductDTO.getMinPrice())
                             .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                             .setParameter("category", filterProductDTO.getCategory())
+                            .setParameter("idStatus", filterProductDTO.getIdStatus())
                             .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
@@ -221,6 +223,7 @@ public class ProductServiceImpl implements IProductService {
                             " WHERE ((p.shop) IN (:listShop)) " +
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
+                            " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " ORDER BY " + filterProductDTO.getSort() + " desc ";
@@ -229,6 +232,7 @@ public class ProductServiceImpl implements IProductService {
                             .setParameter("minPrice", filterProductDTO.getMinPrice())
                             .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                             .setParameter("category", filterProductDTO.getCategory())
+                            .setParameter("idStatus", filterProductDTO.getIdStatus())
                             .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
@@ -244,6 +248,7 @@ public class ProductServiceImpl implements IProductService {
                         " WHERE ((p.shop) IN (:listShop)) " +
                         " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                         " AND (:category is null or (c.name = :category)) " +
+                        " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                         " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                         " GROUP BY p.id, p.name " +
                         " ORDER BY AVG(r.rating) desc ";
@@ -252,6 +257,7 @@ public class ProductServiceImpl implements IProductService {
                         .setParameter("minPrice", filterProductDTO.getMinPrice())
                         .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                         .setParameter("category", filterProductDTO.getCategory())
+                        .setParameter("idStatus", filterProductDTO.getIdStatus())
                         .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                         .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                         .getResultList();
@@ -268,6 +274,7 @@ public class ProductServiceImpl implements IProductService {
                         " WHERE ((p.shop) IN (:listShop)) " +
                         " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                         " AND (:category is null or (c.name = :category)) " +
+                        " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                         " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                         " GROUP BY p.id, p.name " +
                         " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -278,6 +285,7 @@ public class ProductServiceImpl implements IProductService {
                         .setParameter("minPrice", filterProductDTO.getMinPrice())
                         .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                         .setParameter("category", filterProductDTO.getCategory())
+                        .setParameter("idStatus", filterProductDTO.getIdStatus())
                         .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                         .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                         .getResultList();
@@ -293,6 +301,7 @@ public class ProductServiceImpl implements IProductService {
                             " WHERE ((p.shop) IN (:listShop)) " +
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
+                            " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -303,6 +312,7 @@ public class ProductServiceImpl implements IProductService {
                             .setParameter("minPrice", filterProductDTO.getMinPrice())
                             .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                             .setParameter("category", filterProductDTO.getCategory())
+                            .setParameter("idStatus", filterProductDTO.getIdStatus())
                             .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
@@ -320,6 +330,7 @@ public class ProductServiceImpl implements IProductService {
                             " WHERE ((p.shop) IN (:listShop)) " +
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
+                            " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -330,6 +341,7 @@ public class ProductServiceImpl implements IProductService {
                             .setParameter("minPrice", filterProductDTO.getMinPrice())
                             .setParameter("maxPrice", filterProductDTO.getMaxPrice())
                             .setParameter("category", filterProductDTO.getCategory())
+                            .setParameter("idStatus", filterProductDTO.getIdStatus())
                             .setParameter("nameProduct", "%" + filterProductDTO.getNameProduct() + "%")
                             .setMaxResults(Integer.parseInt(filterProductDTO.getQuantity()))
                             .getResultList();
