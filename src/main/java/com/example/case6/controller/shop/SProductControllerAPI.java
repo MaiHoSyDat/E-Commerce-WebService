@@ -46,6 +46,12 @@ public class SProductControllerAPI {
         Product product = productService.findProductByShopId(idShop, idProduct);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
+    @PostMapping("/editStatus")
+    public ResponseEntity<Product> editStatusProduct( @RequestBody Product product) {
+        product.getStatus().setId(2);
+        productService.save(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
 
 
 
