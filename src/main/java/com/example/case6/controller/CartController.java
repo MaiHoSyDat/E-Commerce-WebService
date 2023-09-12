@@ -3,8 +3,11 @@ package com.example.case6.controller;
 import com.example.case6.model.Account;
 import com.example.case6.model.Cart;
 import com.example.case6.model.CartDetail;
+import com.example.case6.model.dto.CodeDTO;
+import com.example.case6.model.dto.ShopCodeDTO;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.ICartService;
+import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +26,8 @@ public class CartController {
     ICartService iCartService;
     @Autowired
     IAccountService iAccountService;
-
+    @Autowired
+    IShopService iShopService;
     @GetMapping()
     public ResponseEntity<List<CartDetail>> getAllCartDetail() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -34,8 +38,6 @@ public class CartController {
     // <37> Thêm sản phẩm vào giỏ hàng
     @PostMapping("/addToCart")
     public ResponseEntity<CartDetail> addToCart(@RequestParam long productId, @RequestParam int quantity) {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(iCartService.addToCart(account, productId, quantity), HttpStatus.OK);
@@ -53,13 +55,19 @@ public class CartController {
         iCartService.deleteProductByCar(cartDetailId);
         return new ResponseEntity<>(cartDetailId,HttpStatus.OK);
     }
-
-    //  Thanh toán;
-    @PostMapping("/payment")
-    public ResponseEntity<?> payment(@RequestParam double payment) {
+    @GetMapping("/shopCode")
+    public ResponseEntity<List<ShopCodeDTO>> getAllShopCode(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
-        iCartService.payment(account,payment);
+        return new ResponseEntity<>( iShopService.getAllShopCode(account),HttpStatus.OK);
+    }
+
+     // Thanh toán;
+    @PostMapping("/payment/{fullName}/{phone}/{address}")
+    public ResponseEntity<?> payment(@PathVariable String fullName, @PathVariable String phone, @PathVariable String address, @RequestBody List<CodeDTO> codeDTOs) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
+        iCartService.payment(account,fullName,phone,address,codeDTOs);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

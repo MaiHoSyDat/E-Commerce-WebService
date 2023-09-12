@@ -109,9 +109,12 @@ public class AdminController {
         iShopService.editAccountShopStatus(accountId,statusId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    //chỉnh sửa trạng thái shop
     @PostMapping("/shop/blockOrActiveShop")
     public ResponseEntity<?> editShopStatus(@RequestParam long shopId, @RequestParam int statusId){
         iShopService.editShopStatus(shopId, statusId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
 }

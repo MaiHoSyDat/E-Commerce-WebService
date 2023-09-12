@@ -1,6 +1,10 @@
 package com.example.case6.service;
 
+import com.example.case6.model.Account;
+import com.example.case6.model.CartDetail;
+import com.example.case6.model.OrderDetail;
 import com.example.case6.model.Shop;
+import com.example.case6.model.dto.ShopCodeDTO;
 
 import java.util.List;
 
@@ -12,4 +16,7 @@ public interface IShopService {
     Shop getShopByAccountLogin(long account_id);
     void editAccountShopStatus(long accountId, int statusId);
     void editShopStatus (long shopId, int statusId);
+    List<Shop> getAllShopByProductInCartDetail(List<CartDetail> cartDetails);
+    List<Shop> getAllShopByProductInOrderDetail(List<OrderDetail> orderDetails);
+    List<ShopCodeDTO> getAllShopCode(Account account);
 }
