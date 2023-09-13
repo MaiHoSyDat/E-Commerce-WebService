@@ -28,7 +28,7 @@ public class ReviewServiceImpl implements IReviewSevice {
             Customer customer = reviews.get(i).getUser();
             CustomerDTO customerDTO = new CustomerDTO(customer.getId(),customer.getBirthday(), customer.getDate_create(),
                     customer.getAvatar(), customer.getAddress(), customer.getPhone(), customer.getGender());
-            reviewDTOS.add(new ReviewDTO(reviews.get(i).getHeadline(),reviews.get(i).getContext(),
+            reviewDTOS.add(new ReviewDTO(reviews.get(i).getId(),reviews.get(i).getHeadline(),reviews.get(i).getContext(),
                     customerDTO  , reviews.get(i).getDate() , reviews.get(i).getRating(),
                     reviews.get(i).getUser().getAccount().getName()));
         }
@@ -39,6 +39,11 @@ public class ReviewServiceImpl implements IReviewSevice {
     public List<Object[]> getTotalReviewRating(long productID) {
         List<Object[]> objects =iReviewRepo.getTotalReviewByRating(productID);
         return objects;
+    }
+
+    @Override
+    public void save(Review review) {
+        iReviewRepo.save(review);
     }
 
 }

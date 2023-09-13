@@ -358,5 +358,20 @@ public class ProductServiceImpl implements IProductService {
         return iProductRepo.findById(id);
     }
 
+    @Override
+    public List<Product> getAllProductsByCustomerBuy(long idCustomer) {
+        List<Product> result = entityManager.createQuery("SELECT DISTINCT od.product " +
+                        " FROM Customer c " +
+                        " JOIN Order o ON c.id = o.user.id " +
+                        " JOIN OrderDetail od ON o.id = od.order.id " +
+                        " JOIN Product p ON od.product.id = p.id " +
+                        " WHERE c.id = :idCustomer ", Product.class)
+                .setParameter("idCustomer", idCustomer)
+                .getResultList();
+        return result;
+    }
+
+
+
 }
 

@@ -103,4 +103,8 @@ public class ProductController {
 //    public ResponseEntity<FilterProductDTO> getFilterProducts(@RequestBody FilterProductDTO filterProductDTO) {
 //        return new ResponseEntity<>(filterProductDTO, HttpStatus.OK);
 //    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Product> findById(@PathVariable long id) {
+        return new ResponseEntity<>(iProductService.getById(id), HttpStatus.OK);
+    }
 }
