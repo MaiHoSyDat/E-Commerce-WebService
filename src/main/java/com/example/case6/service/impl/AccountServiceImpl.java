@@ -83,7 +83,7 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context) {
+    public Page<AccountDTO> getAlByLike(Pageable pageable, int num, String context) {
         if (num == 1) {
             Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
