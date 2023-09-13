@@ -2,10 +2,7 @@ package com.example.case6.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -16,4 +13,6 @@ public class Code {
     private String name;
     private int quantity;
     private double percent;
+    @ManyToOne
+    private Shop shop;
 }
