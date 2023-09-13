@@ -1,6 +1,7 @@
 package com.example.case6.controller.shop;
 
 import com.example.case6.model.Shop;
+import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,10 @@ public class SShopControllerAPI {
     @GetMapping
     public ResponseEntity<List<Shop>> getAllShop () {
         return new ResponseEntity<>(shopService.getAllShop(), HttpStatus.OK);
+    }
+    @GetMapping("/page/{offset}")
+    public ResponseEntity<List<Shop>> getFiveShopsPage (@PathVariable int offset) {
+        return new ResponseEntity<>(shopService.getFiveShopsPage(offset), HttpStatus.OK);
     }
     //12
     @GetMapping("/{idShop}")
@@ -40,5 +45,13 @@ public class SShopControllerAPI {
     @GetMapping("/login/{idAccount}")
     public ResponseEntity<Shop> getShopByAccountLogin (@PathVariable long idAccount) {
         return new ResponseEntity<>(shopService.getShopByAccountLogin(idAccount), HttpStatus.OK);
+    }
+    @GetMapping("/dto/{idShop}")
+    public ResponseEntity<ShopReviewDTO> findShopDTO (@PathVariable long idShop) {
+        return new ResponseEntity<>(shopService.findShopDTO(idShop), HttpStatus.OK);
+    }
+    @GetMapping("/login/dto/{idAccount}")
+    public ResponseEntity<ShopReviewDTO> findShopDTOByAccountLogin (@PathVariable long idAccount) {
+        return new ResponseEntity<>(shopService.findShopDTO(idAccount), HttpStatus.OK);
     }
 }

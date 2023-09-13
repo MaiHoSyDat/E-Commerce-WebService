@@ -1,6 +1,7 @@
 package com.example.case6.controller.index;
 
 import com.example.case6.model.Product;
+import com.example.case6.model.dto.ProductReviewDTO;
 import com.example.case6.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,12 @@ import java.util.List;
 public class IProductControllerAPI {
     @Autowired
     private IProductService productService;
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> getTenNewProducts () {
-        return new ResponseEntity<>(productService.getTenNewProducts(), HttpStatus.OK);
+    @GetMapping("/tenNewProducts")
+    public ResponseEntity<List<ProductReviewDTO>> getTenNewProductsDTO () {
+        return new ResponseEntity<>(productService.getTenNewProductsDTO(), HttpStatus.OK);
+    }
+    @GetMapping("/threeProductsMaxRating")
+    public ResponseEntity<List<ProductReviewDTO>> getThreeProductsMaxRatingDTO () {
+        return new ResponseEntity<>(productService.getThreeProductsMaxRatingDTO(), HttpStatus.OK);
     }
 }
