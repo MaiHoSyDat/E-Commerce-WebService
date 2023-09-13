@@ -3,6 +3,7 @@ package com.example.case6.service.impl;
 import com.example.case6.model.Account;
 import com.example.case6.model.Customer;
 import com.example.case6.model.Status;
+import com.example.case6.model.dto.CustomerDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.ICustomerRepo;
 import com.example.case6.service.IAccountService;
@@ -35,5 +36,27 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public Customer getByAccount(Account account) {
         return iCustomerRepo.findByAccountId(account.getId());
+    }
+
+    @Override
+    public CustomerDTO findById(long id) {
+        Account account = iAccountRepo.findById(id);
+        Customer customer = iCustomerRepo.getCustomerByAccount_Id(account.getId());
+        CustomerDTO customerDTO = new CustomerDTO(customer.getId(),customer.getBirthday()
+                ,customer.getDate_create(), customer.getAvatar(), customer.getAddress(), customer.getPhone(), customer.getGender());
+        return customerDTO;
+    }
+
+    @Override
+    public CustomerDTO edit(CustomerDTO customerDTO) {
+        Customer customer = iCustomerRepo.findById(customerDTO.getId());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setAvatar(customerDTO.getAvatar());
+        customer.setGender(customerDTO.getGender());
+        customer.setBirthday(customerDTO.getBirthday());
+        customer.setPhone(customerDTO.getPhone());
+        iCustomerRepo.save(customer);
+        System.out.println(customer);
+        return customerDTO;
     }
 }

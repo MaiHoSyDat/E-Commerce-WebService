@@ -2,6 +2,7 @@ package com.example.case6.controller;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Customer;
+import com.example.case6.model.dto.EditPassDTO;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class AccountController {
     @PostMapping("/forgot")
     public ResponseEntity<Account> changePassword(@RequestParam String username, @RequestParam String password){
         return new ResponseEntity<>(iAccountService.changePassword(username,password), HttpStatus.OK);
+    }
+    @PostMapping("/editPass")
+    public ResponseEntity<?> editPass(@RequestBody EditPassDTO editPassDTO){
+        iAccountService.editPass(editPassDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
