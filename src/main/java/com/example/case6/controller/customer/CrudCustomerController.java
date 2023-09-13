@@ -15,10 +15,12 @@ import java.util.List;
 public class CrudCustomerController {
     @Autowired
     ICustomerService iCustomerService;
+
     @PostMapping("/save")
     public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer){
         return new ResponseEntity<>(iCustomerService.save(customer) , HttpStatus.OK);
     }
+
     @GetMapping("/getAll")
     public ResponseEntity<List<Customer>> getAll(){
         return new ResponseEntity<>(iCustomerService.getAll() , HttpStatus.OK);

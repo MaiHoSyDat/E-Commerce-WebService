@@ -24,6 +24,9 @@ public class ShopServiceImpl implements IShopService {
     @Autowired
     private IAccountRepo iAccountRepo;
 
+    @Autowired
+    private IShopRepo shopRepo;
+
     @Override
     public List<Shop> getAllShop() {
         return iShopRepo.findAll();
@@ -85,11 +88,6 @@ public class ShopServiceImpl implements IShopService {
                 .setMaxResults(5)
                 .getResultList();
         return result;
-    }
-
-    @Override
-    public Shop saveShop(Shop shop) {
-        return iShopRepo.save(shop);
     }
 
     @Override

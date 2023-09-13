@@ -18,11 +18,13 @@ public interface IShopService {
     void editShop(Shop shop);
 
     Shop getShopByAccountLogin(long account_id);
+
     ShopReviewDTO findShopDTO(long id);
+
     ShopReviewDTO findShopDTOByAccountLogin(long id);
+
     List<Shop> getFiveShopsPage(int offset);
 
-    Shop saveShop (Shop shop);
-
     Optional<Shop> findById(Long id);
+
 }
