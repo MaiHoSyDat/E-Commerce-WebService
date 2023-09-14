@@ -21,6 +21,7 @@ public class ShopServiceImpl implements IShopService {
     private IShopRepo iShopRepo;
     @PersistenceContext
     EntityManager entityManager;
+
     @Autowired
     private IAccountRepo iAccountRepo;
 

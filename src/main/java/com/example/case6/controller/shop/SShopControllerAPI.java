@@ -73,7 +73,7 @@ public class SShopControllerAPI {
         return new ResponseEntity<>(shopService.findShopDTO(idAccount), HttpStatus.OK);
     }
 
-    @PostMapping("/save/{idAccount}")
+    @PostMapping("/save/account/{idAccount}")
     public ResponseEntity<?> saveShop(@PathVariable Long idAccount,
                                          @RequestBody Shop shop) {
         Optional<Account> accountOptional = iAccountService.findShopByAccountId(idAccount);
@@ -88,7 +88,7 @@ public class SShopControllerAPI {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
 
-        @PostMapping("/save/{idShop}")
+        @PostMapping("/save/shop/{idShop}")
     public ResponseEntity<?> editInformationShop(@PathVariable Long idShop,
                                                  @RequestBody Shop shop) {
         Optional<Shop> shopOptional = shopService.findById(idShop);
