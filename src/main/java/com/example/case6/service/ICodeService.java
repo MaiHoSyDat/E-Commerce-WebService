@@ -8,4 +8,5 @@ public interface ICodeService {
     List<Code> getAllCodeByShopId(long idShop);
     void setQuantity(Code code);
     Code findById(long idCode);
+    void saveCode(Code code);
 }

@@ -25,4 +25,10 @@ public class CodeController {
         codeService.setQuantity(code);
         return new ResponseEntity<>(code, HttpStatus.OK);
     }
+    @PostMapping("/create")
+    public ResponseEntity<Code> saveCode(@RequestBody Code code){
+        codeService.saveCode(code);
+        return new ResponseEntity<>(code, HttpStatus.OK);
+
+    }
 }
