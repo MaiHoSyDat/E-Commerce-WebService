@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewDTO {
+    private long id;
     private String headline;
     private String context ;
     private CustomerDTO customer;
