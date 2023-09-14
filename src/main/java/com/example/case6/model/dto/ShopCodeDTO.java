@@ -5,29 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Date;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerDTO {
+public class ShopCodeDTO {
     private long id;
-
-    private Date birthday;
-
-    private Date date_create;
-
-
-    private String avatar;
-
-    private String address;
-
-
-    private String phone;
-
-    private String gender;
-
-
-
-
+    private String shopName;
+    private String logo;
+    private List<CodeDTO> codes;
 }

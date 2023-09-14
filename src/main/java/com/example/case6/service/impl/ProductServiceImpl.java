@@ -84,7 +84,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void save(ProductDTO productDTO, long idShop) {
         Product product = new Product();
-        Shop shop = shopService.findShopById(idShop);
+        Shop shop = shopService.getShopByAccountLogin(idShop);
         product.setShop(shop);
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());

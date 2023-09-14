@@ -17,6 +17,10 @@ public class OrderServiceImpl implements IOrderService {
     public Order save(Order order) {
         return iOderRepo.save(order);
     }
+    @Override
+    public List<Order> getByStatusAndCustomer(long statusId, long customerId) {
+        return iOderRepo.getAllByStatusIdAndUserId(statusId, customerId);
+    }
 
     @Override
     public List<Order> getAllOrdersByCustomerId(long idCustomer) {

@@ -13,6 +13,7 @@ import java.util.Optional;
 public class CodeServiceImpl implements ICodeService {
     @Autowired
     private ICodeRepo iCodeRepo;
+
     @Override
     public List<Code> getAllCodeByShopId(long idShop) {
         return iCodeRepo.getAllCodeByShopId(idShop);
@@ -25,7 +26,6 @@ public class CodeServiceImpl implements ICodeService {
 
     @Override
     public Code findById(long idCode) {
-        Optional<Code> codeOptional = iCodeRepo.findById(idCode);
-        return codeOptional.orElse(null);
+        return iCodeRepo.findById(idCode);
     }
 }

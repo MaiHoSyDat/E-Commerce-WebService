@@ -11,4 +11,11 @@ import java.util.List;
 public interface ICodeRepo extends JpaRepository<Code, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM Code where shop_id= :shop_id")
     List<Code> getAllCodeByShopId(@Param("shop_id") long shop_id);
+
+    List<Code> findAllByShopId(long shopId);
+
+    Code findById(long id);
+
+    @Query(nativeQuery = true, value = "select * FROM code c WHERE c.shop_id = :shopId AND c.quantity > 0")
+    List<Code> findAllByShop(@Param("shopId") long shopId);
 }

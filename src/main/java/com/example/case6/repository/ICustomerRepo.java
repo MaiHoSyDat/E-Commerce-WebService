@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface ICustomerRepo extends JpaRepository<Customer, Long> {
     Customer findById(long id);
     Customer findByAccountId(long id);
+    Customer getCustomerByAccount_Id(long id);
     @Query(nativeQuery = true, value = "SELECT * FROM Customer where account_id= :account_id")
     Customer getCustomerByAccountLogin(@Param("account_id") long account_id);
 }
