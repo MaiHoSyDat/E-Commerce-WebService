@@ -11,6 +11,7 @@ public interface ICustomerService {
     Customer save(Customer customer);
     List<Customer> getAll();
     Customer getByAccount(Account account);
+    Customer getCustomerByAccountLogin(long idAccount);
     CustomerDTO findById(long id);
     CustomerDTO edit(CustomerDTO customerDTO);
 

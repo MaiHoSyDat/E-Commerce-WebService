@@ -39,5 +39,6 @@ public interface IProductService {
     List<ProductReviewDTO> getThreeProductsMaxRatingDTO();
     List<ProductReviewDTO> getFilterProductsDTO(FilterProductDTO filterProductDTO);
     Product getById(long id);
+    List<Product> getAllProductsByCustomerBuy(long idCustomer);
 
 }
