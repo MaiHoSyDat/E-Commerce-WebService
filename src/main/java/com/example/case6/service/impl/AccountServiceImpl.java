@@ -155,5 +155,12 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.getEmployeeAccount();
     }
 
+    @Override
+    public Page<AccountDTO> getAllShopAccount(Pageable pageable,long idStatus, long idRole) {
+        Page<Account> accountPage = iAccountRepo.findAllByStatusIdAndRoleId(pageable, idStatus,idRole);
+        Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
+        return accountDTOS;
+    }
+
 
 }

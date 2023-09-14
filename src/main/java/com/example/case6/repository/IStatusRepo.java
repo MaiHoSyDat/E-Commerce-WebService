@@ -14,7 +14,7 @@ public interface IStatusRepo extends JpaRepository<Status, Long> {
     @Query(value = "select new Status(s.id, s.name) from Status s where s.id = 1 or s.id = 2")
     List<Status> getCustomerStatus();
     Status findById(long id);
-    @Query(value = "select new Status(s.id, s.name) from Status s where s.id = 1 or s.id = 2 or s.id = 3")
+    @Query(value = "select new Status(s.id, s.name) from Status s where s.id between 1 and 4")
     List<Status> getShopStatus();
     @Query(nativeQuery = true, value = "SELECT * FROM status WHERE name = 'Pending' OR name = 'Confirm' OR name = 'Received' OR name = 'Cancel'")
     List<Status> getAllStatusOrder();

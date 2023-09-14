@@ -24,4 +24,5 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
     List<Account> getEmployeeAccount();
     @Query("select a from Account a where a.role.id = 4 and a.username like :username")
     Page<Account> findAllByUsernameLike(@Param("username") String username, Pageable pageable);
+    Page<Account> findAllByStatusIdAndRoleId( Pageable pageable,long idStatus,long idRole);
 }

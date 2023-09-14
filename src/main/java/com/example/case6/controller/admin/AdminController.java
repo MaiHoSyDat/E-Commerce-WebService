@@ -49,6 +49,12 @@ public class AdminController {
         Page<AccountDTO> accountDTOS = iAccountService.getAllByRoleId(PageRequest.of(page, 10), id);
         return new ResponseEntity<>(accountDTOS, HttpStatus.OK);
     }
+    //lấy ra tất cả account có role =3  và status = 4
+    @GetMapping("/getAllShopPending")
+    public ResponseEntity<?> getAllShopPending(@RequestParam(defaultValue = "0") int page, @RequestParam long idStatus, @RequestParam long idRole){
+        Page<AccountDTO> accountDTOS = iAccountService.getAllShopAccount(PageRequest.of(page, 10), idStatus,idRole);
+        return new ResponseEntity<>(accountDTOS, HttpStatus.OK);
+    }
 
 
     //  <4>   Admin block/active tài khoản:
@@ -70,7 +76,7 @@ public class AdminController {
         return new ResponseEntity<>(iStatusService.getCustomerStatus(),HttpStatus.OK);
     }
     //lấy ra các status shop
-    @GetMapping("shopStatus")
+    @GetMapping("/shopStatus")
     public ResponseEntity<List<Status>> getShopStatus(){
         return new ResponseEntity<>(iStatusService.getShopStatus(),HttpStatus.ACCEPTED);
     }

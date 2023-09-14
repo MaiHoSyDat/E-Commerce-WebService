@@ -39,6 +39,7 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountByUsername(String username);
 
     List<Account> getEmployeeAccount();
+    Page<AccountDTO> getAllShopAccount(Pageable pageable,long idStatus,long idRole);
 
 
 }
