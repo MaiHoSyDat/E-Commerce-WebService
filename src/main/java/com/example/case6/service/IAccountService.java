@@ -1,6 +1,7 @@
 package com.example.case6.service;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.model.dto.EditPassDTO;
 import org.springframework.data.domain.Page;
@@ -26,7 +27,7 @@ public interface IAccountService extends UserDetailsService {
 
     AccountDTO convertToAccountDTO(Account account);
 
-    Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context);
+    Page<AccountDTO> getAllByLike(Pageable pageable,long roleId, int num, String context);
 
     Account getAccountLogin(String username, String password);
 
@@ -36,5 +37,8 @@ public interface IAccountService extends UserDetailsService {
 
     Account add(Account account);
     Account getAccountByUsername(String username);
+
+    List<Account> getEmployeeAccount();
+
 
 }
