@@ -5,6 +5,7 @@ import com.example.case6.model.Review;
 import com.example.case6.model.dto.ProductReviewDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,5 +20,11 @@ public interface IReviewRepo extends JpaRepository<Review, Long> {
     List<Object[]> getTotalReviewByRating(long product);
 
     List<Review> getAllByProductId (long idProduct);
+    @Query(nativeQuery = true, value = " SELECT * " +
+            " FROM Review r " +
+            " JOIN Customer c ON r.user_id = c.id " +
+            " JOIN Product p ON r.product_id = p.id " +
+            " WHERE r.product_id = :product_id AND r.user_id = :user_id;")
+    List<Review> getAllByProductIdAndCustomerId(@Param("product_id") long product_id, @Param("user_id") long user_id);
 
 }

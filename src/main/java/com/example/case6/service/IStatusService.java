@@ -8,4 +8,6 @@ public interface IStatusService {
     List<Status> getAllStatus();
     List<Status> getCustomerStatus();
     List<Status> getShopStatus();
+    List<Status> getAllStatusOrder();
+
 }

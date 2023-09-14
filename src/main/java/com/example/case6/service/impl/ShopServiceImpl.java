@@ -166,9 +166,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-        public void editAccountShopStatus(long accountId, int statusId) {
+    public void editAccountShopStatus(long accountId, int statusId) {
         Account account = iAccountRepo.findById(accountId);
         account.setStatus(new Status(statusId));
         iAccountRepo.save(account);
+
     }
 }

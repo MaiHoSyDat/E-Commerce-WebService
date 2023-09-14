@@ -18,7 +18,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private Date date_create = Date.valueOf(LocalDate.now());
+        private Date date_create = Date.valueOf(LocalDate.now());
     @ManyToOne
     private Status status = new Status(3);
     @ManyToOne
@@ -45,6 +45,7 @@ public class Order {
         this.code = code;
         this.shop = shop;
     }
+
 
     public Order(Customer user, double totalAmount) {
         this.user = user;

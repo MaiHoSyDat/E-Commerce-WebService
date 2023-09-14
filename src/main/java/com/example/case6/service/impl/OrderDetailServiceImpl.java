@@ -4,11 +4,9 @@ import com.example.case6.model.*;
 import com.example.case6.model.dto.CodeDTO;
 import com.example.case6.model.dto.OrderDTO;
 import com.example.case6.model.dto.OrderDetailDTO;
-import com.example.case6.model.dto.OrderIdAndShopDTO;
 import com.example.case6.repository.ICartRepo;
 import com.example.case6.repository.ICodeRepo;
 import com.example.case6.repository.IOderDetailRepo;
-import com.example.case6.repository.IOderRepo;
 import com.example.case6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,5 +75,15 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
             orderDTOS.add(new OrderDTO(o.getId(),o.getShop().getId(),o.getShop().getName(),o.getShop().getLogo(),o.getTotalAmount(),orderDetailDTOs,codeDTOS));
         }
         return orderDTOS;
+    }
+
+    @Override
+    public List<OrderDetail> getAllOrdersDetailByOrderId(long idOrder) {
+        return iOderDetailRepo.getAllOrdersDetailByOrderId(idOrder);
+    }
+
+    @Override
+    public void deleteByOrderId(long idOrder) {
+        iOderDetailRepo.deleteByOrderId(idOrder);
     }
 }

@@ -4,6 +4,7 @@ import com.example.case6.model.Account;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
+import com.example.case6.model.dto.EditPassDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.IRoleRepo;
 import com.example.case6.repository.IStatusRepo;
@@ -115,6 +116,20 @@ public class AccountServiceImpl implements IAccountService {
         Account account = iAccountRepo.getAccountByUsername(username);
         account.setPassword(password);
         return account;
+    }
+
+    @Override
+    public boolean editPass(EditPassDTO editPassDTO) {
+        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())){
+            Account account = iAccountRepo.findById(editPassDTO.getAccountId());
+            if (editPassDTO.getPass().equals(account.getPassword())){
+                account.setPassword(editPassDTO.getNewPass());
+                iAccountRepo.save(account);
+                return true;
+            }else
+                return false;
+        }else
+            return false;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.case6.service;
 import com.example.case6.model.Account;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
+import com.example.case6.model.dto.EditPassDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,7 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountLogin(String username, String password);
 
     Account changePassword(String username, String password);
-
+    boolean editPass(EditPassDTO editPassDTO);
     void editStatus(long accountId, int statusId);
 
     Account add(Account account);
