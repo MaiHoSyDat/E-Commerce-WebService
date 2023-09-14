@@ -9,4 +9,5 @@ public interface IReviewSevice {
     List<ReviewDTO> getAllReviewByIdProduct(Long idProduct);
     List<Object[]> getTotalReviewRating(long productID);
     void save(Review review);
+    List<Review> getAllByProductIdAndCustomerId(long idProduct, long idCustomer);
 }

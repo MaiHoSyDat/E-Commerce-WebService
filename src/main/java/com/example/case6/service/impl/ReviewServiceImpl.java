@@ -1,20 +1,21 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.*;
-import com.example.case6.model.dto.CustomerDTO;
-import com.example.case6.model.dto.ProductDTO;
-import com.example.case6.model.dto.ReviewDTO;
-import com.example.case6.model.dto.ShopDTO;
+import com.example.case6.model.dto.*;
 import com.example.case6.repository.IImageRepo;
 import com.example.case6.repository.IReviewRepo;
 import com.example.case6.service.IReviewSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 @Service
 public class ReviewServiceImpl implements IReviewSevice {
+    @PersistenceContext
+    EntityManager entityManager;
     @Autowired
     IReviewRepo iReviewRepo;
     @Autowired
@@ -44,6 +45,19 @@ public class ReviewServiceImpl implements IReviewSevice {
     @Override
     public void save(Review review) {
         iReviewRepo.save(review);
+    }
+
+    @Override
+    public List<Review> getAllByProductIdAndCustomerId(long idProduct, long idCustomer) {
+        List<Review> result = entityManager.createQuery("SELECT r " +
+                        " FROM Review r " +
+                        " JOIN r.user c " +
+                        " JOIN r.product p " +
+                        " WHERE p.id = :idProduct AND c.id = :idCustomer ", Review.class)
+                .setParameter("idProduct", idProduct)
+                .setParameter("idCustomer", idCustomer)
+                .getResultList();
+        return result;
     }
 
 }

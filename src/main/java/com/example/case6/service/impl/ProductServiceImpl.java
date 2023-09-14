@@ -30,7 +30,7 @@ import java.lang.*;
 public class ProductServiceImpl implements IProductService {
 
     @Autowired
-   private IShopService shopService;
+    private IShopService shopService;
     @PersistenceContext
     EntityManager entityManager;
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -22,5 +23,9 @@ public class ReviewController {
         review.setDate(date);
         reviewSevice.save(review);
         return new ResponseEntity<>(review, HttpStatus.OK);
+    }
+    @GetMapping("/{idProduct}/{idCustomer}")
+    public ResponseEntity<List<Review>> getAllByProductIdAndCustomerId(@PathVariable long idProduct, @PathVariable long idCustomer) {
+        return new ResponseEntity<>(reviewSevice.getAllByProductIdAndCustomerId(idProduct, idCustomer), HttpStatus.OK);
     }
 }
