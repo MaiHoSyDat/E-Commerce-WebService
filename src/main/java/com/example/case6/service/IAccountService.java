@@ -31,7 +31,7 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountLogin(String username, String password);
 
     Account changePassword(String username, String password);
-    void editPass(EditPassDTO editPassDTO);
+    boolean editPass(EditPassDTO editPassDTO);
     void editStatus(long accountId, int statusId);
 
     Account add(Account account);

@@ -104,16 +104,17 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public void editPass(EditPassDTO editPassDTO) {
+    public boolean editPass(EditPassDTO editPassDTO) {
         if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())){
             Account account = iAccountRepo.findById(editPassDTO.getAccountId());
             if (editPassDTO.getPass().equals(account.getPassword())){
                 account.setPassword(editPassDTO.getNewPass());
                 iAccountRepo.save(account);
-            }
-
-        }
-
+                return true;
+            }else
+                return false;
+        }else
+            return false;
     }
 
     @Override

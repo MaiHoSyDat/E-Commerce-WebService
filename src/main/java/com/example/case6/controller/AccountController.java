@@ -23,8 +23,10 @@ public class AccountController {
     }
     @PostMapping("/editPass")
     public ResponseEntity<?> editPass(@RequestBody EditPassDTO editPassDTO){
-        iAccountService.editPass(editPassDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if ( iAccountService.editPass(editPassDTO)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
