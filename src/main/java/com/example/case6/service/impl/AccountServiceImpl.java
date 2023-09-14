@@ -83,13 +83,13 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context) {
+    public Page<AccountDTO> getAllByLike(Pageable pageable,long roleId , int num, String context) {
         if (num == 1) {
-            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%",roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         } else if (num == 2) {
-            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%", pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%",roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         }

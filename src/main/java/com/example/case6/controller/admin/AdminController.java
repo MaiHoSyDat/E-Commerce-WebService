@@ -38,8 +38,8 @@ public class AdminController {
 
     //    <2> Tìm kiếm tương đối tài khoản theo Full_name hoặc Email kèm theo lựa chọn 1-Full_name và 2-Email
     @GetMapping("/getByLike")
-    public ResponseEntity<Page<AccountDTO>> getByLike(@RequestParam(defaultValue = "0") int page, @RequestParam int num, @RequestParam String context) {
-        return new ResponseEntity<>(iAccountService.getAllByLike(PageRequest.of(page, 10), num, context), HttpStatus.OK);
+    public ResponseEntity<Page<AccountDTO>> getByLike(@RequestParam(defaultValue = "0") int page,@RequestParam long roleId, @RequestParam int num, @RequestParam String context) {
+        return new ResponseEntity<>(iAccountService.getAllByLike(PageRequest.of(page, 10), roleId, num, context), HttpStatus.OK);
     }
 
 

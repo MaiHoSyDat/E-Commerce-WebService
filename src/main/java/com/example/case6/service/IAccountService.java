@@ -26,7 +26,7 @@ public interface IAccountService extends UserDetailsService {
 
     AccountDTO convertToAccountDTO(Account account);
 
-    Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context);
+    Page<AccountDTO> getAllByLike(Pageable pageable,long roleId, int num, String context);
 
     Account getAccountLogin(String username, String password);
 

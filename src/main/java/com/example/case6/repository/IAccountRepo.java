@@ -13,10 +13,10 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
     Account findById(long id);
     Account findByUsername(String username);
     //tìm kiếm theo tên
-    @Query("select a from Account a WHERE a.name like :name")
-    Page<Account> findAllByNameLike(@Param("name") String name, Pageable pageable);
-    @Query("select a from Account a WHERE a.email like :email")
-    Page<Account> findAllByEmailLike(@Param("email") String email, Pageable pageable);
+    @Query("select a from Account a WHERE a.name like :name and a.role.id = :roleId")
+    Page<Account> findAllByNameLike(@Param("name") String name,@Param("roleId") long roleId, Pageable pageable);
+    @Query("select a from Account a WHERE a.email like :email and a.role.id = :roleId")
+    Page<Account> findAllByEmailLike(@Param("email") String email,@Param("roleId") long roleId, Pageable pageable);
     Account getAccountByUsernameAndPassword (String user , String pass );
     Account getAccountByUsername(String username);
     Page<Account> findAllByRoleId(Pageable pageable, long id);
