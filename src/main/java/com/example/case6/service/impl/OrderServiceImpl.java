@@ -1,7 +1,11 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Order;
+import com.example.case6.model.OrderDetail;
+import com.example.case6.model.Product;
+import com.example.case6.repository.IOderDetailRepo;
 import com.example.case6.repository.IOderRepo;
+import com.example.case6.repository.IProductRepo;
 import com.example.case6.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +17,26 @@ import java.util.Optional;
 public class OrderServiceImpl implements IOrderService {
     @Autowired
     IOderRepo iOderRepo;
+    @Autowired
+    IProductRepo iProductRepo;
+    @Autowired
+    IOderDetailRepo iOderDetailRepo;
+
+    @Override
+    public Order update(Order order) {
+        if (order.getStatus().getId() == 7){
+            List<OrderDetail> orderDetails = iOderDetailRepo.getAllOrdersDetailByOrderId(order.getId());
+            for (OrderDetail od :orderDetails) {
+                Product product = iProductRepo.findById(od.getProduct().getId());
+                product.setQuantity(product.getQuantity() + od.getQuantity());
+                iProductRepo.save(product);
+            }
+        }else {
+            iOderRepo.save(order);
+        }
+        return null;
+    }
+
     @Override
     public Order save(Order order) {
         return iOderRepo.save(order);

@@ -22,7 +22,7 @@ public class OrderController {
     }
     @PostMapping("/{idOrder}")
     public ResponseEntity<Order> update(@RequestBody Order order) {
-        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
+        return new ResponseEntity<>(orderService.update(order), HttpStatus.OK);
     }
     @GetMapping("/delete/{idOrder}")
     public ResponseEntity<Order> delete(@PathVariable long idOrder) {

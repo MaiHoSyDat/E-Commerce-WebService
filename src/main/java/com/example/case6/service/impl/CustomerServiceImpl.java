@@ -3,14 +3,17 @@ package com.example.case6.service.impl;
 import com.example.case6.model.Account;
 import com.example.case6.model.Customer;
 import com.example.case6.model.Status;
+import com.example.case6.model.Wishlist;
 import com.example.case6.model.dto.CustomerDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.ICustomerRepo;
+import com.example.case6.repository.IWishlistRepo;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,13 +22,20 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerRepo iCustomerRepo;
     @Autowired
     IAccountRepo iAccountRepo;
+    @Autowired
+    IWishlistRepo iWishlistRepo;
 
     @Override
     public Customer save(Customer customer) {
         Account account = iAccountRepo.findById(customer.getAccount().getId());
         account.setStatus(new Status(1));
         iAccountRepo.save(account);
-        return iCustomerRepo.save(customer);
+        Customer customer1 = iCustomerRepo.save(customer);
+        Wishlist wishlist = new Wishlist();
+        wishlist.setAccount(customer1);
+        wishlist.setProducts(new ArrayList<>());
+        iWishlistRepo.save(wishlist);
+        return customer1;
     }
 
     @Override

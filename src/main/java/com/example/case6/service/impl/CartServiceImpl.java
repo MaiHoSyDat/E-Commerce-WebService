@@ -122,31 +122,41 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs) {
+    public boolean payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs) {
         Customer customer = iCustomerService.getByAccount(account);
         Cart cart = iCartRepo.findByAccountId(account.getId());
         List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
         List<Shop> shops = iShopService.getAllShopByProductInCartDetail(cartDetails);
+        for (CartDetail cd : cartDetails) {
+            Product product = iProductService.findById(cd.getProduct().getId()).get();
+            if (cd.getQuantity() > product.getQuantity()) {
+                return false;
+            }
+        }
         for (Shop s : shops) {
             Code code = null;
-            for (CodeDTO cd:codeDTOs) {
-                if (cd.getShopId() == s.getId()){
+            for (CodeDTO cd : codeDTOs) {
+                if (cd.getShopId() == s.getId()) {
                     code = iCodeRepo.findById(cd.getId());
                     code.setQuantity(code.getQuantity() - 1);
                     iCodeRepo.save(code);
                 }
             }
-            Order order = new Order(customer,fullName,phone,address,code,s);
+            Order order = new Order(customer, fullName, phone, address, code, s);
             iOrderService.save(order);
             for (CartDetail cd : cartDetails) {
                 if (cd.getProduct().getShop().getId() == s.getId()) {
                     OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
                     iOrderDetailService.save(orderDetail);
+                    Product product = iProductService.findById(cd.getProduct().getId()).get();
+                    product.setQuantity(product.getQuantity() - cd.getQuantity());
+                    iProductService.save(product);
                     iCartDetailService.deleteCartDetail(cd.getId());
                 }
             }
         }
 
+        return true;
     }
 
 
