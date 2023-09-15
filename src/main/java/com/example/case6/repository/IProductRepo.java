@@ -42,6 +42,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
             " FROM Product p " +
             " JOIN Category c ON p.category.id = c.id " +
             " LEFT JOIN Review r ON p.id = r.product.id " +
+            " WHERE p.status.id <> 2 " +
             " GROUP BY p.id, p.name " +
             " Order By p.id desc")
     List<ProductReviewDTO> getTenNewProductsDTO();
@@ -57,6 +58,7 @@ public interface IProductRepo extends JpaRepository<Product, Long> {
             " FROM product p " +
             " JOIN category c ON p.category_id = c.id " +
             " LEFT JOIN review r ON p.id = r.product_id " +
+            " WHERE p.status.id <> 2 " +
             " GROUP BY p.id, p.name " +
             " Order By average_rating desc limit 3;")
     List<ProductReviewDTO> getThreeProductsMaxRatingDTO();

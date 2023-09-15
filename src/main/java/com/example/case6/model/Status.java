@@ -1,5 +1,6 @@
 package com.example.case6.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +11,9 @@ import javax.persistence.Id;
 
 @Entity
 @Data
+
 @NoArgsConstructor
+
 public class Status {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -18,5 +21,10 @@ public class Status {
     private String name;
     public Status(long id) {
         this.id = id;
+    }
+
+    public Status(long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 }

@@ -1,15 +1,26 @@
 package com.example.case6.service.impl;
 
+import com.example.case6.model.*;
+import com.example.case6.model.dto.CodeDTO;
+import com.example.case6.model.dto.ShopCodeDTO;
+import com.example.case6.repository.ICartRepo;
+import com.example.case6.repository.ICodeRepo;
 import com.example.case6.model.Account;
 import com.example.case6.model.Shop;
+import com.example.case6.model.Status;
+import com.example.case6.repository.IAccountRepo;
 import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.model.Status;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.IShopRepo;
+import com.example.case6.service.ICartDetailService;
+import com.example.case6.service.ICustomerService;
+import com.example.case6.service.IAccountService;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -19,11 +30,18 @@ import java.util.Optional;
 public class ShopServiceImpl implements IShopService {
     @Autowired
     private IShopRepo iShopRepo;
-    @PersistenceContext
-    EntityManager entityManager;
-
+    @Autowired
+    ICodeRepo iCodeRepo;
+    @Autowired
+    ICustomerService iCustomerService;
+    @Autowired
+    ICartDetailService iCartDetailService;
+    @Autowired
+    ICartRepo iCartRepo;
     @Autowired
     private IAccountRepo iAccountRepo;
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     private IShopRepo shopRepo;
@@ -40,9 +58,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public void save (Shop shop) {
+    public void save(Shop shop) {
         iShopRepo.save(shop);
     }
+
 
     @Override
     public void editShop(Shop shop) {
@@ -89,6 +108,75 @@ public class ShopServiceImpl implements IShopService {
                 .setMaxResults(5)
                 .getResultList();
         return result;
+    }
+
+    @Override
+    public List<Shop> getAllShopByProductInCartDetail(List<CartDetail> cartDetails) {
+        List<Shop> shops = new ArrayList<>();
+        for (CartDetail cd : cartDetails) {
+            boolean isShopExist = false;
+            for (Shop s : shops) {
+                if (s.getId() == cd.getProduct().getShop().getId()) {
+                    isShopExist = true;
+                    break;
+                }
+            }
+            if (!isShopExist) {
+                shops.add(cd.getProduct().getShop());
+            }
+        }
+        return shops;
+    }
+
+    @Override
+    public List<Shop> getAllShopByProductInOrderDetail(List<OrderDetail> orderDetails) {
+        List<Shop> shops = new ArrayList<>();
+        for (OrderDetail od : orderDetails) {
+            boolean isShopExist = false;
+            for (Shop s : shops) {
+                if (s.getId() == od.getProduct().getShop().getId()) {
+                    isShopExist = true;
+                    break;
+                }
+            }
+            if (!isShopExist) {
+                shops.add(od.getProduct().getShop());
+            }
+        }
+        return shops;
+    }
+    @Override
+    public List<ShopCodeDTO> getAllShopCode(Account account) {
+        Cart cart = iCartRepo.findByAccountId(account.getId());
+        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+        List<Shop> shops = getAllShopByProductInCartDetail(cartDetails);
+        List<ShopCodeDTO> shopCodeDTOS = new ArrayList<>();
+        for (Shop s : shops) {
+            List<Code> codes = iCodeRepo.findAllByShop(s.getId());
+            List<CodeDTO> codeDTOS = new ArrayList<>();
+            for (Code c:codes) {
+                codeDTOS.add(new CodeDTO(c.getId(),c.getName(),c.getQuantity(),c.getPercent(),c.getShop().getId()));
+            }
+            shopCodeDTOS.add(new ShopCodeDTO(s.getId(),s.getName(),s.getLogo(),codeDTOS));
+        }
+        return shopCodeDTOS;
+    }
+
+
+
+    @Override
+    public void editShopStatus(long shopId, int statusId) {
+        Shop shop = iShopRepo.findById(shopId).get();
+        shop.setStatus(new Status(statusId));
+        iShopRepo.save(shop);
+    }
+
+    @Override
+    public void editAccountShopStatus(long accountId, int statusId) {
+        Account account = iAccountRepo.findById(accountId);
+        account.setStatus(new Status(statusId));
+        iAccountRepo.save(account);
+
     }
 
     @Override

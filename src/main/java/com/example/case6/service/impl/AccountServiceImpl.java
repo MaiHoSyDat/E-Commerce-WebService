@@ -4,7 +4,10 @@ import com.example.case6.model.Account;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
+import com.example.case6.model.dto.EditPassDTO;
 import com.example.case6.repository.IAccountRepo;
+import com.example.case6.repository.IRoleRepo;
+import com.example.case6.repository.IStatusRepo;
 import com.example.case6.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,10 @@ public class AccountServiceImpl implements IAccountService {
 
     @Autowired
     IAccountRepo iAccountRepo;
-
+    @Autowired
+    IStatusRepo iStatusRepo;
+    @Autowired
+    IRoleRepo iRoleRepo;
     @Override
     public List<Account> getAll() {
         return iAccountRepo.findAll();
@@ -37,9 +43,19 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account create(Account account) {
-        account.setRole(new Role(4));
+        Role role = iRoleRepo.findById(4);
+        Status status = iStatusRepo.findById(1);
+
+        if (role != null) {
+            account.setRole(role);
+        }
+
+        if (status != null) {
+            account.setStatus(status);
+        }
+
         account.setPassword("@123456");
-        account.setStatus(new Status(1));
+
         return iAccountRepo.save(account);
     }
 
@@ -69,13 +85,13 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Page<AccountDTO> getAllByLike(Pageable pageable, int num, String context) {
+    public Page<AccountDTO> getAllByLike(Pageable pageable,long roleId , int num, String context) {
         if (num == 1) {
-            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%",roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         } else if (num == 2) {
-            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%", pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%",roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         }
@@ -104,6 +120,20 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
+    public boolean editPass(EditPassDTO editPassDTO) {
+        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())){
+            Account account = iAccountRepo.findById(editPassDTO.getAccountId());
+            if (editPassDTO.getPass().equals(account.getPassword())){
+                account.setPassword(editPassDTO.getNewPass());
+                iAccountRepo.save(account);
+                return true;
+            }else
+                return false;
+        }else
+            return false;
+    }
+
+    @Override
     public void editStatus(long accountId, int statusId) {
         Account account = iAccountRepo.findById(accountId);
         account.setStatus(new Status(statusId));
@@ -120,6 +150,12 @@ public class AccountServiceImpl implements IAccountService {
     public Account getAccountByUsername(String username) {
         return iAccountRepo.findByUsername(username);
     }
+
+    @Override
+    public List<Account> getEmployeeAccount() {
+        return iAccountRepo.getEmployeeAccount();
+    }
+
 
     @Override
     public Optional<Account> findShopByAccountId(Long id) {
