@@ -29,6 +29,6 @@ public interface ICartService {
     List<CartDetail> updateCart(List<CartDetail> cartDetails);
     void deleteProductByCar(long cartDetailId);
     List<CartDetail> getAllCartDetail(Account account);
-    void payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs);
+    boolean payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs);
 
 }
