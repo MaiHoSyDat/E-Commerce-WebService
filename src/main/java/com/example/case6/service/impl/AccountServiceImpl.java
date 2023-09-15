@@ -158,8 +158,9 @@ public class AccountServiceImpl implements IAccountService {
 
 
     @Override
-    public Optional<Account> findShopByAccountId(Long id) {
+    public Optional<Account> getAccountByAccountId(Long id) {
         return iAccountRepo.findById(id);
     }
+
 
 }

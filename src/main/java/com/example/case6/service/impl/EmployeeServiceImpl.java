@@ -1,6 +1,7 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Employee;
+import com.example.case6.model.Shop;
 import com.example.case6.repository.IEmployeeRepo;
 import com.example.case6.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public Optional<Employee> findById(Long id) {
         return iEmployeeRepo.findById(id);
+    }
+
+    @Override
+    public Employee getEmployeeByAccountLogin(long account_id) {
+        return iEmployeeRepo.getEmployeeByAccountLogin(account_id);
     }
 
     @Override

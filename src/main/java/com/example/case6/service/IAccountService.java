@@ -41,6 +41,7 @@ public interface IAccountService extends UserDetailsService {
 
     List<Account> getEmployeeAccount();
 
-    Optional<Account> findShopByAccountId(Long id);
+    Optional<Account> getAccountByAccountId(Long id);
+
 
 }

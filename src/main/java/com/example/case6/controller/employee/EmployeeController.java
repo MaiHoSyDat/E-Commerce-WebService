@@ -1,4 +1,4 @@
-package com.example.case6.controller.admin;
+package com.example.case6.controller.employee;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Employee;
@@ -28,10 +28,15 @@ public class EmployeeController {
     @Autowired
     private IAccountRepo iAccountRepo;
 
+    @GetMapping("/login/{idAccount}")
+    public ResponseEntity<Employee> getEmployeeByAccountLogin(@PathVariable long idAccount) {
+        return new ResponseEntity<>(employeeService.getEmployeeByAccountLogin(idAccount), HttpStatus.OK);
+    }
+
     @PostMapping("/save/{idAccount}")
-    public ResponseEntity<?> saveShop(@PathVariable Long idAccount,
+    public ResponseEntity<?> saveStaff(@PathVariable Long idAccount,
                                       @RequestBody Employee employee) {
-        Optional<Account> accountOptional = iAccountService.findShopByAccountId(idAccount);
+        Optional<Account> accountOptional = iAccountService.getAccountByAccountId(idAccount);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             employee.setAccount(account);
@@ -44,7 +49,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/save/employee/{idEmployee}")
-    public ResponseEntity<?> editInformationShop(@PathVariable Long idEmployee,
+    public ResponseEntity<?> editInformationStaff(@PathVariable Long idEmployee,
                                                  @RequestBody Employee employee) {
         Optional<Employee> employeeOptional = employeeService.findById(idEmployee);
         if (employeeOptional.isPresent()) {
@@ -54,4 +59,5 @@ public class EmployeeController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
+
 }
