@@ -35,13 +35,11 @@ public class Employee {
 
     @NotBlank(message = "Phone number is required")
     private String phone;
-
+    private double salaryPerDay =0;
     private String gender;
 
     private double salary =0 ;
     @OneToOne
     private Account account;
-
-
 
 }

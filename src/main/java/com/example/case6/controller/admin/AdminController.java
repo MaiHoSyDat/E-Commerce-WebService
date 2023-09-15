@@ -49,7 +49,7 @@ public class AdminController {
         Page<AccountDTO> accountDTOS = iAccountService.getAllByRoleId(PageRequest.of(page, 10), id);
         return new ResponseEntity<>(accountDTOS, HttpStatus.OK);
     }
-    //lấy ra tất cả account có role =3  và status = 4
+    //lấy ra tất cả account shop đang chờ duyệt
     @GetMapping("/getAllShopPending")
     public ResponseEntity<?> getAllShopPending(@RequestParam(defaultValue = "0") int page, @RequestParam long idStatus, @RequestParam long idRole){
         Page<AccountDTO> accountDTOS = iAccountService.getAllShopAccount(PageRequest.of(page, 10), idStatus,idRole);
