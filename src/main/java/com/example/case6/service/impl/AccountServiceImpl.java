@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
@@ -155,5 +156,10 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.getEmployeeAccount();
     }
 
+
+    @Override
+    public Optional<Account> findShopByAccountId(Long id) {
+        return iAccountRepo.findById(id);
+    }
 
 }

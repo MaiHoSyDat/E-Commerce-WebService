@@ -12,6 +12,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IShopRepo extends JpaRepository<Shop, Long> {
     // tìm shop theo account đăng nhập
@@ -20,4 +21,6 @@ public interface IShopRepo extends JpaRepository<Shop, Long> {
     //tìm account theo shop
     @Query("SELECT s.account FROM Shop s WHERE s.id = :shopId")
     Account findAccountByShopId(@Param("shopId") long shopId);
+
+    Optional<Shop> findShopsById(Long id);
 }

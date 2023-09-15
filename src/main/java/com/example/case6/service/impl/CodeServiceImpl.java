@@ -28,4 +28,8 @@ public class CodeServiceImpl implements ICodeService {
     public Code findById(long idCode) {
         return iCodeRepo.findById(idCode);
     }
+    @Override
+    public void saveCode(Code code){
+        iCodeRepo.save(code);
+    }
 }

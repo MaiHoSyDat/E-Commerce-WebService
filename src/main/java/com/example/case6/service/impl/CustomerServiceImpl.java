@@ -1,9 +1,6 @@
 package com.example.case6.service.impl;
 
-import com.example.case6.model.Account;
-import com.example.case6.model.Customer;
-import com.example.case6.model.Status;
-import com.example.case6.model.Wishlist;
+import com.example.case6.model.*;
 import com.example.case6.model.dto.CustomerDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.ICustomerRepo;
@@ -13,11 +10,15 @@ import com.example.case6.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
+    @PersistenceContext
+    EntityManager entityManager;
     @Autowired
     ICustomerRepo iCustomerRepo;
     @Autowired
@@ -73,5 +74,19 @@ public class CustomerServiceImpl implements ICustomerService {
         iCustomerRepo.save(customer);
         System.out.println(customer);
         return customerDTO;
+    }
+
+    @Override
+    public List<Customer> getAllCustomerBuyProductFromShop(long idShop) {
+        String hql = "SELECT c " +
+                " FROM Customer c " +
+                " JOIN Order o ON o.user.id = c.id " +
+                " JOIN Shop s ON s.id = o.shop.id " +
+                " WHERE s.id = :idShop " +
+                " GROUP BY  c.id ";
+        List<Customer> result = entityManager.createQuery(hql, Customer.class)
+                .setParameter("idShop", idShop)
+                .getResultList();
+        return result;
     }
 }

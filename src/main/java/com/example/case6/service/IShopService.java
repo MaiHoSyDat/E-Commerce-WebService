@@ -8,11 +8,12 @@ import com.example.case6.model.dto.ShopCodeDTO;
 import com.example.case6.model.dto.ShopReviewDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IShopService {
     List<Shop> getAllShop();
     Shop findShopById(long id);
-    void saveShop(Shop shop);
+    void save(Shop shop);
     void editShop(Shop shop);
     Shop getShopByAccountLogin(long account_id);
     List<Shop> getAllShopByProductInCartDetail(List<CartDetail> cartDetails);
@@ -23,4 +24,7 @@ public interface IShopService {
     List<Shop> getFiveShopsPage(int offset);
     void editAccountShopStatus(long accountId, int statusId);
     void editShopStatus (long shopId, int statusId);
+
+    Optional<Shop> findById(Long id);
+
 }

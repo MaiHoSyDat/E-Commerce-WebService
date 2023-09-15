@@ -41,9 +41,16 @@ public class SProductControllerAPI {
 
     //15, 16, 17, 18
     @PostMapping("/{idShop}/products/{idProduct}")
-    public ResponseEntity<Product> updateProductByShopId(@PathVariable long idShop, @PathVariable long idProduct, @RequestBody Product product) {
-        productService.edit(product);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+    public ResponseEntity<?> updateProductByShopId(@PathVariable long idShop,
+                                                   @PathVariable long idProduct,
+                                                   @RequestBody Product product) {
+        Product productToUpdate = productService.findProductByShopId(idShop, idProduct);
+        if (productToUpdate != null) {
+            product.setId(idProduct);
+            productService.edit(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Product does not exist" , HttpStatus.NOT_ACCEPTABLE);
     }
 
     //19

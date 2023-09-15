@@ -32,7 +32,6 @@ public class Customer {
     @Lob
     private String address;
 
-
     @NotBlank(message = "Phone number is required")
     private String phone;
 

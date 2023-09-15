@@ -10,6 +10,8 @@ import com.example.case6.model.Shop;
 import com.example.case6.model.Status;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.model.dto.ShopReviewDTO;
+import com.example.case6.model.Status;
+import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.IShopRepo;
 import com.example.case6.service.ICartDetailService;
 import com.example.case6.service.ICustomerService;
@@ -41,6 +43,9 @@ public class ShopServiceImpl implements IShopService {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Autowired
+    private IShopRepo shopRepo;
+
     @Override
     public List<Shop> getAllShop() {
         return iShopRepo.findAll();
@@ -53,9 +58,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
     @Override
-    public void saveShop(Shop shop) {
+    public void save(Shop shop) {
         iShopRepo.save(shop);
     }
+
 
     @Override
     public void editShop(Shop shop) {
@@ -151,7 +157,8 @@ public class ShopServiceImpl implements IShopService {
             for (Code c:codes) {
                 codeDTOS.add(new CodeDTO(c.getId(),c.getName(),c.getQuantity(),c.getPercent(),c.getShop().getId()));
             }
-            shopCodeDTOS.add(new ShopCodeDTO(s.getId(),s.getName(),s.getLogo(),codeDTOS));
+
+            shopCodeDTOS.add(new ShopCodeDTO(s.getId(),s.getName(),s.getLogo(),codeDTOS, s.getAccount().getId()));
         }
         return shopCodeDTOS;
     }
@@ -170,6 +177,11 @@ public class ShopServiceImpl implements IShopService {
         Account account = iAccountRepo.findById(accountId);
         account.setStatus(new Status(statusId));
         iAccountRepo.save(account);
-
     }
+
+    @Override
+    public Optional<Shop> findById(Long id) {
+        return iShopRepo.findById(id);
+    }
+
 }
