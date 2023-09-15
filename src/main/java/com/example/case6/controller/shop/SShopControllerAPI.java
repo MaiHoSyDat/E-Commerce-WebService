@@ -99,5 +99,4 @@ public class SShopControllerAPI {
         }
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
-
 }
