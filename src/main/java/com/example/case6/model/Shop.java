@@ -1,19 +1,20 @@
 package com.example.case6.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +41,6 @@ public class Shop {
 
     private Date dateCreate = Date.valueOf(LocalDate.now());
 
-    @OneToMany
-    private List<Code> codes;
 
     @OneToOne
     private Account account;

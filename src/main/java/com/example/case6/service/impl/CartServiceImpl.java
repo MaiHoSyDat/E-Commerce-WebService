@@ -1,8 +1,10 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.*;
+import com.example.case6.model.dto.CodeDTO;
 import com.example.case6.repository.ICartDetailRepo;
 import com.example.case6.repository.ICartRepo;
+import com.example.case6.repository.ICodeRepo;
 import com.example.case6.repository.ICustomerRepo;
 import com.example.case6.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,10 @@ public class CartServiceImpl implements ICartService {
     IOrderDetailService iOrderDetailService;
     @Autowired
     IOrderService iOrderService;
+    @Autowired
+    IShopService iShopService;
+    @Autowired
+    ICodeRepo iCodeRepo;
 
     @Override
 
@@ -116,17 +122,31 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public void payment(Account account, double payment) {
-        Cart cart = getByAccount(account);
-        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+    public void payment(Account account, String fullName, String phone, String address, List<CodeDTO> codeDTOs) {
         Customer customer = iCustomerService.getByAccount(account);
-        Order order = new Order(customer, payment);
-        iOrderService.save(order);
-        for (CartDetail cd : cartDetails) {
-            OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
-            iOrderDetailService.save(orderDetail);
-            iCartDetailService.deleteCartDetail(cd.getId());
+        Cart cart = iCartRepo.findByAccountId(account.getId());
+        List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
+        List<Shop> shops = iShopService.getAllShopByProductInCartDetail(cartDetails);
+        for (Shop s : shops) {
+            Code code = null;
+            for (CodeDTO cd:codeDTOs) {
+                if (cd.getShopId() == s.getId()){
+                    code = iCodeRepo.findById(cd.getId());
+                    code.setQuantity(code.getQuantity() - 1);
+                    iCodeRepo.save(code);
+                }
+            }
+            Order order = new Order(customer,fullName,phone,address,code,s);
+            iOrderService.save(order);
+            for (CartDetail cd : cartDetails) {
+                if (cd.getProduct().getShop().getId() == s.getId()) {
+                    OrderDetail orderDetail = new OrderDetail(order, cd.getProduct(), cd.getQuantity());
+                    iOrderDetailService.save(orderDetail);
+                    iCartDetailService.deleteCartDetail(cd.getId());
+                }
+            }
         }
+
     }
 
 
