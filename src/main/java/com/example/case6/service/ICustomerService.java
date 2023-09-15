@@ -17,5 +17,6 @@ public interface ICustomerService {
     Customer getCustomerByAccountLogin(long idAccount);
     CustomerDTO findById(long id);
     CustomerDTO edit(CustomerDTO customerDTO);
+    List<Customer> getAllCustomerBuyProductFromShop(long idShop);
 
 }
