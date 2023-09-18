@@ -16,4 +16,5 @@ public class ShopCodeDTO {
     private String shopName;
     private String logo;
     private List<CodeDTO> codes;
+    private long idAccount;
 }

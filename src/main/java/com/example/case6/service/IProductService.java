@@ -40,5 +40,6 @@ public interface IProductService {
     List<ProductReviewDTO> getFilterProductsDTO(FilterProductDTO filterProductDTO);
     Product getById(long id);
     List<Product> getAllProductsByCustomerBuy(long idCustomer);
+    void removeImageById(long imageId);
 
 }

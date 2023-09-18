@@ -157,7 +157,8 @@ public class ShopServiceImpl implements IShopService {
             for (Code c:codes) {
                 codeDTOS.add(new CodeDTO(c.getId(),c.getName(),c.getQuantity(),c.getPercent(),c.getShop().getId()));
             }
-            shopCodeDTOS.add(new ShopCodeDTO(s.getId(),s.getName(),s.getLogo(),codeDTOS));
+
+            shopCodeDTOS.add(new ShopCodeDTO(s.getId(),s.getName(),s.getLogo(),codeDTOS, s.getAccount().getId()));
         }
         return shopCodeDTOS;
     }
@@ -176,7 +177,6 @@ public class ShopServiceImpl implements IShopService {
         Account account = iAccountRepo.findById(accountId);
         account.setStatus(new Status(statusId));
         iAccountRepo.save(account);
-
     }
 
     @Override

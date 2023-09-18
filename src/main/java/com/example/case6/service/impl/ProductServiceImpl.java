@@ -86,6 +86,7 @@ public class ProductServiceImpl implements IProductService {
         Product product = new Product();
         Shop shop = shopService.getShopByAccountLogin(idShop);
         product.setShop(shop);
+        product.setId(productDTO.getId());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
@@ -372,6 +373,10 @@ public class ProductServiceImpl implements IProductService {
         return result;
     }
 
+    @Override
+    public void removeImageById(long imageId) {
+        iImageRepo.deleteById(imageId);
+    }
 
 
 }
