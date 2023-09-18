@@ -43,4 +43,6 @@ public interface IAccountService extends UserDetailsService {
 
     Optional<Account> findShopByAccountId(Long id);
 
+
+    Account loginGoogle(AccountDTO email);
 }
