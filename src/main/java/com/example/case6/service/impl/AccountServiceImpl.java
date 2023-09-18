@@ -184,8 +184,6 @@ public class AccountServiceImpl implements IAccountService {
             if (account.getRole() == null || account.getRole().getId() == -1) {
                 account.setStatus(email.getStatus());
                 account.setRole(email.getRole());
-
-
             }
             return  add(account);
         } else {
