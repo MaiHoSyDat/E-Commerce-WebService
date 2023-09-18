@@ -1,11 +1,13 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Customer;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.model.dto.EditPassDTO;
 import com.example.case6.repository.IAccountRepo;
+import com.example.case6.repository.ICustomerRepo;
 import com.example.case6.repository.IRoleRepo;
 import com.example.case6.repository.IStatusRepo;
 import com.example.case6.service.IAccountService;
@@ -31,6 +33,8 @@ public class AccountServiceImpl implements IAccountService {
     IStatusRepo iStatusRepo;
     @Autowired
     IRoleRepo iRoleRepo;
+    @Autowired
+    ICustomerRepo iCustomerRepo;
     @Override
     public List<Account> getAll() {
         return iAccountRepo.findAll();
@@ -143,7 +147,15 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account add(Account account) {
-        return iAccountRepo.save(account);
+        Account account1 = iAccountRepo.save(account);
+        if (account1.getRole().getId() ==2){
+            Customer customer = new Customer();
+            customer.setAccount(account1);
+            customer.setAvatar("https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg");
+            iCustomerRepo.save(customer);
+        }
+
+        return account1;
     }
 
     @Override
