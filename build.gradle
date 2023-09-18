@@ -33,6 +33,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'  // Thêm dependency Hibernate Validator
     implementation 'javax.validation:validation-api:2.0.1.Final'  // Thêm dependency Validation API
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.7.1'
+
 
 }
 

@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -111,7 +112,6 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.getAccountByUsernameAndPassword(username, password);
     }
 
-
     @Override
     public Account changePassword(String username, String password) {
         Account account = iAccountRepo.getAccountByUsername(username);
@@ -160,6 +160,16 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> getAccountByAccountId(Long id) {
         return iAccountRepo.findById(id);
+    }
+
+    @Override
+    public Account getAccountByEmail(String email) {
+        return iAccountRepo.getAccountByEmail(email);
+    }
+
+    @Override
+    public Account save(Account account) {
+        return iAccountRepo.save(account);
     }
 
 

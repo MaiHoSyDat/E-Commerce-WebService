@@ -1,6 +1,7 @@
 package com.example.case6.repository;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,7 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
     List<Account> getEmployeeAccount();
     @Query("select a from Account a where a.role.id = 4 and a.username like :username")
     Page<Account> findAllByUsernameLike(@Param("username") String username, Pageable pageable);
+
+    Account getAccountByEmail(String email);
+
 }

@@ -1,5 +1,7 @@
 package com.example.case6;
 
+import com.example.case6.controller.SendEmailController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
