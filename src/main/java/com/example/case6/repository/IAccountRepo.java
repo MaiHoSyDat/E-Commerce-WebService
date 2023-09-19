@@ -24,4 +24,10 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
     List<Account> getEmployeeAccount();
     @Query("select a from Account a where a.role.id = 4 and a.username like :username")
     Page<Account> findAllByUsernameLike(@Param("username") String username, Pageable pageable);
+    @Query(nativeQuery = true, value = "SELECT * " +
+            " FROM account " +
+            " JOIN shop ON shop.account_id = account.id " +
+            " WHERE shop.id = :idShop;")
+    Account getAccountByShopId(@Param("idShop") long idShop);
+
 }

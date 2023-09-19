@@ -1,6 +1,7 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Feedback;
 import com.example.case6.model.Customer;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
@@ -20,12 +21,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     IAccountRepo iAccountRepo;
@@ -35,6 +41,7 @@ public class AccountServiceImpl implements IAccountService {
     IRoleRepo iRoleRepo;
     @Autowired
     ICustomerRepo iCustomerRepo;
+
     @Override
     public List<Account> getAll() {
         return iAccountRepo.findAll();
@@ -83,19 +90,19 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public AccountDTO convertToAccountDTO(Account account) {
-        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getEmail(),account.getName(),
-                account.getUsername(),account.getStatus(),account.getRole());
+        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getEmail(), account.getName(),
+                account.getUsername(), account.getStatus(), account.getRole());
         return accountDTO;
     }
 
     @Override
-    public Page<AccountDTO> getAllByLike(Pageable pageable,long roleId , int num, String context) {
+    public Page<AccountDTO> getAllByLike(Pageable pageable, long roleId, int num, String context) {
         if (num == 1) {
-            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%",roleId, pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         } else if (num == 2) {
-            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%",roleId, pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%", roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         }
@@ -125,15 +132,15 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public boolean editPass(EditPassDTO editPassDTO) {
-        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())){
+        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())) {
             Account account = iAccountRepo.findById(editPassDTO.getAccountId());
-            if (editPassDTO.getPass().equals(account.getPassword())){
+            if (editPassDTO.getPass().equals(account.getPassword())) {
                 account.setPassword(editPassDTO.getNewPass());
                 iAccountRepo.save(account);
                 return true;
-            }else
+            } else
                 return false;
-        }else
+        } else
             return false;
     }
 
@@ -148,12 +155,13 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Account add(Account account) {
         Account account1 = iAccountRepo.save(account);
-        if (account1.getRole().getId() ==2){
-            Customer customer = new Customer();
-            customer.setAccount(account1);
-            customer.setAvatar("https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg");
-            iCustomerRepo.save(customer);
-        }
+        if (account1.getRole() != null)
+            if (account1.getRole().getId() == 2) {
+                Customer customer = new Customer();
+                customer.setAccount(account1);
+                customer.setAvatar("https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg");
+                iCustomerRepo.save(customer);
+            }
 
         return account1;
     }
@@ -172,6 +180,61 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> findShopByAccountId(Long id) {
         return iAccountRepo.findById(id);
+    }
+
+    @Override
+    public Account loginGoogle(AccountDTO email) {
+        Account account = iAccountRepo.getAccountByUsername(email.getUsername());
+        if (account != null) {
+            if (account.getRole() == null || account.getRole().getId() == -1) {
+                account.setStatus(email.getStatus());
+                account.setRole(email.getRole());
+            }
+            return  add(account);
+        } else {
+            account = new Account();
+            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder password = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < 6; i++) {
+                int index = random.nextInt(characters.length());
+                password.append(characters.charAt(index));
+            }
+            account.setUsername(email.getUsername());
+            account.setPassword(password.toString());
+            account.setName(email.getName());
+            account.setStatus(email.getStatus());
+            account.setEmail(email.getEmail());
+            account.setRole(email.getRole());
+            iAccountRepo.save(account);
+            return null;
+        }
+    }
+
+    @Override
+    public Account getAccountByShopId(long idShop) {
+        Account result = entityManager.createQuery("SELECT a " +
+                        " FROM Account a " +
+                        " JOIN Shop s On s.account.id = a.id" +
+                        " WHERE s.id = :idShop ", Account.class)
+                .setParameter("idShop", idShop)
+                .getSingleResult();
+        return result;
+    }
+
+    @Override
+    public List<Long> getAllIdAccountMapToMessage(long idFind) {
+        List<Long> result = entityManager.createQuery("SELECT DISTINCT idF " +
+                        " FROM (SELECT DISTINCT a.id as idF, m.id as idM " +
+                        " FROM Account a" +
+                        " JOIN Message m ON a.id = m.sender.id OR a.id = m.receiver.id " +
+                        " WHERE ((m.sender.id = :idFind) OR (m.receiver.id = :idFind)) " +
+                        " and (a.id != :idFind) " +
+                        " group by a.id,m.id " +
+                        " order by idM desc) as idList  ", Long.class)
+                .setParameter("idFind", idFind)
+                .getResultList();
+        return result;
     }
 
 }

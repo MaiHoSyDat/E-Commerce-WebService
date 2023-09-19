@@ -107,6 +107,10 @@ public class ProductController {
     public ResponseEntity<Product> findById(@PathVariable long id) {
         return new ResponseEntity<>(iProductService.getById(id), HttpStatus.OK);
     }
+    @GetMapping("/fiveMostPurchased")
+    public ResponseEntity<List<ProductReviewDTO>> getFiveMostPurchasedProducts() {
+        return new ResponseEntity<>(iProductService.getFiveMostPurchasedProducts(), HttpStatus.OK);
+    }
     @PostMapping("/removeImage/{imageId}")
     public ResponseEntity<?> removeImage(@PathVariable long imageId){
         iProductService.removeImageById(imageId);

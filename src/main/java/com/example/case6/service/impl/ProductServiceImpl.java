@@ -377,6 +377,18 @@ public class ProductServiceImpl implements IProductService {
     public void removeImageById(long imageId) {
         iImageRepo.deleteById(imageId);
     }
+    @Override
+    public List<ProductReviewDTO> getFiveMostPurchasedProducts() {
+        List<ProductReviewDTO> result = entityManager.createQuery("SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
+                        " FROM Product p " +
+                        " LEFT JOIN Review r ON p.id = r.product.id " +
+                        " JOIN OrderDetail od ON od.product.id = p.id " +
+                        " GROUP BY p.id " +
+                        " ORDER BY COUNT(od.product.id) ", ProductReviewDTO.class)
+                .setMaxResults(5)
+                .getResultList();
+        return result;
+    }
 
 
 }

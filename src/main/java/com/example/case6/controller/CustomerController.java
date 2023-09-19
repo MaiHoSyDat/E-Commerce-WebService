@@ -1,6 +1,7 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Customer;
+import com.example.case6.model.dto.CustomerMessageDTO;
 import com.example.case6.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,5 +19,9 @@ public class CustomerController {
     @GetMapping("/buyProductOfShop/{idShop}")
     public ResponseEntity<List<Customer>> getAllCustomerBuyProductFromShop(@PathVariable long idShop) {
         return new ResponseEntity<>(customerService.getAllCustomerBuyProductFromShop(idShop), HttpStatus.OK);
+    }
+    @GetMapping("/messages/{idAccountShop}")
+    public ResponseEntity<List<CustomerMessageDTO>> getAllCustomerMapMessage(@PathVariable long idAccountShop) {
+        return new ResponseEntity<>(customerService.getAllCustomerMapMessage(idAccountShop), HttpStatus.OK);
     }
 }
