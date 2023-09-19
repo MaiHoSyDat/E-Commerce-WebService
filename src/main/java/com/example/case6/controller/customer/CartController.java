@@ -1,4 +1,4 @@
-package com.example.case6.controller;
+package com.example.case6.controller.customer;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Cart;

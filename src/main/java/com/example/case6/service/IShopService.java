@@ -4,6 +4,7 @@ import com.example.case6.model.Account;
 import com.example.case6.model.CartDetail;
 import com.example.case6.model.OrderDetail;
 import com.example.case6.model.Shop;
+import com.example.case6.model.dto.RevenueDTO;
 import com.example.case6.model.dto.ShopCodeDTO;
 import com.example.case6.model.dto.ShopReviewDTO;
 
@@ -27,4 +28,5 @@ public interface IShopService {
 
     Optional<Shop> findById(Long id);
 
+    List<RevenueDTO> getRevenue(Account account);
 }
