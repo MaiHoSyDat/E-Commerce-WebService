@@ -49,4 +49,6 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountByEmail(String email);
 
     Account save(Account account);
+
+    String getRandomPassword();
 }
