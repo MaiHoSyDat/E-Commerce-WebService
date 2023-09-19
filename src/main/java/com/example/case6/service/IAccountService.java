@@ -50,5 +50,5 @@ public interface IAccountService extends UserDetailsService {
 
     Account save(Account account);
 
-    String getRandomPassword();
+
 }

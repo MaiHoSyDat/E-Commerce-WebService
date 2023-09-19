@@ -172,15 +172,4 @@ public class AccountServiceImpl implements IAccountService {
     public Account save(Account account) {
         return iAccountRepo.save(account);
     }
-
-    public String getRandomPassword() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder password = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 6; i++) {
-            int index = random.nextInt(characters.length());
-            password.append(characters.charAt(index));
-        }
-        return password.toString();
-    }
 }
