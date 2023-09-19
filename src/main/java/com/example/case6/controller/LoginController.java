@@ -1,6 +1,7 @@
 package com.example.case6.controller;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.service.IAccountService;
 import com.example.case6.service.JwtService;
@@ -13,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Random;
 
 @RestController
 @CrossOrigin("*")
@@ -41,11 +44,21 @@ public class LoginController {
                 String errorMessage = "Unauthorized access.";
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
             }
-            AccountDTO accountToken = new AccountDTO(account.getId(), account.getEmail(),account.getName(), account.getUsername(), account.getStatus(), account.getRole(), token);
+            AccountDTO accountToken = new AccountDTO(account.getId(), account.getEmail(), account.getName(), account.getUsername(), account.getStatus(), account.getRole(), token);
             return ResponseEntity.ok(accountToken);
         } catch (AuthenticationException e) {
             String errorMessage = "Invalid username or password.";
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
     }
+
+    @PostMapping("/email")
+    public ResponseEntity<?> getLoginEmail(@RequestBody AccountDTO email) {
+        Account account = accountService.loginGoogle(email);
+        if (account == null) {
+            return ResponseEntity.status(HttpStatus.OK).body("new account");
+        }
+        return getLogin(account);
+    }
+
 }

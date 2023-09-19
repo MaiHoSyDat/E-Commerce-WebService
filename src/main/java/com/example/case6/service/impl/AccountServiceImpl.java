@@ -2,11 +2,13 @@ package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Feedback;
+import com.example.case6.model.Customer;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
 import com.example.case6.model.dto.EditPassDTO;
 import com.example.case6.repository.IAccountRepo;
+import com.example.case6.repository.ICustomerRepo;
 import com.example.case6.repository.IRoleRepo;
 import com.example.case6.repository.IStatusRepo;
 import com.example.case6.service.IAccountService;
@@ -24,6 +26,7 @@ import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
@@ -36,6 +39,9 @@ public class AccountServiceImpl implements IAccountService {
     IStatusRepo iStatusRepo;
     @Autowired
     IRoleRepo iRoleRepo;
+    @Autowired
+    ICustomerRepo iCustomerRepo;
+
     @Override
     public List<Account> getAll() {
         return iAccountRepo.findAll();
@@ -84,19 +90,19 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public AccountDTO convertToAccountDTO(Account account) {
-        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getEmail(),account.getName(),
-                account.getUsername(),account.getStatus(),account.getRole());
+        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getEmail(), account.getName(),
+                account.getUsername(), account.getStatus(), account.getRole());
         return accountDTO;
     }
 
     @Override
-    public Page<AccountDTO> getAllByLike(Pageable pageable,long roleId , int num, String context) {
+    public Page<AccountDTO> getAllByLike(Pageable pageable, long roleId, int num, String context) {
         if (num == 1) {
-            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%",roleId, pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByNameLike("%" + context + "%", roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         } else if (num == 2) {
-            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%",roleId, pageable);
+            Page<Account> accountPage = iAccountRepo.findAllByEmailLike("%" + context + "%", roleId, pageable);
             Page<AccountDTO> accountDTOS = accountPage.map(this::convertToAccountDTO);
             return accountDTOS;
         }
@@ -126,15 +132,15 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public boolean editPass(EditPassDTO editPassDTO) {
-        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())){
+        if (editPassDTO.getNewPass().equals(editPassDTO.getRetypePass())) {
             Account account = iAccountRepo.findById(editPassDTO.getAccountId());
-            if (editPassDTO.getPass().equals(account.getPassword())){
+            if (editPassDTO.getPass().equals(account.getPassword())) {
                 account.setPassword(editPassDTO.getNewPass());
                 iAccountRepo.save(account);
                 return true;
-            }else
+            } else
                 return false;
-        }else
+        } else
             return false;
     }
 
@@ -148,7 +154,16 @@ public class AccountServiceImpl implements IAccountService {
 
     @Override
     public Account add(Account account) {
-        return iAccountRepo.save(account);
+        Account account1 = iAccountRepo.save(account);
+        if (account1.getRole() != null)
+            if (account1.getRole().getId() == 2) {
+                Customer customer = new Customer();
+                customer.setAccount(account1);
+                customer.setAvatar("https://i.pinimg.com/originals/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg");
+                iCustomerRepo.save(customer);
+            }
+
+        return account1;
     }
 
     @Override
@@ -165,6 +180,35 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> findShopByAccountId(Long id) {
         return iAccountRepo.findById(id);
+    }
+
+    @Override
+    public Account loginGoogle(AccountDTO email) {
+        Account account = iAccountRepo.getAccountByUsername(email.getUsername());
+        if (account != null) {
+            if (account.getRole() == null || account.getRole().getId() == -1) {
+                account.setStatus(email.getStatus());
+                account.setRole(email.getRole());
+            }
+            return  add(account);
+        } else {
+            account = new Account();
+            String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder password = new StringBuilder();
+            Random random = new Random();
+            for (int i = 0; i < 6; i++) {
+                int index = random.nextInt(characters.length());
+                password.append(characters.charAt(index));
+            }
+            account.setUsername(email.getUsername());
+            account.setPassword(password.toString());
+            account.setName(email.getName());
+            account.setStatus(email.getStatus());
+            account.setEmail(email.getEmail());
+            account.setRole(email.getRole());
+            iAccountRepo.save(account);
+            return null;
+        }
     }
 
     @Override

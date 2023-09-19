@@ -126,20 +126,26 @@ public class CartServiceImpl implements ICartService {
         Customer customer = iCustomerService.getByAccount(account);
         Cart cart = iCartRepo.findByAccountId(account.getId());
         List<CartDetail> cartDetails = iCartDetailService.getByCart(cart);
-        List<Shop> shops = iShopService.getAllShopByProductInCartDetail(cartDetails);
+        List<Shop> shops = new ArrayList<>();
         for (CartDetail cd : cartDetails) {
             Product product = iProductService.findById(cd.getProduct().getId()).get();
             if (cd.getQuantity() > product.getQuantity()) {
                 return false;
             }
         }
+        for (CodeDTO cd : codeDTOs) {
+            Shop shop = iShopService.findShopById(cd.getShopId());
+            shops.add(shop);
+        }
         for (Shop s : shops) {
             Code code = null;
             for (CodeDTO cd : codeDTOs) {
                 if (cd.getShopId() == s.getId()) {
-                    code = iCodeRepo.findById(cd.getId());
-                    code.setQuantity(code.getQuantity() - 1);
-                    iCodeRepo.save(code);
+                    if (cd.getId() != -1) {
+                        code = iCodeRepo.findById(cd.getId());
+                        code.setQuantity(code.getQuantity() - 1);
+                        iCodeRepo.save(code);
+                    }
                 }
             }
             Order order = new Order(customer, fullName, phone, address, code, s);

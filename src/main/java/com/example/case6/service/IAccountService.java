@@ -45,4 +45,6 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountByShopId(long idShop);
     List<Long> getAllIdAccountMapToMessage(long idFind);
 
+
+    Account loginGoogle(AccountDTO email);
 }

@@ -41,5 +41,6 @@ public interface IProductService {
     Product getById(long id);
     List<Product> getAllProductsByCustomerBuy(long idCustomer);
     List<ProductReviewDTO> getFiveMostPurchasedProducts();
+    void removeImageById(long imageId);
 
 }
