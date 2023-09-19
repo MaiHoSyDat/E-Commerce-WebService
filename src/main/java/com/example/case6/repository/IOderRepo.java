@@ -14,10 +14,10 @@ public interface IOderRepo extends JpaRepository<Order, Long> {
     List<Order> getAllOrdersByCustomerId(@Param("user_id") long user_id);
     @Query(nativeQuery = true, value = "SELECT * FROM `Order` where shop_id= :shop_id order by id desc")
     List<Order> getAllOrdersByShopId(@Param("shop_id") long shop_id);
-    @Query(" SELECT new com.example.case6.model.dto.RevenueDTO(MONTH(o.date_create) , YEAR(o.date_create) , SUM(o.totalAmount - c.percent * o.totalAmount)) " +
-                   " FROM Order o join Code c ON o.code.id = c.id " +
-                   " WHERE o.shop.id = :shopId AND o.status.id = 6 " +
-                   " GROUP BY MONTH(o.date_create), YEAR(o.date_create) " +
-                   " ORDER BY YEAR(o.date_create), MONTH(o.date_create) ")
+    @Query("SELECT new com.example.case6.model.dto.RevenueDTO(MONTH(o.date_create), YEAR(o.date_create), SUM(o.totalAmount - COALESCE(c.percent, 0) * o.totalAmount)) " +
+            "FROM Order o LEFT JOIN Code c ON o.code.id = c.id " +
+            "WHERE o.shop.id = :shopId AND o.status.id = 6 " +
+            "GROUP BY MONTH(o.date_create), YEAR(o.date_create) " +
+            "ORDER BY YEAR(o.date_create), MONTH(o.date_create)")
     List<RevenueDTO> getRevenueByMonthAndYear(@Param("shopId") long shopId);
 }
