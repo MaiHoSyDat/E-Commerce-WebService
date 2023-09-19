@@ -141,9 +141,11 @@ public class CartServiceImpl implements ICartService {
             Code code = null;
             for (CodeDTO cd : codeDTOs) {
                 if (cd.getShopId() == s.getId()) {
-                    code = iCodeRepo.findById(cd.getId());
-                    code.setQuantity(code.getQuantity() - 1);
-                    iCodeRepo.save(code);
+                    if (cd.getId() != -1) {
+                        code = iCodeRepo.findById(cd.getId());
+                        code.setQuantity(code.getQuantity() - 1);
+                        iCodeRepo.save(code);
+                    }
                 }
             }
             Order order = new Order(customer, fullName, phone, address, code, s);
