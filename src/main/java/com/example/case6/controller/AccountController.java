@@ -13,6 +13,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/account")
@@ -35,6 +37,14 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.OK);
         }else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    @GetMapping("/shop/{idShop}")
+    public ResponseEntity<Account> getAccountByShopId(@PathVariable long idShop) {
+        return new ResponseEntity<>(iAccountService.getAccountByShopId(idShop), HttpStatus.OK);
+    }
+    @GetMapping("/idAccount/{idFind}")
+    public ResponseEntity<List<Long>> getAllIdAccountMapToMessage(@PathVariable long idFind) {
+        return new ResponseEntity<>(iAccountService.getAllIdAccountMapToMessage(idFind), HttpStatus.OK);
     }
 
     @GetMapping("/{email}")

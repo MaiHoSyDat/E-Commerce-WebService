@@ -44,6 +44,9 @@ public interface IAccountService extends UserDetailsService {
 
     List<Account> getEmployeeAccount();
 
+    Optional<Account> findShopByAccountId(Long id);
+    Account getAccountByShopId(long idShop);
+    List<Long> getAllIdAccountMapToMessage(long idFind);
     Optional<Account> getAccountByAccountId(Long id);
 
     Account getAccountByEmail(String email);
@@ -51,4 +54,6 @@ public interface IAccountService extends UserDetailsService {
     Account save(Account account);
 
 
+
+    Account loginGoogle(AccountDTO email);
 }

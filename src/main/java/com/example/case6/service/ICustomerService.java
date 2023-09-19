@@ -4,6 +4,7 @@ import com.example.case6.model.Customer;
 import com.example.case6.model.Account;
 import com.example.case6.model.Customer;
 import com.example.case6.model.dto.CustomerDTO;
+import com.example.case6.model.dto.CustomerMessageDTO;
 
 import java.util.List;
 
@@ -18,5 +19,6 @@ public interface ICustomerService {
     CustomerDTO findById(long id);
     CustomerDTO edit(CustomerDTO customerDTO);
     List<Customer> getAllCustomerBuyProductFromShop(long idShop);
+    List<CustomerMessageDTO> getAllCustomerMapMessage(long idFind);
 
 }

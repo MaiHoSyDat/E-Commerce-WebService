@@ -18,6 +18,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
     private String email;

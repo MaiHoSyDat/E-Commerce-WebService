@@ -2,6 +2,7 @@ package com.example.case6.service.impl;
 
 import com.example.case6.model.*;
 import com.example.case6.model.dto.CustomerDTO;
+import com.example.case6.model.dto.CustomerMessageDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.repository.ICustomerRepo;
 import com.example.case6.repository.IWishlistRepo;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -88,5 +90,27 @@ public class CustomerServiceImpl implements ICustomerService {
                 .setParameter("idShop", idShop)
                 .getResultList();
         return result;
+    }
+
+    @Override
+    public List<CustomerMessageDTO> getAllCustomerMapMessage(long idFind) {
+        String hql = "SELECT new com.example.case6.model.dto.CustomerMessageDTO(c, m.id)  " +
+                " FROM Customer c " +
+                " JOIN Account a ON a.id = c.account.id " +
+                " JOIN Message m ON a.id = m.sender.id OR a.id = m.receiver.id " +
+                " WHERE (m.sender.id = :idFind OR m.receiver.id = :idFind) AND (a.id != :idFind) " +
+                " ORDER BY m.id DESC ";
+        List<CustomerMessageDTO> result = entityManager.createQuery(hql, CustomerMessageDTO.class)
+                .setParameter("idFind", idFind)
+                .getResultList();
+        HashSet<Integer> uniqueIds = new HashSet<>();
+        List<CustomerMessageDTO> filter = new ArrayList<>();
+
+        for (CustomerMessageDTO element : result) {
+            if (uniqueIds.add((int) element.getCustomer().getId())) {
+                filter.add(element);
+            }
+        }
+        return filter;
     }
 }
