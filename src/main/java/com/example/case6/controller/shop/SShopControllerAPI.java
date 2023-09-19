@@ -4,6 +4,7 @@ import com.example.case6.model.Account;
 import com.example.case6.model.Customer;
 import com.example.case6.model.Shop;
 import com.example.case6.model.Status;
+import com.example.case6.model.dto.RevenueDTO;
 import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.service.IAccountService;
@@ -11,6 +12,8 @@ import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -79,16 +82,16 @@ public class SShopControllerAPI {
         Optional<Account> accountOptional = iAccountService.getAccountByAccountId(idAccount);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
-                shop.setAccount(account);
-                shopService.save(shop);
-                account.setStatus(new Status(1));
-                iAccountRepo.save(account);
-                return new ResponseEntity<>(HttpStatus.ACCEPTED);
-            }
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            shop.setAccount(account);
+            shopService.save(shop);
+            account.setStatus(new Status(1));
+            iAccountRepo.save(account);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
 
-        @PostMapping("/save/shop/{idShop}")
+    @PostMapping("/save/shop/{idShop}")
     public ResponseEntity<?> editInformationShop(@PathVariable Long idShop,
                                                  @RequestBody Shop shop) {
         Optional<Shop> shopOptional = shopService.findById(idShop);

@@ -37,7 +37,7 @@ public class ResetPasswordServiceImpl implements IResetPasswordService {
         emailContent += "Best Regards,\n";
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("send.email712@gmail.com");
+            message.setFrom("ly.hoangdoan@gmail.com");
             message.setTo(email);
             message.setSubject(subject);
             message.setText(emailContent);

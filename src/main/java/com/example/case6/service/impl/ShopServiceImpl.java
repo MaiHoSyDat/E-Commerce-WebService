@@ -2,17 +2,15 @@ package com.example.case6.service.impl;
 
 import com.example.case6.model.*;
 import com.example.case6.model.dto.CodeDTO;
+import com.example.case6.model.dto.RevenueDTO;
 import com.example.case6.model.dto.ShopCodeDTO;
-import com.example.case6.repository.ICartRepo;
-import com.example.case6.repository.ICodeRepo;
+import com.example.case6.repository.*;
 import com.example.case6.model.Account;
 import com.example.case6.model.Shop;
 import com.example.case6.model.Status;
-import com.example.case6.repository.IAccountRepo;
 import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.model.Status;
 import com.example.case6.repository.IAccountRepo;
-import com.example.case6.repository.IShopRepo;
 import com.example.case6.service.ICartDetailService;
 import com.example.case6.service.ICustomerService;
 import com.example.case6.service.IAccountService;
@@ -40,6 +38,8 @@ public class ShopServiceImpl implements IShopService {
     ICartRepo iCartRepo;
     @Autowired
     private IAccountRepo iAccountRepo;
+    @Autowired
+    private IOderRepo iOderRepo;
     @PersistenceContext
     EntityManager entityManager;
 
@@ -182,6 +182,12 @@ public class ShopServiceImpl implements IShopService {
     @Override
     public Optional<Shop> findById(Long id) {
         return iShopRepo.findById(id);
+    }
+
+    @Override
+    public List<RevenueDTO> getRevenue(Account account) {
+        Shop shop = iShopRepo.getShopByAccountLogin(account.getId());
+        return iOderRepo.getRevenueByMonthAndYear(shop.getId());
     }
 
 }
