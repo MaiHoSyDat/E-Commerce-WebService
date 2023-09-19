@@ -201,7 +201,7 @@ public class AccountServiceImpl implements IAccountService {
             account.setStatus(email.getStatus());
             account.setEmail(email.getEmail());
             account.setRole(email.getRole());
-            add(account);
+            iAccountRepo.save(account);
             return null;
         }
     }
