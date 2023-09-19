@@ -1,6 +1,7 @@
 package com.example.case6.service.impl;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Feedback;
 import com.example.case6.model.Role;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.AccountDTO;
@@ -18,12 +19,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements IAccountService {
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     IAccountRepo iAccountRepo;
@@ -160,6 +165,32 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public Optional<Account> findShopByAccountId(Long id) {
         return iAccountRepo.findById(id);
+    }
+
+    @Override
+    public Account getAccountByShopId(long idShop) {
+        Account result = entityManager.createQuery("SELECT a " +
+                        " FROM Account a " +
+                        " JOIN Shop s On s.account.id = a.id" +
+                        " WHERE s.id = :idShop ", Account.class)
+                .setParameter("idShop", idShop)
+                .getSingleResult();
+        return result;
+    }
+
+    @Override
+    public List<Long> getAllIdAccountMapToMessage(long idFind) {
+        List<Long> result = entityManager.createQuery("SELECT DISTINCT idF " +
+                        " FROM (SELECT DISTINCT a.id as idF, m.id as idM " +
+                        " FROM Account a" +
+                        " JOIN Message m ON a.id = m.sender.id OR a.id = m.receiver.id " +
+                        " WHERE ((m.sender.id = :idFind) OR (m.receiver.id = :idFind)) " +
+                        " and (a.id != :idFind) " +
+                        " group by a.id,m.id " +
+                        " order by idM desc) as idList  ", Long.class)
+                .setParameter("idFind", idFind)
+                .getResultList();
+        return result;
     }
 
 }
