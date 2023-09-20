@@ -78,7 +78,7 @@ public class SShopControllerAPI {
 
     @PostMapping("/save/account/{idAccount}")
     public ResponseEntity<?> saveShop(@PathVariable Long idAccount,
-                                         @RequestBody Shop shop) {
+                                      @RequestBody Shop shop) {
         Optional<Account> accountOptional = iAccountService.getAccountByAccountId(idAccount);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
@@ -100,6 +100,12 @@ public class SShopControllerAPI {
             shopService.save(shop);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
-            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+    }
+    @GetMapping("/revenue")
+    public ResponseEntity<List<RevenueDTO>> getRevenue(){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
+        return new ResponseEntity<>(shopService.getRevenue(account),HttpStatus.OK);
+    }
 }
