@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -176,6 +177,10 @@ public class AccountServiceImpl implements IAccountService {
         return iAccountRepo.getEmployeeAccount();
     }
 
+    @Override
+    public Optional<Account> getAccountByAccountId(Long id) {
+        return iAccountRepo.findById(id);
+    }
 
     @Override
     public Optional<Account> findShopByAccountId(Long id) {
@@ -237,4 +242,13 @@ public class AccountServiceImpl implements IAccountService {
         return result;
     }
 
+    @Override
+    public Account getAccountByEmail(String email) {
+        return iAccountRepo.getAccountByEmail(email);
+    }
+
+    @Override
+    public Account save(Account account) {
+        return iAccountRepo.save(account);
+    }
 }

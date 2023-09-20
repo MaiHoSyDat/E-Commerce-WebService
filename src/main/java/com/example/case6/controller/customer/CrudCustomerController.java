@@ -36,7 +36,6 @@ public class CrudCustomerController {
     @GetMapping("/customerDetail/{id}")
     public ResponseEntity<CustomerDTO> getCustomerFindById(@PathVariable long id){
         return new ResponseEntity<>(iCustomerService.findById(id),HttpStatus.OK);
-
     }
 
 }

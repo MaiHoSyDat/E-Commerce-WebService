@@ -2,6 +2,7 @@ package com.example.case6.repository;
 
 import com.example.case6.model.Account;
 import com.example.case6.model.Employee;
+import com.example.case6.model.Shop;
 import com.example.case6.model.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,7 @@ public interface IEmployeeRepo extends JpaRepository<Employee, Long> {
     List<Object[]> getAllEmployee();
     @Query("select e from Employee e where e.account.id = :idAccount")
     Employee getAllByAccountId(@Param("idAccount") long id);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM Employee where account_id= :account_id")
+    Employee getEmployeeByAccountLogin(@Param("account_id") long account_id);
 }

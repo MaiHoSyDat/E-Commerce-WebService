@@ -79,7 +79,7 @@ public class SShopControllerAPI {
     @PostMapping("/save/account/{idAccount}")
     public ResponseEntity<?> saveShop(@PathVariable Long idAccount,
                                       @RequestBody Shop shop) {
-        Optional<Account> accountOptional = iAccountService.findShopByAccountId(idAccount);
+        Optional<Account> accountOptional = iAccountService.getAccountByAccountId(idAccount);
         if (accountOptional.isPresent()) {
             Account account = accountOptional.get();
             shop.setAccount(account);

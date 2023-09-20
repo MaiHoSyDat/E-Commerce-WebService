@@ -33,10 +33,13 @@ public interface IAccountService extends UserDetailsService {
     Account getAccountLogin(String username, String password);
 
     Account changePassword(String username, String password);
+
     boolean editPass(EditPassDTO editPassDTO);
+
     void editStatus(long accountId, int statusId);
 
     Account add(Account account);
+
     Account getAccountByUsername(String username);
 
     List<Account> getEmployeeAccount();
@@ -44,6 +47,12 @@ public interface IAccountService extends UserDetailsService {
     Optional<Account> findShopByAccountId(Long id);
     Account getAccountByShopId(long idShop);
     List<Long> getAllIdAccountMapToMessage(long idFind);
+    Optional<Account> getAccountByAccountId(Long id);
+
+    Account getAccountByEmail(String email);
+
+    Account save(Account account);
+
 
 
     Account loginGoogle(AccountDTO email);

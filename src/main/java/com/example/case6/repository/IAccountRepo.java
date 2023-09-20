@@ -1,6 +1,7 @@
 package com.example.case6.repository;
 
 import com.example.case6.model.Account;
+import com.example.case6.model.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,5 +30,8 @@ public interface IAccountRepo extends JpaRepository<Account , Long> {
             " JOIN shop ON shop.account_id = account.id " +
             " WHERE shop.id = :idShop;")
     Account getAccountByShopId(@Param("idShop") long idShop);
+
+
+    Account getAccountByEmail(String email);
 
 }

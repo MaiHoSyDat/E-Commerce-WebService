@@ -22,5 +22,5 @@ public interface IShopRepo extends JpaRepository<Shop, Long> {
     @Query("SELECT s.account FROM Shop s WHERE s.id = :shopId")
     Account findAccountByShopId(@Param("shopId") long shopId);
 
-    Optional<Shop> findShopsById(Long id);
+
 }
