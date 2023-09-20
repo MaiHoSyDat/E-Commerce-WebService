@@ -77,7 +77,7 @@ public class ShopServiceImpl implements IShopService {
     public ShopReviewDTO findShopDTO(long idShop) {
         ShopReviewDTO result = entityManager.createQuery("SELECT new com.example.case6.model.dto.ShopReviewDTO(s, AVG(r.rating), COUNT(r.id)) " +
                         " FROM Shop s " +
-                        " JOIN Product p ON p.shop.id = s.id " +
+                        " LEFT JOIN Product p ON p.shop.id = s.id " +
                         " LEFT JOIN Review r ON p.id = r.product.id " +
                         " WHERE s.id = :idShop " +
                         " GROUP BY s.id ", ShopReviewDTO.class)
@@ -90,7 +90,7 @@ public class ShopServiceImpl implements IShopService {
     public ShopReviewDTO findShopDTOByAccountLogin(long id) {
         ShopReviewDTO result = entityManager.createQuery("SELECT new com.example.case6.model.dto.ShopReviewDTO(s, AVG(r.rating), COUNT(r.id)) " +
                         " FROM Shop s " +
-                        " JOIN Product p ON p.shop.id = s.id " +
+                        " LEFT JOIN Product p ON p.shop.id = s.id " +
                         " JOIN Account a ON a.id = s.account.id " +
                         " LEFT JOIN Review r ON p.id = r.product.id " +
                         " WHERE a.id = :idAccount " +

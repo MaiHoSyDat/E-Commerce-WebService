@@ -73,7 +73,7 @@ public class SShopControllerAPI {
 
     @GetMapping("/login/dto/{idAccount}")
     public ResponseEntity<ShopReviewDTO> findShopDTOByAccountLogin(@PathVariable long idAccount) {
-        return new ResponseEntity<>(shopService.findShopDTO(idAccount), HttpStatus.OK);
+        return new ResponseEntity<>(shopService.findShopDTOByAccountLogin(idAccount), HttpStatus.OK);
     }
 
     @PostMapping("/save/account/{idAccount}")

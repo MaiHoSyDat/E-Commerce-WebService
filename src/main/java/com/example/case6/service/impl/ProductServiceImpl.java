@@ -6,11 +6,9 @@ import com.example.case6.model.Shop;
 import com.example.case6.model.Status;
 import com.example.case6.model.dto.ProductDTO;
 import com.example.case6.repository.IImageRepo;
-import com.example.case6.model.Shop;
 import com.example.case6.model.dto.FilterProductDTO;
 import com.example.case6.model.dto.ProductReviewDTO;
 import com.example.case6.repository.IProductRepo;
-import com.example.case6.repository.IShopRepo;
 import com.example.case6.service.IProductService;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,7 +149,8 @@ public class ProductServiceImpl implements IProductService {
                         " FROM Product p " +
                         " JOIN Category c ON p.category.id = c.id " +
                         " LEFT JOIN Review r ON p.id = r.product.id " +
-                        " WHERE p.status.id <> 2 " +
+                        " WHERE (p.status.id <> 2) " +
+                        " AND (p.quantity > 0) " +
                         " GROUP BY p.id, p.name " +
                         " Order By p.id desc", ProductReviewDTO.class)
                 .setMaxResults(10)
@@ -165,7 +164,8 @@ public class ProductServiceImpl implements IProductService {
                         " FROM Product p " +
                         " JOIN Category c ON p.category.id = c.id " +
                         " JOIN Review r ON p.id = r.product.id " +
-                        " WHERE p.status.id <> 2 " +
+                        " WHERE (p.status.id <> 2) " +
+                        " AND (p.quantity > 0) " +
                         " GROUP BY p.id, p.name " +
                         "ORDER BY AVG(r.rating) DESC", ProductReviewDTO.class)
                 .setMaxResults(3)
@@ -200,6 +200,7 @@ public class ProductServiceImpl implements IProductService {
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
                             " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                            " AND (p.quantity > 0) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " ORDER BY p.price asc ";
@@ -226,6 +227,7 @@ public class ProductServiceImpl implements IProductService {
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
                             " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                            " AND (p.quantity > 0) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " ORDER BY " + filterProductDTO.getSort() + " desc ";
@@ -251,6 +253,7 @@ public class ProductServiceImpl implements IProductService {
                         " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                         " AND (:category is null or (c.name = :category)) " +
                         " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                        " AND (p.quantity > 0) " +
                         " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                         " GROUP BY p.id, p.name " +
                         " ORDER BY AVG(r.rating) desc ";
@@ -277,6 +280,7 @@ public class ProductServiceImpl implements IProductService {
                         " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                         " AND (:category is null or (c.name = :category)) " +
                         " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                        " AND (p.quantity > 0) " +
                         " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                         " GROUP BY p.id, p.name " +
                         " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -304,6 +308,7 @@ public class ProductServiceImpl implements IProductService {
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
                             " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                            " AND (p.quantity > 0) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -333,6 +338,7 @@ public class ProductServiceImpl implements IProductService {
                             " AND (:nameProduct is null or (p.name like :nameProduct)) " +
                             " AND (:category is null or (c.name = :category)) " +
                             " AND (:idStatus is null or (p.status.id <> :idStatus)) " +
+                            " AND (p.quantity > 0) " +
                             " AND ((:minPrice is null and :maxPrice is null ) or (p.price between :minPrice and :maxPrice)) " +
                             " GROUP BY p.id, p.name " +
                             " HAVING (FLOOR(AVG(r.rating)) IN (:listRating)) " +
@@ -383,6 +389,8 @@ public class ProductServiceImpl implements IProductService {
                         " FROM Product p " +
                         " LEFT JOIN Review r ON p.id = r.product.id " +
                         " JOIN OrderDetail od ON od.product.id = p.id " +
+                        " WHERE (p.quantity > 0) " +
+                        " AND (p.status.id <> 2) " +
                         " GROUP BY p.id " +
                         " ORDER BY COUNT(od.product.id) ", ProductReviewDTO.class)
                 .setMaxResults(5)
