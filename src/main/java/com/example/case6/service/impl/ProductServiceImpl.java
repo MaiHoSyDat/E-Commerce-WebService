@@ -216,7 +216,7 @@ public class ProductServiceImpl implements IProductService {
                     return filter;
                 } else {
                     if (filterProductDTO.getSort().equals("High to Low")) filterProductDTO.setSort("p.price");
-                    if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.create_at");
+                    if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.id");
                     if (filterProductDTO.getSort().equals("")) filterProductDTO.setSort(null);
                     //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +
@@ -327,7 +327,7 @@ public class ProductServiceImpl implements IProductService {
 
                 } else {
                     if (filterProductDTO.getSort().equals("High to Low")) filterProductDTO.setSort("p.price");
-                    if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.create_at");
+                    if (filterProductDTO.getSort().equals("Release Date")) filterProductDTO.setSort("p.id");
                     if (filterProductDTO.getSort().equals("")) filterProductDTO.setSort(null);
                     //Double.MAX_VALUE
                     String sql = "SELECT new com.example.case6.model.dto.ProductReviewDTO(p, AVG(r.rating), COUNT(r.id)) " +

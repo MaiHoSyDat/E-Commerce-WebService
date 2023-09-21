@@ -25,6 +25,7 @@ public class OrderServiceImpl implements IOrderService {
     @Override
     public Order update(Order order) {
         if (order.getStatus().getId() == 7){
+            iOderRepo.save(order);
             List<OrderDetail> orderDetails = iOderDetailRepo.getAllOrdersDetailByOrderId(order.getId());
             for (OrderDetail od :orderDetails) {
                 Product product = iProductRepo.findById(od.getProduct().getId());
