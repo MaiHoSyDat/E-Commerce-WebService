@@ -1,13 +1,11 @@
 package com.example.case6.controller.shop;
 
-import com.example.case6.model.Account;
-import com.example.case6.model.Customer;
-import com.example.case6.model.Shop;
-import com.example.case6.model.Status;
+import com.example.case6.model.*;
 import com.example.case6.model.dto.RevenueDTO;
 import com.example.case6.model.dto.ShopReviewDTO;
 import com.example.case6.repository.IAccountRepo;
 import com.example.case6.service.IAccountService;
+import com.example.case6.service.IProductService;
 import com.example.case6.service.IShopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +27,8 @@ public class SShopControllerAPI {
     private IAccountService iAccountService;
     @Autowired
     private IAccountRepo iAccountRepo;
+    @Autowired
+    private IProductService productService;
 
     @GetMapping
     public ResponseEntity<List<Shop>> getAllShop() {
@@ -108,4 +108,11 @@ public class SShopControllerAPI {
         Account account = iAccountService.getAccountByUsername(userDetails.getUsername());
         return new ResponseEntity<>(shopService.getRevenue(account),HttpStatus.OK);
     }
+    @PostMapping("/editStatus")
+    public ResponseEntity<Product> editStatusProduct( @RequestBody Product product) {
+        product.getStatus().setId(2);
+        productService.save(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
 }
